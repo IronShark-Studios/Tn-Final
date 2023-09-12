@@ -6,3 +6,6 @@ This is the final iteration of my person system configuration repository. It cur
 
 * This configuration use Emacs Org Tangle
 I am attempting to combine literate programming. Via Org Tangle, with a modular configuration style to make it easier to remember the reasoning behind configuration choices. Generally each Directory level or file should equate to an Org Heading in a similar relative position.
+
+* TODO's
+** TODO Finalize =README.org=

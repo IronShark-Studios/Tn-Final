@@ -1,3 +1,0 @@
-#+Title: TODO File
-
-* TODO Finalize =README.org=
