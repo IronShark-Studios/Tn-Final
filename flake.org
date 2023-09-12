@@ -1,0 +1,221 @@
+#+TITLE: System Tangle File
+#+DESCRIPTION: Temporary file containt all shared files for a nix flake. Go be re organized later.
+#+PROPERTY: :tangle yes :noweb yes
+
+*  Example Heading
+:PROPERTIES:
+:header-args: :tangle ./tempFile.txt
+:END:
+
+#+begin_src nix
+#+end_src
+
+* flake.nix
+:PROPERTIES:
+:header-args: :tangle ./flake.nix
+:END:
+
+#+begin_src nix
+{
+  description = "Configuration for personal travel laptop.";
+
+  inputs = {
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    # You can access packages and modules from different nixpkgs revs
+    # at the same time. Here's an working example:
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+
+    # Home manager
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # TODO: Add any other flake you might need
+    # hardware.url = "github:nixos/nixos-hardware";
+
+    # Shameless plug: looking for a way to nixify your themes and make
+    # everything match nicely? Try nix-colors!
+    # nix-colors.url = "github:misterio77/nix-colors";
+  };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    let
+      inherit (self) outputs;
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+    in
+    rec {
+      # Your custom packages
+      # Acessible through 'nix build', 'nix shell', etc
+      packages = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./pkgs { inherit pkgs; }
+      );
+      # Devshell for bootstrapping
+      # Acessible through 'nix develop' or 'nix-shell' (legacy)
+      devShells = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./shell.nix { inherit pkgs; }
+      );
+
+      # Your custom packages and modifications, exported as overlays
+      overlays = import ./overlays { inherit inputs; };
+      # Reusable nixos modules you might want to export
+      # These are usually stuff you would upstream into nixpkgs
+      nixosModules = import ./modules/nixos;
+      # Reusable home-manager modules you might want to export
+      # These are usually stuff you would upstream into home-manager
+      homeManagerModules = import ./modules/home-manager;
+
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#your-hostname'
+      nixosConfigurations = {
+        # FIXME replace with your hostname
+        your-hostname = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            # > Our main nixos configuration file <
+            ./nixos/configuration.nix
+          ];
+        };
+      };
+
+      # Standalone home-manager configuration entrypoint
+      # Available through 'home-manager --flake .#your-username@your-hostname'
+      homeConfigurations = {
+        # FIXME replace with your username@hostname
+        "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+          ];
+        };
+      };
+    };
+}
+#+end_src
+
+* Flake
+
+** Modules
+
+*** NixOS
+
+**** default.nix
+:PROPERTIES:
+:header-args: :tangle ./Flake/Modules/NixOS/default.nix
+:END:
+
+#+begin_src nix
+# Add your reusable NixOS modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
+# These should be stuff you would like to share with others, not your personal configurations.
+
+{
+  # List your module files here
+  # my-module = import ./my-module.nix;
+}
+#+end_src
+
+*** Home-Manager
+
+**** default.nix
+:PROPERTIES:
+:header-args: :tangle ./Flake/Modules/Home-Manager/default.nix
+:END:
+
+#+begin_src nix
+# Add your reusable home-manager modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
+# These should be stuff you would like to share with others, not your personal configurations.
+
+{
+  # List your module files here
+  # my-module = import ./my-module.nix;
+}
+#+end_src
+
+** Packages
+:PROPERTIES:
+:header-args: :tangle ./Flake/Packages/default.nix
+:END:
+
+#+begin_src nix
+# Custom packages, that can be defined similarly to ones from nixpkgs
+# You can build them using 'nix build .#example' or (legacy) 'nix-build -A example'
+
+{ pkgs ? (import ../nixpkgs.nix) { } }: {
+  # example = pkgs.callPackage ./example { };
+}
+#+end_src
+
+** Overlays
+:PROPERTIES:
+:header-args: :tangle ./Flake/Overlays/default.nix
+:END:
+
+#+begin_src nix
+# This file defines overlays
+{ inputs, ... }:
+{
+  # This one brings our custom packages from the 'pkgs' directory
+  additions = final: _prev: import ../pkgs { pkgs = final; };
+
+  # This one contains whatever you want to overlay
+  # You can change versions, add patches, set compilation flags, anything really.
+  # https://nixos.wiki/wiki/Overlays
+  modifications = final: prev: {
+    # example = prev.example.overrideAttrs (oldAttrs: rec {
+    # ...
+    # });
+  };
+
+  # When applied, the unstable nixpkgs set (declared in the flake inputs) will
+  # be accessible through 'pkgs.unstable'
+  unstable-packages = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+}
+#+end_src
+** nixpkgs.nix
+:PROPERTIES:
+:header-args: :tangle ./Flake/nixpkgs.nix
+:END:
+
+#+begin_src nix
+# A nixpkgs instance that is grabbed from the pinned nixpkgs commit in the lock file
+# This is useful to avoid using channels when using legacy nix commands
+let lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
+in
+import (fetchTarball {
+  url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+  sha256 = lock.narHash;
+})
+#+end_src
+
+** shell.nix
+:PROPERTIES:
+:header-args: :tangle ./Flake/shell.nix
+:END:
+
+#+begin_src nix
+# Shell for bootstrapping flake-enabled nix and home-manager
+# You can enter it through 'nix develop' or (legacy) 'nix-shell'
+
+{ pkgs ? (import ./nixpkgs.nix) { } }: {
+  default = pkgs.mkShell {
+    # Enable experimental features without having to specify the argument
+    NIX_CONFIG = "experimental-features = nix-command flakes";
+    nativeBuildInputs = with pkgs; [ nix home-manager git ];
+  };
+}
+#+end_src
