@@ -14,9 +14,18 @@
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
-  # be accessible through 'pkgs.unstable'
-  static-packages = final: _prev: {
+  # be accessible through 'pkgs.static-nxpkgs'
+  static-nxpkgs = final: _prev: {
     static = import inputs.nixpkgs-static {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+
+ # Creates a subset of home-manager pkgs tied to a specific release.
+ # Accessible with 'pkgs.static-hmpkgs'.
+  static-hmpkgs = final: _prev: {
+    static = import inputs.home-manager-static {
       system = final.system;
       config.allowUnfree = true;
     };
