@@ -46,6 +46,11 @@
     };
   };
 
+  security = {
+    sudo.wheelNeedsPassword = false;
+    rtkit.enable = true;
+  };
+
   users.users = {
     Que = {
       isNormalUser = true;
