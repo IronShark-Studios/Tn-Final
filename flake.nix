@@ -37,6 +37,8 @@
       specialArgs = { inherit inputs outputs; };
       modules = [
         nixos-hardware.nixosModules.lenovo-thinkpad-t430
+        sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
         ./System/NixOS/configuration.nix
       ];
     };
