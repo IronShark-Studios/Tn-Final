@@ -40,6 +40,7 @@
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         ./System/NixOS/configuration.nix
+        ./System/NixOS/hardware-configuration.nix
       ];
     };
   };

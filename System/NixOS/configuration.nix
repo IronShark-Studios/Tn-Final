@@ -2,9 +2,9 @@
 
   system.stateVersion = "23.05";
 
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  # imports = [
+  #   ./hardware-configuration.nix
+  # ];
 
   nixpkgs = {
     overlays = [
