@@ -77,19 +77,39 @@
     useDHCP = lib.mkDefault true;
   };
 
+  services = {
+    openssh = {
+      enable = false;
+      settings = {
+        permitRootLogin = "no";
+        passwordAuthentication = false;
+      };
+    };
+
+    xserver = {
+      enable = true;
+      libinput.enable = true;
+    };
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
+
+    printing.enable = true;
+
+    picom.enable = true;
+  };
+
   users.users = {
     Que = {
       isNormalUser = true;
       openssh.authorizedKeys.keys = [ ];
       extraGroups = [ "wheel" ];
-    };
-  };
-
-  services.openssh = {
-    enable = false;
-    settings = {
-      permitRootLogin = "no";
-      passwordAuthentication = false;
     };
   };
 }
