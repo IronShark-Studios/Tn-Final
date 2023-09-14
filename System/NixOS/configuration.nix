@@ -2,9 +2,11 @@
 
   system.stateVersion = "23.05";
 
-  # imports = [
-  #   ./hardware-configuration.nix
-  # ];
+  imports = [
+    ./hardware-configuration.nix
+    ./default-specialisation.nix
+    ./guest-specialisation.nix
+  ];
 
   nixpkgs = {
     overlays = [
@@ -12,6 +14,7 @@
       outputs.overlays.modifications
       outputs.overlays.static-nxpkgs
       outputs.overlays.static-hmpkgs
+      inputs.emacs-community.overlay
     ];
 
     config = {
@@ -30,8 +33,6 @@
     };
   };
 
-  networking.hostName = "Voyager";
-
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     loader = {
@@ -46,6 +47,12 @@
   security = {
     sudo.wheelNeedsPassword = false;
     rtkit.enable = true;
+  };
+
+  networking = {
+    hostName = "Voyager";
+    networkmanager.enable = true;
+    useDHCP = lib.mkDefault true;
   };
 
   users.users = {
