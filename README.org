@@ -16,3 +16,4 @@ These files are generally specific to each system, and are frequently changed ba
 * TODO's
 ** TODO Finalize =README.org=
 ** TODO Add Home-Manager-Static overlay
+** TODO Get system speakers working
