@@ -214,4 +214,13 @@
         passwordFile = "/etc/secrets/que/que-usrPasswd.nix";
       };
     };
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      Que = import ../home-manager/que-home.nix;
+    };
+  };
+
   }
