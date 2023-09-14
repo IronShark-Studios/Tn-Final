@@ -4,8 +4,6 @@
 
   imports = [
     ./hardware-configuration.nix
-    ./default-specialisation.nix
-    ./guest-specialisation.nix
   ];
 
   nixpkgs = {
@@ -55,6 +53,31 @@
     useDHCP = lib.mkDefault true;
   };
 
+  environment = {
+    systemPackages = with pkgs; [
+      # pulseaudio
+      # pulseaudio-ctl
+      # pulsemixer
+      polybar
+      networkmanagerapplet
+      volctl
+      lm_sensors
+      pciutils
+      fd
+      silver-searcher
+      wget
+      unzip
+      hunspell
+      hunspellDicts.en_US-large
+      slock
+      flameshot
+    ];
+
+    lxqt.excludePackages = with pkgs.lxqt; [
+      qterminal
+    ];
+  };
+
   services = {
     openssh = {
       enable = false;
@@ -75,6 +98,71 @@
       alsa = {
         enable = true;
         support32Bit = true;
+      };
+
+
+      unclutter-xfixes.enable = true;
+
+      cron = {
+        enable = true;
+        systemCronJobs = [
+          "*/5 * * * *      root    date >> /tmp/cron.log"
+        ];
+      };
+
+      xserver = {
+        autorun = true;
+        layout = "us";
+        xkbVariant = "colemak_dh";
+        xkbOptions = "caps:escape";
+
+        desktopManager.lxqt.enable = true;
+
+        displayManager = {
+          sddm.enable = true;
+          sddm.autoNumlock = true;
+        };
+
+        windowManager.exwm = {
+          enable = true;
+          enableDefaultConfig = false;
+          extraPackages = epkgs: with epkgs; [
+            use-package
+            exwm
+            burly
+            helm
+            helm-projectile
+            emojify
+            all-the-icons
+            ligature
+            centered-cursor-mode
+            rainbow-delimiters
+            smartparens
+            doom-modeline
+            doom-themes
+            evil
+            evil-snipe
+            evil-easymotion
+            evil-collection
+            evil-colemak-basics
+            helpful
+            which-key
+            undo-tree
+            dmenu
+            magit
+            git-gutter
+            projectile
+            ag
+            rg
+            nix-mode
+            org-bullets
+            org-appear
+            org
+            ox-hugo
+            visual-fill-column
+            aggressive-indent
+          ];
+        };
       };
     };
 
@@ -110,11 +198,20 @@
     fira-go
   ];
 
-  users.users = {
-    Que = {
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [ ];
-      extraGroups = [ "wheel" ];
+  environment.etc.secrets.source = ../secrets;
+
+  users = {
+    mutableUsers = false;
+    users = {
+      root = {
+        passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
+      };
+
+      Que = {
+        isNormalUser = true;
+        openssh.authorizedKeys.keys = [ ];
+        extraGroups = [ "wheel" ];
+        passwordFile = "/etc/secrets/que/que-usrPasswd.nix";
+      };
     };
-  };
-}
+  }
