@@ -2,7 +2,7 @@
 { inputs, ... }:
 {
   # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs { pkgs = final; };
+  additions = final: _prev: import ../Packages { pkgs = final; };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -16,7 +16,7 @@
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.static-nxpkgs'
   static-nxpkgs = final: _prev: {
-    static = import inputs.nixpkgs-static {
+    nx-static = import inputs.nixpkgs-static {
       system = final.system;
       config.allowUnfree = true;
     };
@@ -25,7 +25,7 @@
  # Creates a subset of home-manager pkgs tied to a specific release.
  # Accessible with 'pkgs.static-hmpkgs'.
   static-hmpkgs = final: _prev: {
-    static = import inputs.home-manager-static {
+    hm-static = import inputs.home-manager-static {
       system = final.system;
       config.allowUnfree = true;
     };

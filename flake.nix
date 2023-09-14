@@ -19,42 +19,27 @@
     emacs-community.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, sops-nix, emacs-community, ... }@inputs:
+   let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
     in
     rec {
-      # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
-      );
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-      );
 
-      overlays = import ./Flake/Overlays { inherit inputs; };
-      # Reusable nixos modules you might want to export
-      # These are usually stuff you would upstream into nixpkgs
-      nixosModules = import ./Flake/Modules/Nixos;
-      # Reusable home-manager modules you might want to export
-      # These are usually stuff you would upstream into home-manager
-      homeManagerModules = import ./Flake/Modules/Home-Manager;
+  overlays = import ./Flake/Overlays { inherit inputs; };
+  nixosModules = import ./Flake/Modules/Nixos;
+  homeManagerModules = import ./Flake/Modules/Home-Manager;
 
-      nixosConfigurations = {
-        Voyager = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./System/NixOS/configuration.nix
-          ];
-        };
-      };
+  nixosConfigurations = {
+    Voyager = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
+      modules = [
+        nixos-hardware.nixosModules.lenovo-thinkpad-t430
+        ./System/NixOS/configuration.nix
+      ];
     };
+  };
+};
 }
