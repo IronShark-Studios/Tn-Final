@@ -1,6 +1,8 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
-  environment.etc.secrets.source = ../secrets;
+  environment.etc.secrets.source = ./Tools/Secrets;
+
+  environment.etc.scripts.source = ./Tools/Scripts;
 
   security = {
     sudo.wheelNeedsPassword = false;
@@ -26,7 +28,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      Que = import ../home-manager/que-home.nix;
+      Que = import ../Home-Manager/home.nix;
     };
   };
 }

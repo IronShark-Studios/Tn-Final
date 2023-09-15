@@ -1,0 +1,19 @@
+#+Title: Technonomicon ReadMe
+
+
+* This repository is a work in progress
+This is the final iteration of my person system configuration repository. It currently only holds the configuration for =Voyager=, my travel laptop. Eventually this flake will be moved into its own sub directory, and used as a template for other systems.
+
+* This configuration use Emacs Org Tangle
+I am attempting to combine literate programming. Via Org Tangle, with a modular configuration style to make it easier to remember the reasoning behind configuration choices. Generally each Directory level or file should equate to an Org Heading in a similar relative position.
+
+** Flake.org
+These file are rarely changed, and are generic across system configurations.
+
+** System.org
+These files are generally specific to each system, and are frequently changed based on daily needs.
+
+* TODO's
+** TODO Finalize =README.org=
+** TODO Add Home-Manager-Static overlay
+** TODO Get system speakers working
