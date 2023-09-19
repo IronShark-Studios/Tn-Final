@@ -2,14 +2,6 @@
 #+DESCRIPTION: Temporary file containt all shared files for a nix flake. Go be re organized later.
 #+PROPERTY: :tangle yes :noweb yes
 
-*  Example Heading
-:PROPERTIES:
-:header-args: :tangle ./tempFile.txt
-:END:
-
-#+begin_src nix
-#+end_src
-
 * flake.nix
 :PROPERTIES:
 :header-args: :tangle ./flake.nix

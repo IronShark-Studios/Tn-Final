@@ -17,3 +17,5 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Finalize =README.org=
 ** TODO Add Home-Manager-Static overlay
 ** TODO Get system speakers working
+** TODO Configure EXWM to use Home-Manager Overlay
+** TODO Sort and update firefox chrome settings
