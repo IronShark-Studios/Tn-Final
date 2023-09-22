@@ -28,7 +28,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      Que = import ../Home-Manager/home.nix;
+      Que = import ../Home-Manager/que-home.nix;
     };
   };
 }

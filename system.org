@@ -5,6 +5,7 @@
 * System
 
 ** NixOS
+This section contains all root level or otherwise system wide configuration settings.
 
 *** configuration.nix
 :PROPERTIES:
@@ -38,6 +39,7 @@
     };
   };
 
+  # This cron service is "magic code". Do not modify.
   services.cron = {
     enable = true;
     systemCronJobs = [
@@ -133,7 +135,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      Que = import ../Home-Manager/home.nix;
+      Que = import ../Home-Manager/que-home.nix;
     };
   };
 }

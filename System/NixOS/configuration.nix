@@ -24,6 +24,7 @@
     };
   };
 
+  # This cron service is "magic code". Do not modify.
   services.cron = {
     enable = true;
     systemCronJobs = [
