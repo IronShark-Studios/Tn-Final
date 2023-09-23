@@ -105,11 +105,11 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 :END:
 
 #+begin_src nix
-{ config, lib, pkgs, modulesPath, ... }: {
+{ inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
 
-  environment.etc.secrets.source = ./Tools/Secrets;
+  environment.etc.secrets.source = ../Tools/Secrets;
 
-  environment.etc.scripts.source = ./Tools/Scripts;
+  environment.etc.scripts.source = ../Tools/Scripts;
 
   security = {
     sudo.wheelNeedsPassword = false;
@@ -123,7 +123,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
         passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
       };
 
-      Que = {
+      que = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ ];
         extraGroups = [ "wheel" ];
@@ -135,7 +135,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      Que = import ../Home-Manager/que-home.nix;
+      que = import ../../Home-Manager/que-home.nix;
     };
   };
 }
@@ -235,7 +235,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
     ];
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     nerdfonts
     iosevka
     overpass
@@ -413,11 +413,11 @@ place holder file
 
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
-    ./Home-Packages/home.nix
+    ./Home-Packages/home-manager.nix
   ];
 
   home = {
-    username = "Que";
+    username = "que";
     homeDirectory = "/home/que";
     stateVersion = "23.05";
   };
@@ -426,7 +426,6 @@ place holder file
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
       outputs.overlays.static-nxpkgs
       outputs.overlays.static-hmpkgs
       inputs.emacs-community.overlay

@@ -1,8 +1,8 @@
-{ config, lib, pkgs, modulesPath, ... }: {
+{ inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
 
-  environment.etc.secrets.source = ./Tools/Secrets;
+  environment.etc.secrets.source = ../Tools/Secrets;
 
-  environment.etc.scripts.source = ./Tools/Scripts;
+  environment.etc.scripts.source = ../Tools/Scripts;
 
   security = {
     sudo.wheelNeedsPassword = false;
@@ -16,7 +16,7 @@
         passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
       };
 
-      Que = {
+      que = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ ];
         extraGroups = [ "wheel" ];
@@ -28,7 +28,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      Que = import ../Home-Manager/que-home.nix;
+      que = import ../../Home-Manager/que-home.nix;
     };
   };
 }
