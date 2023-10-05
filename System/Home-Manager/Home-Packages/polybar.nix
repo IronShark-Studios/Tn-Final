@@ -24,10 +24,19 @@
           separator-foreground = "\${colors.disabled}";
           font-0 = ''"Iosevka:size=16:weight=extrabold;2"'';
           modules-left = "xworkspaces memory cpu cpu-temp";
-          modules-right = "pulseaudio date";
+          modules-right = "pulseaudio date battery";
           cursor-click = "pointer";
           cursor-scroll = "ns-resize";
           enable-ipc = "true";
+        };
+        "module/battery" = {
+          type = "internal/battery";
+          label-charging = "Charging %percentage%%";
+          full-at = "98";
+          low-at = "10";
+          battery = "BAT0";
+          adapter = "AC";
+          poll-interval = "5";
         };
         "module/xworkspaces" = {
           type = "internal/xworkspaces";

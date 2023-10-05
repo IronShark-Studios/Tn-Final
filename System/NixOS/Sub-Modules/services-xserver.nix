@@ -18,8 +18,6 @@
       xkbVariant = "colemak_dh";
       xkbOptions = "caps:escape";
 
-      desktopManager.lxqt.enable = true;
-
       displayManager = {
         sddm.enable = true;
         sddm.autoNumlock = true;
