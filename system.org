@@ -326,6 +326,11 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
         sddm.enable = true;
         sddm.autoNumlock = true;
       };
+
+      desktopManager.lxqt = {
+        enable = true;
+        };
+
     };
 
     unclutter-xfixes.enable = true;

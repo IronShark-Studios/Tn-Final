@@ -22,6 +22,11 @@
         sddm.enable = true;
         sddm.autoNumlock = true;
       };
+
+      desktopManager.lxqt = {
+        enable = true;
+        };
+
     };
 
     unclutter-xfixes.enable = true;
