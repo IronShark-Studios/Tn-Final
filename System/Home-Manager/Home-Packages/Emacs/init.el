@@ -31,8 +31,6 @@
 
 (global-hl-line-mode 1)
 
-(display-battery-mode 1)
-
 (setq column-number-mode t)
 
 (bookmark-load bookmark-default-file t)
