@@ -296,53 +296,25 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
   environment = {
     systemPackages = with pkgs; [
-      blueman
-      chromium
-      deja-dup
-      drawing
+      blueman # GTK base bluetooth manager
       elementary-xfce-icon-theme
-      evince
-      firefox
-      foliate
-      font-manager
-      gimp-with-plugins
-      gnome.file-roller
-      gnome.gnome-disk-utility
-      inkscape-with-extensions
-      libqalculate
-      libreoffice
-      orca
-      pavucontrol
-      qalculate-gtk
-      thunderbird
-      wmctrl
-      xclip
-      xcolor
-      xcolor
-      xdo
-      xdotool
-      xfce.catfish
-      xfce.gigolo
-      xfce.orage
-      xfce.xfburn
+      gimp-with-plugins # Move into home-manager
+      gnome.gnome-disk-utility # replace with Gparted in home-manager
+      inkscape-with-extensions # Move into home-manager
+      pavucontrol # Move into main config
+      xclip # Move into main config
+      xcolor # Move into main config with flakeshot
+      xdo # Move into main config
+      xdotool # Move into main config
+      xsel # Move into main config
       xfce.xfce4-appfinder
-      xfce.xfce4-clipman-plugin
-      xfce.xfce4-cpugraph-plugin
-      xfce.xfce4-dict
-      xfce.xfce4-fsguard-plugin
       xfce.xfce4-genmon-plugin
-      xfce.xfce4-netload-plugin
       xfce.xfce4-panel
       xfce.xfce4-pulseaudio-plugin
-      xfce.xfce4-systemload-plugin
-      xfce.xfce4-weather-plugin
       xfce.xfce4-whiskermenu-plugin
       xfce.xfce4-xkb-plugin
       xfce.xfdashboard
       xorg.xev
-      xsel
-      xtitle
-      xwinmosaic
       sddm-chili-theme
     ];
   };
