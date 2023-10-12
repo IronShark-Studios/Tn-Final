@@ -202,9 +202,15 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
   environment = {
     systemPackages = with pkgs; [
-      # pulseaudio
-      # pulseaudio-ctl
-      # pulsemixer
+      pulseaudio
+      pulseaudio-ctl
+      pulsemixer
+      pavucontrol
+      xclip
+      xcolor
+      xdo
+      xdotool
+      xsel
       polybar
       networkmanagerapplet
       volctl
@@ -218,10 +224,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       hunspellDicts.en_US-large
       slock
       flameshot
-    ];
-
-    lxqt.excludePackages = with pkgs.lxqt; [
-      qterminal
     ];
   };
 
@@ -301,12 +303,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       gimp-with-plugins # Move into home-manager
       gnome.gnome-disk-utility # replace with Gparted in home-manager
       inkscape-with-extensions # Move into home-manager
-      pavucontrol # Move into main config
-      xclip # Move into main config
-      xcolor # Move into main config with flakeshot
-      xdo # Move into main config
-      xdotool # Move into main config
-      xsel # Move into main config
       xfce.xfce4-appfinder
       xfce.xfce4-genmon-plugin
       xfce.xfce4-panel

@@ -7,12 +7,6 @@
       gimp-with-plugins # Move into home-manager
       gnome.gnome-disk-utility # replace with Gparted in home-manager
       inkscape-with-extensions # Move into home-manager
-      pavucontrol # Move into main config
-      xclip # Move into main config
-      xcolor # Move into main config with flakeshot
-      xdo # Move into main config
-      xdotool # Move into main config
-      xsel # Move into main config
       xfce.xfce4-appfinder
       xfce.xfce4-genmon-plugin
       xfce.xfce4-panel

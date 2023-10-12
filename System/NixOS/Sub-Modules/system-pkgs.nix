@@ -2,9 +2,15 @@
 
   environment = {
     systemPackages = with pkgs; [
-      # pulseaudio
-      # pulseaudio-ctl
-      # pulsemixer
+      pulseaudio
+      pulseaudio-ctl
+      pulsemixer
+      pavucontrol
+      xclip
+      xcolor
+      xdo
+      xdotool
+      xsel
       polybar
       networkmanagerapplet
       volctl
@@ -18,10 +24,6 @@
       hunspellDicts.en_US-large
       slock
       flameshot
-    ];
-
-    lxqt.excludePackages = with pkgs.lxqt; [
-      qterminal
     ];
   };
 
