@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.gitFull;
     lfs.enable = true;
-    userName = "Xin";
+    userName = "xin";
     userEmail = "git@ironshark.org";
     ignores = [
       "*~"

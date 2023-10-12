@@ -2,7 +2,7 @@
 
   services.polybar = {
       enable = true;
-      script = "polybar Thanatos &";
+      script = "polybar thanatos &";
       settings = {
         "colors" = {
           background = "#191e24";
@@ -12,7 +12,7 @@
           alert = "#d85362";
           disabled = "#707880";
         };
-        "bar/Thanatos" = {
+        "bar/thanatos" = {
           width = "100%";
           height = "24pt";
           background = "\${colors.background}";

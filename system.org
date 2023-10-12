@@ -440,7 +440,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   networking = {
-    hostName = "Thanatos";
+    hostName = "thanatos";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
   };
@@ -515,7 +515,7 @@ place holder file
   ];
 
   home = {
-    username = "Xin";
+    username = "xin";
     homeDirectory = "/home/xin";
     stateVersion = "23.05";
   };
@@ -804,7 +804,7 @@ See the above repository for updates as well as full license text. */
     enable = true;
     package = pkgs.gitFull;
     lfs.enable = true;
-    userName = "Xin";
+    userName = "xin";
     userEmail = "git@ironshark.org";
     ignores = [
       "*~"
@@ -843,7 +843,7 @@ git push";
 
   services.polybar = {
       enable = true;
-      script = "polybar Thanatos &";
+      script = "polybar thanatos &";
       settings = {
         "colors" = {
           background = "#191e24";
@@ -853,7 +853,7 @@ git push";
           alert = "#d85362";
           disabled = "#707880";
         };
-        "bar/Thanatos" = {
+        "bar/thanatos" = {
           width = "100%";
           height = "24pt";
           background = "\${colors.background}";
@@ -1065,8 +1065,8 @@ git push";
 (setq calendar-latitude 42.33
       calendar-longitude -83.04
       calendar-location-name "Detroit,MI"
-      user-login-name "Xin"
-      user-mail-address "Xin@ironshark.org")
+      user-login-name "xin"
+      user-mail-address "xin@ironshark.org")
 
 (global-visual-line-mode t)
 

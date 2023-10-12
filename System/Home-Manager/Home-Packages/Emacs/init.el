@@ -67,8 +67,8 @@
 (setq calendar-latitude 42.33
       calendar-longitude -83.04
       calendar-location-name "Detroit,MI"
-      user-login-name "Xin"
-      user-mail-address "Xin@ironshark.org")
+      user-login-name "xin"
+      user-mail-address "xin@ironshark.org")
 
 (global-visual-line-mode t)
 
