@@ -13,8 +13,8 @@
   ];
 
   home = {
-    username = "que";
-    homeDirectory = "/home/que";
+    username = "Xin";
+    homeDirectory = "/home/xin";
     stateVersion = "23.05";
   };
 

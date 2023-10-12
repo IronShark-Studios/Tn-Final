@@ -16,11 +16,11 @@
         passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
       };
 
-      que = {
+      xin = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ ];
         extraGroups = [ "wheel" ];
-        passwordFile = "/etc/secrets/que/que-usrPasswd.nix";
+        passwordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
       };
     };
   };
@@ -28,7 +28,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
-      que = import ../../Home-Manager/que-home.nix;
+      xin = import ../../Home-Manager/xin-home.nix;
     };
   };
 }

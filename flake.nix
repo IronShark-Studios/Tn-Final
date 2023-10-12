@@ -33,7 +33,7 @@
   homeManagerModules = import ./Flake/Modules/Home-Manager;
 
   nixosConfigurations = {
-    Voyager = nixpkgs.lib.nixosSystem {
+    Thanatos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs outputs; };
       modules = [
         nixos-hardware.nixosModules.lenovo-thinkpad-t430

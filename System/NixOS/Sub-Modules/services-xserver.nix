@@ -105,9 +105,9 @@
 
       desktopManager.xfce = {
         enable = true;
+        enableScreensaver = false;
      #   noDesktop = true;
      #   enableXfwm = false;
-     #   enableScreensaver = false;
       };
     };
 

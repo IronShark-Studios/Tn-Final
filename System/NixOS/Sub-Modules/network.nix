@@ -1,7 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   networking = {
-    hostName = "Voyager";
+    hostName = "Thanatos";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
   };
