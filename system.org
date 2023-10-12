@@ -353,7 +353,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       xsel
       xtitle
       xwinmosaic
-      zuki-themes
+      sddm-chili-theme
     ];
   };
 
@@ -400,13 +400,11 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       ];
 
       displayManager = {
-        lightdm = {
+        sddm = {
           enable = true;
-          greeters.slick = {
-            enable = true;
-            theme.name = "Zukitre-dark";
+          autoNumlock = true;
+          theme = "chili";
           };
-        };
       };
 
       desktopManager.xfce = {

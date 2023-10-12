@@ -49,7 +49,7 @@
       xsel
       xtitle
       xwinmosaic
-      zuki-themes
+      sddm-chili-theme
     ];
   };
 
@@ -96,13 +96,11 @@
       ];
 
       displayManager = {
-        lightdm = {
+        sddm = {
           enable = true;
-          greeters.slick = {
-            enable = true;
-            theme.name = "Zukitre-dark";
+          autoNumlock = true;
+          theme = "chili";
           };
-        };
       };
 
       desktopManager.xfce = {
