@@ -68,6 +68,7 @@
       ];
 
       displayManager = {
+        defaultSession = "xfce+exwm";
         sddm = {
           enable = true;
           autoNumlock = true;
