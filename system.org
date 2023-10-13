@@ -358,7 +358,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       ];
 
       displayManager = {
-        defaultSession = "xfce+exwm";
+        # defaultSession = "xfce+exwm";
         sddm = {
           enable = true;
           autoNumlock = true;
@@ -496,6 +496,7 @@ place holder file
   };
 
   systemd.user.startServices = "sd-switch";
+  systemd.user.services.emacs-startup = { description = "..."; serviceConfig.PassEnvironment = "DISPLAY"; script = ''emacs-*''; wantedBy = [ "multi-user.target" ];
   programs.home-manager.enable = true;
 }
 #+end_src
