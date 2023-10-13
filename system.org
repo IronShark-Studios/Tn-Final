@@ -496,7 +496,7 @@ place holder file
   };
 
   systemd.user.startServices = "sd-switch";
-  systemd.user.services.emacs-startup = { description = "..."; serviceConfig.PassEnvironment = "DISPLAY"; script = ''emacs-*''; wantedBy = [ "multi-user.target" ];
+  # systemd.user.services.emacs-startup = { description = "..."; serviceConfig.PassEnvironment = "DISPLAY"; script = ''emacs-*''; wantedBy = [ "multi-user.target" ];
   programs.home-manager.enable = true;
 }
 #+end_src
@@ -1734,7 +1734,16 @@ it can be passed in POS."
 
 programs.emacs = {
   enable = true;
-  package = pkgs.emacs-unstable;
+  # package = pkgs.emacs-unstable;
+  package = (pkgs.emacsWithPackagesFromUsePackage {
+    config = ./init.el;
+    defaultInitFile = true;
+    package = pkgs.emacs-unstable;
+    alwaysEnsure = true;
+    extraEmacsPackages = epkgs: [
+       # Anything needed but not specified in init.el
+      ];
+    });
   };
 
 services.emacs = {

@@ -35,6 +35,6 @@
   };
 
   systemd.user.startServices = "sd-switch";
-  systemd.user.services.emacs-startup = { description = "..."; serviceConfig.PassEnvironment = "DISPLAY"; script = ''emacs-*''; wantedBy = [ "multi-user.target" ];
+  # systemd.user.services.emacs-startup = { description = "..."; serviceConfig.PassEnvironment = "DISPLAY"; script = ''emacs-*''; wantedBy = [ "multi-user.target" ];
   programs.home-manager.enable = true;
 }
