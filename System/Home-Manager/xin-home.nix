@@ -5,6 +5,7 @@
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/Emacs/exwm.nix
     ./Home-Packages/alacritty.nix
     ./Home-Packages/firefox.nix
     ./Home-Packages/bash.nix

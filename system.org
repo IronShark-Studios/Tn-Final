@@ -466,6 +466,7 @@ place holder file
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/Emacs/exwm.nix
     ./Home-Packages/alacritty.nix
     ./Home-Packages/firefox.nix
     ./Home-Packages/bash.nix
@@ -1728,6 +1729,8 @@ it can be passed in POS."
 :END:
 
 #+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
 programs.emacs = {
   enable = true;
   package = "emacs-unstable";
@@ -1740,6 +1743,7 @@ sevices.emacs = {
     "exwm-enable"
     ];
   };
+}
 #+end_src
 
 *** Home-Scripts
