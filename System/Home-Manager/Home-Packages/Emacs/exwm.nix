@@ -2,7 +2,7 @@
 
 programs.emacs = {
   enable = true;
-  package = "emacs-unstable";
+  package = pkgs.emacs-unstable;
   };
 
 services.emacs = {
