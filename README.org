@@ -15,11 +15,13 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Finalize =README.org=
 ** TODO Rename =System= Directory to =Thanatos= and update all tangle paths in config files
+** TODO Switch EXWM to Home-Manager
+- The goal with this is to remove the need to manually add each Emacs package to my =configuration.nix= and use the rolling release version of Emacs and EXWM.
 ** TODO Add Home-Manager-Static overlay
 ** TODO Get system speakers working
 ** TODO Configure Bluetooth Connection Manager
+** TODO Get polybar sound module working
 ** TODO Fix polybar startup error
 ** TODO Add Polybar Network manager module, and remove modeline applet
 ** TODO Configure thunar darkmode
@@ -27,11 +29,20 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Configure EXWM to use Home-Manager Overlay
 ** TODO Sort and update firefox chrome settings
 *** TODO add bitwarden, darkreader, and tridactly to default install
-** TODO Switch EXWM to Home-Manager
-- The goal with this is to remove the need to manually add each Emacs package to my =configuration.nix= and use the rolling release version of Emacs and EXWM.
 ** TODO Configure XFCE settings
+*** TODO Disable pop up network messages
 ** --------- Emacs Core ------------
 ** TODO Configure Org-Roam
 ** TODO Switch from Helm to something else
 ** ----------- Long Term ---------
+** TODO Finalize =README.org=
 ** TODO Create custom sddm package with theming
+** TODO Enable and configure Tridactly native for firefox
+*** TODO Customize keymap for colemak-dh
+** TODO Look into using Modifying core system
+*** TODO Repeatable disk partitioning using a machine specific script.
+*** TODO Use of Zen kernel with older normal kernel fallback
+*** TODO Use of ZFS for file system
+*** TODO Use of TMPFS and Impermance modules
+*** TODO Use of Libreboot Bios
+*** TODO Full disk encryption
