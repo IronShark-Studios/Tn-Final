@@ -243,49 +243,49 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 :END:
 
 #+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
+# { inputs, outputs, lib, config, pkgs, ... }: {
 
-  services.xserver.windowManager.exwm = {
-   enable = true;
-   enableDefaultConfig = false;
-   extraPackages = epkgs: with epkgs; [
-     use-package
-     exwm
-     burly
-     helm
-     helm-projectile
-     emojify
-     all-the-icons
-     ligature
-     centered-cursor-mode
-     rainbow-delimiters
-     smartparens
-     doom-modeline
-     doom-themes
-     evil
-     evil-snipe
-     evil-easymotion
-     evil-collection
-     evil-colemak-basics
-     helpful
-     which-key
-     undo-tree
-     dmenu
-     magit
-     git-gutter
-     projectile
-     ag
-     rg
-     nix-mode
-     org-bullets
-     org-appear
-     org
-     ox-hugo
-     visual-fill-column
-     aggressive-indent
-   ];
- };
-}
+#   services.xserver.windowManager.exwm = {
+#    enable = true;
+#    enableDefaultConfig = false;
+#    extraPackages = epkgs: with epkgs; [
+#      use-package
+#      exwm
+#      burly
+#      helm
+#      helm-projectile
+#      emojify
+#      all-the-icons
+#      ligature
+#      centered-cursor-mode
+#      rainbow-delimiters
+#      smartparens
+#      doom-modeline
+#      doom-themes
+#      evil
+#      evil-snipe
+#      evil-easymotion
+#      evil-collection
+#      evil-colemak-basics
+#      helpful
+#      which-key
+#      undo-tree
+#      dmenu
+#      magit
+#      git-gutter
+#      projectile
+#      ag
+#      rg
+#      nix-mode
+#      org-bullets
+#      org-appear
+#      org
+#      ox-hugo
+#      visual-fill-column
+#      aggressive-indent
+#    ];
+#  };
+# }
 #+end_src
 
 **** services-xserver.nix
@@ -1720,6 +1720,26 @@ it can be passed in POS."
     target = ".config/emacs/bookmarks";
   };
 }
+#+end_src
+
+***** exwm.nix
+:PROPERTIES:
+:header-args: :tangle ./System/Home-Manager/Home-Packages/Emacs/exwm.nix
+:END:
+
+#+begin_src nix
+programs.emacs = {
+  enable = true;
+  package = "emacs-unstable";
+  };
+
+sevices.emacs = {
+  enable = true;
+  defaultEditor = true;
+  extraOptions = [
+    "exwm-enable"
+    ];
+  };
 #+end_src
 
 *** Home-Scripts
