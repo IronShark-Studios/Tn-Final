@@ -243,7 +243,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 :END:
 
 #+begin_src nix
-# { inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, ... }: {
 
 #   services.xserver.windowManager.exwm = {
 #    enable = true;
@@ -285,7 +285,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 #      aggressive-indent
 #    ];
 #  };
-# }
+}
 #+end_src
 
 **** services-xserver.nix
