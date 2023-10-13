@@ -5,7 +5,7 @@ programs.emacs = {
   package = "emacs-unstable";
   };
 
-sevices.emacs = {
+services.emacs = {
   enable = true;
   defaultEditor = true;
   extraOptions = [
