@@ -2,10 +2,6 @@
 
 programs.emacs = {
   enable = true;
-  defaultEditor = true;
-  extraOptions = [
-    "exwm-enable"
-    ];
   package = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
     defaultInitFile = true;
