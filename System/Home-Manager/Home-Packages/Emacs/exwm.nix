@@ -2,7 +2,10 @@
 
 programs.emacs = {
   enable = true;
-  # package = pkgs.emacs-unstable;
+  defaultEditor = true;
+  extraOptions = [
+    "exwm-enable"
+    ];
   package = (pkgs.emacsWithPackagesFromUsePackage {
     config = ./init.el;
     defaultInitFile = true;
@@ -14,11 +17,11 @@ programs.emacs = {
     });
   };
 
-services.emacs = {
-  enable = true;
-  defaultEditor = true;
-  extraOptions = [
-    "exwm-enable"
-    ];
-  };
+# services.emacs = {
+#   enable = true;
+#   defaultEditor = true;
+#   extraOptions = [
+#     "exwm-enable"
+#     ];
+#   };
 }

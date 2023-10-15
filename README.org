@@ -15,14 +15,21 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Rename =System= Directory to =Thanatos= and update all tangle paths in config files
 ** TODO Switch EXWM to Home-Manager
 - The goal with this is to remove the need to manually add each Emacs package to my =configuration.nix= and use the rolling release version of Emacs and EXWM.
+- This is Mostly done. It is mostly working. Just a few issues to figure out.
+*** TODO How to open an emacs client from an existing server
+- Look into how =EO= and =SEO= work
+*** TODO Move =XFCE= into home-manager
+**** TODO Remove toolbar, window-manager and other un-needed modules
+*** TODO Automatically start Emacs from server on user login, and act as window-manager
+- This is the key on. It's fine if =XFCE= doesn't get moved into home-manager, but I need =EXWM= to start automatically.
+** TODO Fix polybar startup error
+** TODO Rename =System= Directory to =Thanatos= and update all tangle paths in config files
 ** TODO Add Home-Manager-Static overlay
 ** TODO Get system speakers working
 ** TODO Configure Bluetooth Connection Manager
 ** TODO Get polybar sound module working
-** TODO Fix polybar startup error
 ** TODO Add Polybar Network manager module, and remove modeline applet
 ** TODO Configure thunar darkmode
 ** TODO Install and configure ranger or alternative
