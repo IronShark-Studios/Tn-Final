@@ -7,9 +7,8 @@
     ./Sub-Modules/nixpkgs.nix
     ./Sub-Modules/users.nix
     ./Sub-Modules/utf.nix
-    ./Sub-Modules/system-pkgs.nix
-    ./Sub-Modules/services-exwm.nix
-    ./Sub-Modules/services-xserver.nix
+    ./Sub-Modules/pkgs.nix
+    ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
   ];
 

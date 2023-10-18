@@ -38,6 +38,7 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO add bitwarden, darkreader, and tridactly to default install
 ** TODO Configure XFCE settings
 *** TODO Disable pop up network messages
+** TODO Sort and organize pkgs.nix package list
 ** --------- Emacs Core ------------
 ** TODO Configure Org-Roam
 ** TODO Switch from Helm to something else

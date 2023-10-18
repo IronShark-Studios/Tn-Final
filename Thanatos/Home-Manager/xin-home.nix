@@ -1,11 +1,7 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
-    ./Home-Packages/Emacs/exwm.nix
     ./Home-Packages/alacritty.nix
     ./Home-Packages/firefox.nix
     ./Home-Packages/bash.nix

@@ -1,5 +1,5 @@
 #+TITLE: System Tangle File
-#+DESCRIPTION: Temporary file containt all shared files for a nix flake. Go be re organized later.
+#+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
 
 * System
@@ -9,7 +9,7 @@ This section contains all root level or otherwise system wide configuration sett
 
 *** configuration.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/configuration.nix
+:header-args: :tangle ./Thanatos/NixOS/configuration.nix
 :END:
 
 #+begin_src nix
@@ -22,9 +22,8 @@ This section contains all root level or otherwise system wide configuration sett
     ./Sub-Modules/nixpkgs.nix
     ./Sub-Modules/users.nix
     ./Sub-Modules/utf.nix
-    ./Sub-Modules/system-pkgs.nix
-    ./Sub-Modules/services-exwm.nix
-    ./Sub-Modules/services-xserver.nix
+    ./Sub-Modules/pkgs.nix
+    ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
   ];
 
@@ -47,7 +46,7 @@ This section contains all root level or otherwise system wide configuration sett
 
 *** hardware-configuration.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/hardware-configuration.nix
+:header-args: :tangle ./Thanatos/NixOS/hardware-configuration.nix
 :END:
 This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into this location as part of any fresh install. At some point I would like to be able to standardize it.
 
@@ -87,7 +86,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 **** users.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/users.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/users.nix
 :END:
 
 #+begin_src nix
@@ -129,7 +128,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 **** utf.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/utf.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/utf.nix
 :END:
 
 #+begin_src nix
@@ -155,7 +154,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 **** nixpkgs.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/nixpkgs.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/nixpkgs.nix
 :END:
 
 #+begin_src nix
@@ -176,7 +175,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
     };
   };
 
-
   nix = {
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
@@ -188,9 +186,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** system-pkgs.nix
+**** pkgs.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/system-pkgs.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/pkgs.nix
 :END:
 
 #+begin_src nix
@@ -235,60 +233,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** services-exwm.nix
+**** xserver.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/services-exwm.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-#   services.xserver.windowManager.exwm = {
-#    enable = true;
-#    enableDefaultConfig = false;
-#    extraPackages = epkgs: with epkgs; [
-#      use-package
-#      exwm
-#      burly
-#      helm
-#      helm-projectile
-#      emojify
-#      all-the-icons
-#      ligature
-#      centered-cursor-mode
-#      rainbow-delimiters
-#      smartparens
-#      doom-modeline
-#      doom-themes
-#      evil
-#      evil-snipe
-#      evil-easymotion
-#      evil-collection
-#      evil-colemak-basics
-#      helpful
-#      which-key
-#      undo-tree
-#      dmenu
-#      magit
-#      git-gutter
-#      projectile
-#      ag
-#      rg
-#      nix-mode
-#      org-bullets
-#      org-appear
-#      org
-#      ox-hugo
-#      visual-fill-column
-#      aggressive-indent
-#    ];
-#  };
-}
-#+end_src
-
-**** services-xserver.nix
-:PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/services-xserver.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/xserver.nix
 :END:
 
 #+begin_src nix
@@ -378,7 +325,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 **** network.nix
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Sub-Modules/network.nix
+:header-args: :tangle ./Thanatos/NixOS/Sub-Modules/network.nix
 :END:
 
 #+begin_src nix
@@ -411,7 +358,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 ***** Root
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Tools/Secrets/root/root-usrPasswd.nix
+:header-args: :tangle ./Thanatos/NixOS/Tools/Secrets/root/root-usrPasswd.nix
 :END:
 
 #+begin_src nix
@@ -420,7 +367,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
 ***** Xin
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Tools/Secrets/xin/xin-usrPasswd.nix
+:header-args: :tangle ./Thanatos/NixOS/Tools/Secrets/xin/xin-usrPasswd.nix
 :END:
 #+begin_src nix
 $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3KxhYGOs/w6d4nQeFJIz/s9XnCjIJ0
@@ -430,7 +377,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
 ***** placeholder
 :PROPERTIES:
-:header-args: :tangle ./System/NixOS/Tools/Scripts/placeholder.txt
+:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/placeholder.txt
 :END:
 
 #+begin_src txt
@@ -441,18 +388,14 @@ place holder file
 
 *** xin-home.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/xin-home.nix
+:header-args: :tangle ./Thanatos/Home-Manager/xin-home.nix
 :END:
 
 #+begin_src nix
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
-    ./Home-Packages/Emacs/exwm.nix
     ./Home-Packages/alacritty.nix
     ./Home-Packages/firefox.nix
     ./Home-Packages/bash.nix
@@ -491,7 +434,7 @@ place holder file
 
 **** home-manager.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/home-manager.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/home-manager.nix
 :END:
 
 #+begin_src nix
@@ -505,7 +448,7 @@ place holder file
 
 **** alacritty.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/alacritty.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/alacritty.nix
 :END:
 
 #+begin_src nix
@@ -521,7 +464,7 @@ place holder file
 
 **** bash.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/bash.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/bash.nix
 :END:
 
 #+begin_src nix
@@ -559,7 +502,7 @@ place holder file
 
 **** firefox.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/firefox.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/firefox.nix
 :END:
 
 #+begin_src nix
@@ -744,7 +687,7 @@ See the above repository for updates as well as full license text. */
 
 **** git.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/git.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/git.nix
 :END:
 
 #+begin_src nix
@@ -786,7 +729,7 @@ git push";
 
 **** polybar.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/polybar.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/polybar.nix
 :END:
 
 #+begin_src nix
@@ -912,7 +855,7 @@ git push";
 
 ***** bookmarks
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/Emacs/bookmarks
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/bookmarks
 :END:
 
 #+begin_src emacs-lisp
@@ -943,7 +886,7 @@ git push";
 
 ***** init.el
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/Emacs/init.el
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/init.el
 :END:
 
 #+begin_src emacs-lisp
@@ -1696,7 +1639,7 @@ it can be passed in POS."
 
 ***** emacs.nix
 :PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/Emacs/emacs.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/emacs.nix
 :END:
 
 #+begin_src nix
@@ -1724,16 +1667,6 @@ it can be passed in POS."
       ];
     });
   };
-}
-#+end_src
-
-***** exwm.nix
-:PROPERTIES:
-:header-args: :tangle ./System/Home-Manager/Home-Packages/Emacs/exwm.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
 }
 #+end_src
 
