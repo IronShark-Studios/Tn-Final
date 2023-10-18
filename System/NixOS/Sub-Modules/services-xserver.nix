@@ -2,18 +2,7 @@
 
   environment = {
     systemPackages = with pkgs; [
-      blueman # GTK base bluetooth manager
-      elementary-xfce-icon-theme
-      gimp-with-plugins # Move into home-manager
-      gnome.gnome-disk-utility # replace with Gparted in home-manager
-      inkscape-with-extensions # Move into home-manager
-      xfce.xfce4-appfinder
       xfce.xfce4-genmon-plugin
-      xfce.xfce4-panel
-      xfce.xfce4-pulseaudio-plugin
-      xfce.xfce4-whiskermenu-plugin
-      xfce.xfce4-xkb-plugin
-      xfce.xfdashboard
       xorg.xev
       sddm-chili-theme
     ];

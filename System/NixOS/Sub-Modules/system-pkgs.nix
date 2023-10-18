@@ -6,6 +6,8 @@
       pulseaudio-ctl
       pulsemixer
       pavucontrol
+      blueman
+      gparted
       xclip
       xcolor
       xdo

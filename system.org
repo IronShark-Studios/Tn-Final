@@ -202,6 +202,8 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       pulseaudio-ctl
       pulsemixer
       pavucontrol
+      blueman
+      gparted
       xclip
       xcolor
       xdo
@@ -294,18 +296,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
   environment = {
     systemPackages = with pkgs; [
-      blueman # GTK base bluetooth manager
-      elementary-xfce-icon-theme
-      gimp-with-plugins # Move into home-manager
-      gnome.gnome-disk-utility # replace with Gparted in home-manager
-      inkscape-with-extensions # Move into home-manager
-      xfce.xfce4-appfinder
       xfce.xfce4-genmon-plugin
-      xfce.xfce4-panel
-      xfce.xfce4-pulseaudio-plugin
-      xfce.xfce4-whiskermenu-plugin
-      xfce.xfce4-xkb-plugin
-      xfce.xfdashboard
       xorg.xev
       sddm-chili-theme
     ];
@@ -1720,6 +1711,19 @@ it can be passed in POS."
     source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
     target = ".config/emacs/bookmarks";
   };
+
+  programs.emacs = {
+    enable = true;
+    package = (pkgs.emacsWithPackagesFromUsePackage {
+      config = ./init.el;
+      defaultInitFile = true;
+      package = pkgs.emacs-unstable;
+      alwaysEnsure = true;
+      extraEmacsPackages = epkgs: with epkgs; [
+        # Anything needed by Emacs but not specified in init.el
+      ];
+    });
+  };
 }
 #+end_src
 
@@ -1730,19 +1734,6 @@ it can be passed in POS."
 
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
-
-programs.emacs = {
-  enable = true;
-  package = (pkgs.emacsWithPackagesFromUsePackage {
-    config = ./init.el;
-    defaultInitFile = true;
-    package = pkgs.emacs-unstable;
-    alwaysEnsure = true;
-    extraEmacsPackages = epkgs: with epkgs; [
-       # Anything needed but not specified in init.el
-      ];
-    });
-  };
 }
 #+end_src
 
