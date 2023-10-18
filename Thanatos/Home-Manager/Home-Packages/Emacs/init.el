@@ -1,7 +1,5 @@
 (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
 
-(start-process-shell-command "volctl" "*Messages*" "volctl")
-
 (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
 
 (setq package-enable-at-startup nil)
@@ -106,6 +104,8 @@
 
 (setq-default indent-tabs-mode nil)
 
+(use-package alsamixer)
+
 (use-package burly)
 
 (defun Tn/exwm-update-title ()
@@ -139,17 +139,9 @@
   (interactive)
   (shell-command "sudo slock"))
 
-(defun Tn/audio-up ()
+(defun Tn/audio-set ()
   (interactive)
-  (shell-command "pulseaudio-ctl up"))
-
-(defun Tn/audio-down ()
-  (interactive)
-  (shell-command "pulseaudio-ctl down"))
-
-(defun Tn/audio-mute ()
-  (interactive)
-  (shell-command "pulseaudio-ctl mute"))
+  (execute-extended-command "" "alsamixer-set-volume"))
 
 (defun Tn/single-collumn-template ()
   (interactive)
@@ -242,9 +234,10 @@
 
 ([?\s-p] . helm-projectile)
 
-([?\s-.] . Tn/audio-up)
-([?\s-,] . Tn/audio-down)
-([?\s-/] . Tn/audio-mute)
+([?\s-.] . alsamixer-up-volume)
+([?\s-,] . alsamixer-down-volume)
+([?\s-\M-/] . Tn/audio-set)
+([?\s-/] . alsamixer-toggle-mute)
 
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)

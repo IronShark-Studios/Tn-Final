@@ -3,8 +3,16 @@
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
-      xorg.xev
       sddm-chili-theme
+      pavucontrol
+      xorg.xev
+      gparted
+      xdotool
+      slock
+      xclip
+      xcolor
+      xsel
+      xdo
     ];
   };
 

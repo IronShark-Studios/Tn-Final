@@ -196,30 +196,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
   environment = {
     systemPackages = with pkgs; [
-      pulseaudio
-      pulseaudio-ctl
-      pulsemixer
-      pavucontrol
-      blueman
-      gparted
-      xclip
-      xcolor
-      xdo
-      xdotool
-      xsel
-      polybar
-      networkmanagerapplet
-      volctl
-      lm_sensors
-      pciutils
-      fd
-      silver-searcher
       wget
       unzip
-      hunspell
-      hunspellDicts.en_US-large
-      slock
-      flameshot
+      alsa-utils
     ];
   };
 
@@ -244,8 +223,16 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
-      xorg.xev
       sddm-chili-theme
+      pavucontrol
+      xorg.xev
+      gparted
+      xdotool
+      slock
+      xclip
+      xcolor
+      xsel
+      xdo
     ];
   };
 
@@ -401,6 +388,8 @@ place holder file
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
+    ./Home-Packages/flameshot.nix
+    ./Home-Packages/blueman.nix
   ];
 
   programs.home-manager.enable = true;
@@ -848,6 +837,10 @@ git push";
     };
   };
 
+  home.packages = with pkgs; [
+    lm_sensors
+    pciutils
+  ];
 }
 #+end_src
 
@@ -891,8 +884,6 @@ git push";
 
 #+begin_src emacs-lisp
 (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
-
-(start-process-shell-command "volctl" "*Messages*" "volctl")
 
 (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
 
@@ -998,6 +989,8 @@ git push";
 
 (setq-default indent-tabs-mode nil)
 
+(use-package alsamixer)
+
 (use-package burly)
 
 (defun Tn/exwm-update-title ()
@@ -1031,17 +1024,9 @@ git push";
   (interactive)
   (shell-command "sudo slock"))
 
-(defun Tn/audio-up ()
+(defun Tn/audio-set ()
   (interactive)
-  (shell-command "pulseaudio-ctl up"))
-
-(defun Tn/audio-down ()
-  (interactive)
-  (shell-command "pulseaudio-ctl down"))
-
-(defun Tn/audio-mute ()
-  (interactive)
-  (shell-command "pulseaudio-ctl mute"))
+  (execute-extended-command "" "alsamixer-set-volume"))
 
 (defun Tn/single-collumn-template ()
   (interactive)
@@ -1134,9 +1119,10 @@ git push";
 
 ([?\s-p] . helm-projectile)
 
-([?\s-.] . Tn/audio-up)
-([?\s-,] . Tn/audio-down)
-([?\s-/] . Tn/audio-mute)
+([?\s-.] . alsamixer-up-volume)
+([?\s-,] . alsamixer-down-volume)
+([?\s-\M-/] . Tn/audio-set)
+([?\s-/] . alsamixer-toggle-mute)
 
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
@@ -1667,7 +1653,46 @@ it can be passed in POS."
       ];
     });
   };
+
+  home.packages = with pkgs; [
+    fd
+    silver-searcher
+    hunspell
+    hunspellDicts.en_US-large
+    networkmanagerapplet
+  ];
 }
 #+end_src
+
+**** flameshot.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/flameshot.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.flameshot = {
+    enable = true;
+    settings = {
+    };
+  };
+}
+#+end_src
+
+**** blueman.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/blueman.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.blueman-applet = {
+    enable = true;
+  };
+}
+#+end_src
+
 
 *** Home-Scripts

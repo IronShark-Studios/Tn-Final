@@ -7,6 +7,8 @@
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
+    ./Home-Packages/flameshot.nix
+    ./Home-Packages/blueman.nix
   ];
 
   programs.home-manager.enable = true;

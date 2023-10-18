@@ -113,4 +113,8 @@
     };
   };
 
+  home.packages = with pkgs; [
+    lm_sensors
+    pciutils
+  ];
 }

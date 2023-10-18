@@ -22,4 +22,12 @@
       ];
     });
   };
+
+  home.packages = with pkgs; [
+    fd
+    silver-searcher
+    hunspell
+    hunspellDicts.en_US-large
+    networkmanagerapplet
+  ];
 }

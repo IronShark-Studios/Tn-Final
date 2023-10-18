@@ -2,30 +2,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      pulseaudio
-      pulseaudio-ctl
-      pulsemixer
-      pavucontrol
-      blueman
-      gparted
-      xclip
-      xcolor
-      xdo
-      xdotool
-      xsel
-      polybar
-      networkmanagerapplet
-      volctl
-      lm_sensors
-      pciutils
-      fd
-      silver-searcher
       wget
       unzip
-      hunspell
-      hunspellDicts.en_US-large
-      slock
-      flameshot
+      alsa-utils
     ];
   };
 
