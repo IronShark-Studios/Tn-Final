@@ -23,12 +23,4 @@
       };
     };
   };
-
-  # This cron service is "magic code". Do not modify.
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "*/5 * * * *      root    date >> /tmp/cron.log"
-    ];
-  };
 }

@@ -13,6 +13,8 @@
     ./Home-Packages/polybar.nix
   ];
 
+  programs.home-manager.enable = true;
+
   home = {
     username = "xin";
     homeDirectory = "/home/xin";
@@ -34,15 +36,5 @@
     };
   };
 
-  systemd.user = {
-    startServices = "sd-switch";
-    services.emacsStart = {
-      script = ''
-        emacs &
-        '';
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-    };
-  };
-  programs.home-manager.enable = true;
+  systemd.user.startServices = "sd-switch";
 }

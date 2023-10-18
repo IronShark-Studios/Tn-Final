@@ -1,4 +1,4 @@
-(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar Thanatos")
+(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
 
 (start-process-shell-command "volctl" "*Messages*" "volctl")
 

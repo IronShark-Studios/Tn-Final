@@ -38,14 +38,6 @@ This section contains all root level or otherwise system wide configuration sett
       };
     };
   };
-
-  # This cron service is "magic code". Do not modify.
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "*/5 * * * *      root    date >> /tmp/cron.log"
-    ];
-  };
 }
 #+end_src
 
@@ -358,7 +350,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       ];
 
       displayManager = {
-        # defaultSession = "xfce+exwm";
         sddm = {
           enable = true;
           autoNumlock = true;
@@ -369,8 +360,8 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       desktopManager.xfce = {
         enable = true;
         enableScreensaver = false;
-     #   noDesktop = true;
-     #   enableXfwm = false;
+        noDesktop = true;
+        enableXfwm = false;
       };
     };
 
@@ -474,6 +465,8 @@ place holder file
     ./Home-Packages/polybar.nix
   ];
 
+  programs.home-manager.enable = true;
+
   home = {
     username = "xin";
     homeDirectory = "/home/xin";
@@ -495,17 +488,7 @@ place holder file
     };
   };
 
-  systemd.user = {
-    startServices = "sd-switch";
-    services.emacsStart = {
-      script = ''
-        emacs &
-        '';
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-    };
-  };
-  programs.home-manager.enable = true;
+  systemd.user.startServices = "sd-switch";
 }
 #+end_src
 
@@ -571,6 +554,10 @@ place holder file
     sessionVariables = {
       WEBKIT_DISABLE_COMPOSITING_MODE=1;
     };
+
+    profileExtra = ''
+      emacs
+    '';
   };
 }
 #+end_src
@@ -965,7 +952,7 @@ git push";
 :END:
 
 #+begin_src emacs-lisp
-(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar Thanatos")
+(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
 
 (start-process-shell-command "volctl" "*Messages*" "volctl")
 
@@ -1752,14 +1739,6 @@ programs.emacs = {
       ];
     });
   };
-
-# services.emacs = {
-#   enable = true;
-#   defaultEditor = true;
-#   extraOptions = [
-#     "exwm-enable"
-#     ];
-#   };
 }
 #+end_src
 
