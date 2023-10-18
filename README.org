@@ -53,3 +53,5 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Use of TMPFS and Impermance modules
 *** TODO Use of Libreboot Bios
 *** TODO Full disk encryption
+** TODO Figure out how to create custom systemd services
+*** TODO autolock screen when laptop lid is closed

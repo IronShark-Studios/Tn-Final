@@ -39,9 +39,19 @@ This section contains all root level or otherwise system wide configuration sett
     };
   };
 
-  systemd.sleep.extraConfig = ''
-    HandleSuspend=ignore
-  '';
+  systemd = {
+    # sleep.extraConfig = ''
+    #   HandleSuspend=ignore
+    # '';
+    user.services.screenLocker = {
+      description = "Activates SLock on lid close";
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.slock}/run/current-system/sw/bin/slock";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+  };
 }
 #+end_src
 
@@ -1738,7 +1748,7 @@ programs.emacs = {
     defaultInitFile = true;
     package = pkgs.emacs-unstable;
     alwaysEnsure = true;
-    extraEmacsPackages = epkgs: with epkgs; [
+    extraEmacsPackages = epkgs: [
        # Anything needed but not specified in init.el
       ];
     });

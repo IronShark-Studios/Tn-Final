@@ -7,7 +7,7 @@ programs.emacs = {
     defaultInitFile = true;
     package = pkgs.emacs-unstable;
     alwaysEnsure = true;
-    extraEmacsPackages = epkgs: [
+    extraEmacsPackages = epkgs: with epkgs; [
        # Anything needed but not specified in init.el
       ];
     });

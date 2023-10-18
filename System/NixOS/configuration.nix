@@ -23,4 +23,8 @@
       };
     };
   };
+
+  systemd.sleep.extraConfig = ''
+    HandleSuspend=ignore
+  '';
 }
