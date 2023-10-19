@@ -15,19 +15,43 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Add Home-Manager-Static overlay
-** TODO Configure Bluetooth Connection Manager
-** TODO Install and configure ranger or alternative
 ** TODO Sort and update firefox chrome settings
-*** TODO add bitwarden, darkreader, and tridactly to default install
+*** TODO Configure tridactyl
+**** TODO Enable Colemak DH keybindings
+*** TODO How to add extension configuration files to nixos
+**** TODO YouTube enhancer
+**** TODO Reddit enhancement suite
+** TODO Configure XDG settings
+*** TODO Set default directories to
+- Downloads
+- Projects
+- Archive
+** TODO Configure Interactive Shell
+*** TODO Switch to and configure ZSH
+**** TODO vim bindings
+*** TODO Switch to and configure Dash as non-interactive shell
+*** TODO Configure Alacritty
+**** TODO vim bindings
+** TODO Install and configure ranger or alternative
 ** TODO Configure XFCE and Thunar settings
 *** TODO Copy =~/.config/xfce4/xfconf/xfce-perchannel-xml/xsetting.xml= into home-manager
 *** TODO Copy =~/.config/Thunar= into home-manager
 **** TODO Configure thunar darkmode
+*** TODO Remove un-needed buttons from the top right of app windows
+** TODO Fixe unclutter and picom
 ** --------- Emacs Core ------------
+** TODO Convert init.el to a modular config
+- https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
+- https://www.emacswiki.org/emacs/DotEmacsModular
 ** TODO Configure Org-Roam
 ** TODO Switch from Helm to something else
 ** TODO Figure out what I need =silver-searcher= for and if I can use =rip-grep=
+** TODO Create (M-x programName) functions for all frequently used programs
+** TODO Switch (M-x term) to call Alacritty
+** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
+** TODO Figure out how echo area applets work
+*** TODO How is nm-applet currently appearing
+*** TODO add blueman-applet, and sound applet
 ** ----------- Long Term ---------
 ** TODO Finalize =README.org=
 ** TODO Create custom sddm package with theming
@@ -45,3 +69,4 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Add these programs to work computer
 -      gimp-with-plugins
 -      inkscape-with-extensions
+** TODO Fix screen brightness hot keys

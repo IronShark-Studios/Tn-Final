@@ -67,7 +67,7 @@
       };
 
       desktopManager.xfce = {
-        enable = true;
+        enable = false; #true;
         enableScreensaver = false;
         noDesktop = true;
         enableXfwm = false;

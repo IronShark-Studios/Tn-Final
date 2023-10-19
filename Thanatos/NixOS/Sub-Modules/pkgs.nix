@@ -2,6 +2,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      cachix
       wget
       unzip
       alsa-utils
