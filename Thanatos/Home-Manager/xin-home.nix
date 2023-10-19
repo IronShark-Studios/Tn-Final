@@ -3,7 +3,9 @@
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/alacritty.nix
-    ./Home-Packages/firefox.nix
+    ./Home-Packages/Firefox/firefox.nix
+    ./Home-Packages/Firefox/policies.nix
+    ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix

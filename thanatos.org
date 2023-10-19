@@ -385,7 +385,9 @@ place holder file
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/alacritty.nix
-    ./Home-Packages/firefox.nix
+    ./Home-Packages/Firefox/firefox.nix
+    ./Home-Packages/Firefox/policies.nix
+    ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
@@ -490,9 +492,10 @@ place holder file
 }
 #+end_src
 
-**** firefox.nix
+**** Firefox
+***** firefox.nix
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/firefox.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/firefox.nix
 :END:
 
 #+begin_src nix
@@ -500,70 +503,6 @@ place holder file
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox.override {
-      cfg = {
-        enableTridactylNative = true;
-      };
-      extraPolicies = {
-        AppAutoUpdate = true;
-        PromptForDownloadLocation = false;
-        DisableFirefoxStudies = true;
-        DisableFormHistory = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DisableFirefoxAccounts = false;
-        NoDefaultBookmarks = true;
-        DisableMasterPasswordCreation = true;
-        OfferToSaveLogins = false;
-        OfferToSaveLoginsDefault = false;
-        PasswordManagerEnabled = false;
-        EnableTrackingProtection.Value = true;
-        Homepage.URL = "https://en.wikipedia.org/wiki/Special:Random";
-        StartPage = "homepage";
-        SearchSuggestEnable = false;
-        ShowHomeButton = false;
-        NewTabPage = false;
-        Cookies = {
-          Default = true;
-          AcceptThirdParty = "always";
-          ExpireAtSessionEnd = true;
-          RejectTracker = true;
-        };
-        SanitizeOnShutdown = {
-          Cache = true;
-          Cookies = true;
-          Downloads = true;
-          FormData = true;
-          History = true;
-          Sessions = true;
-          SiteSettings = true;
-          OfflineApps = true;
-          Locked = true;
-        };
-        FirefoxHome = {
-          Search = false;
-          Pocket = false;
-          SponsoredPocket = false;
-          Snippets = false;
-          TopSites = false;
-          SponsoredTopSites = false;
-          Highlights = false;
-        };
-        FirefoxSuggests = {
-          WebSuggestions = false;
-          SponsoredSuggestions = false;
-          ImproveSuggest = false;
-        };
-        UserMessaging = {
-          ExtensionRecommendations = false;
-          SkipOnboarding = true;
-          WhatsNew = false;
-          FeatureRecomendations = false;
-          UrlbarInterventions = false;
-          MoreFromMozilla = false;
-        };
-      };
-    };
 
     profiles.xin = {
       isDefault = true;
@@ -576,7 +515,95 @@ place holder file
                     user_pref("extensions.formautofill.addresses.enabled", false);
                     user_pref("extensions.formautofill.creditCards.enabled", false);
                 '';
-      userChrome = ''
+    };
+  };
+}
+#+end_src
+
+***** policies.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/policies.nix
+:END:
+
+#+begin_src nix
+{ config, lib, pkgs, modulesPath, ... }: {
+
+  programs.firefox.package = pkgs.firefox.override {
+    cfg = {
+      enableTridactylNative = true;
+    };
+    extraPolicies = {
+      AppAutoUpdate = true;
+      PromptForDownloadLocation = false;
+      DisableFirefoxStudies = true;
+      DisableFormHistory = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DisableFirefoxAccounts = false;
+      NoDefaultBookmarks = true;
+      DisableMasterPasswordCreation = true;
+      OfferToSaveLogins = false;
+      OfferToSaveLoginsDefault = false;
+      PasswordManagerEnabled = false;
+      EnableTrackingProtection.Value = true;
+      Homepage.URL = "https://en.wikipedia.org/wiki/Special:Random";
+      StartPage = "homepage";
+      SearchSuggestEnable = false;
+      ShowHomeButton = false;
+      NewTabPage = false;
+      Cookies = {
+        Default = true;
+        AcceptThirdParty = "always";
+        ExpireAtSessionEnd = true;
+        RejectTracker = true;
+      };
+      SanitizeOnShutdown = {
+        Cache = true;
+        Cookies = true;
+        Downloads = true;
+        FormData = true;
+        History = true;
+        Sessions = true;
+        SiteSettings = true;
+        OfflineApps = true;
+        Locked = true;
+      };
+      FirefoxHome = {
+        Search = false;
+        Pocket = false;
+        SponsoredPocket = false;
+        Snippets = false;
+        TopSites = false;
+        SponsoredTopSites = false;
+        Highlights = false;
+      };
+      FirefoxSuggests = {
+        WebSuggestions = false;
+        SponsoredSuggestions = false;
+        ImproveSuggest = false;
+      };
+      UserMessaging = {
+        ExtensionRecommendations = false;
+        SkipOnboarding = true;
+        WhatsNew = false;
+        FeatureRecomendations = false;
+        UrlbarInterventions = false;
+        MoreFromMozilla = false;
+      };
+    };
+  };
+}
+#+end_src
+
+***** userChrome.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/userChrome.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.firefox.profiles.xin.userChrome = ''
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;
@@ -922,14 +949,14 @@ See the above repository for updates as well as full license text. */
 /* For OSX use hide_tabs_toolbar_osx.css instead */
 
 /* Note, if you have either native titlebar or menubar enabled, then you don't really need this style.
- * In those cases you can just use: #TabsToolbar{ visibility: collapse !important }
- */
+ ,* In those cases you can just use: #TabsToolbar{ visibility: collapse !important }
+ ,*/
 
 /* IMPORTANT */
 /*
 Get window_control_placeholder_support.css
 Window controls will be all wrong without it
-*/
+,*/
 
 :root[tabsintitlebar]{ --uc-toolbar-height: 40px; }
 :root[tabsintitlebar][uidensity="compact"]{ --uc-toolbar-height: 32px }
@@ -971,11 +998,8 @@ Window controls will be all wrong without it
   margin-left: var(--uc-window-drag-space-pre,0px)
 }
 '';
-    };
-  };
 }
 #+end_src
-
 **** git.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/git.nix

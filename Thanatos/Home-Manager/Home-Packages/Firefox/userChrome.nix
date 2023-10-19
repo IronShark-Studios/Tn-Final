@@ -1,84 +1,6 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.firefox = {
-    enable = true;
-    package = pkgs.firefox.override {
-      cfg = {
-        enableTridactylNative = true;
-      };
-      extraPolicies = {
-        AppAutoUpdate = true;
-        PromptForDownloadLocation = false;
-        DisableFirefoxStudies = true;
-        DisableFormHistory = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DisableFirefoxAccounts = false;
-        NoDefaultBookmarks = true;
-        DisableMasterPasswordCreation = true;
-        OfferToSaveLogins = false;
-        OfferToSaveLoginsDefault = false;
-        PasswordManagerEnabled = false;
-        EnableTrackingProtection.Value = true;
-        Homepage.URL = "https://en.wikipedia.org/wiki/Special:Random";
-        StartPage = "homepage";
-        SearchSuggestEnable = false;
-        ShowHomeButton = false;
-        NewTabPage = false;
-        Cookies = {
-          Default = true;
-          AcceptThirdParty = "always";
-          ExpireAtSessionEnd = true;
-          RejectTracker = true;
-        };
-        SanitizeOnShutdown = {
-          Cache = true;
-          Cookies = true;
-          Downloads = true;
-          FormData = true;
-          History = true;
-          Sessions = true;
-          SiteSettings = true;
-          OfflineApps = true;
-          Locked = true;
-        };
-        FirefoxHome = {
-          Search = false;
-          Pocket = false;
-          SponsoredPocket = false;
-          Snippets = false;
-          TopSites = false;
-          SponsoredTopSites = false;
-          Highlights = false;
-        };
-        FirefoxSuggests = {
-          WebSuggestions = false;
-          SponsoredSuggestions = false;
-          ImproveSuggest = false;
-        };
-        UserMessaging = {
-          ExtensionRecommendations = false;
-          SkipOnboarding = true;
-          WhatsNew = false;
-          FeatureRecomendations = false;
-          UrlbarInterventions = false;
-          MoreFromMozilla = false;
-        };
-      };
-    };
-
-    profiles.xin = {
-      isDefault = true;
-      extraConfig = ''
-                    user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-                    user_pref("full-screen-api.ignore-widgets", true);
-                    user_pref("media.ffmpeg.vaapi.enabled", true);
-                    user_pref("media.rdd-vpx.enabled", true);
-                    user_pref("general.smoothScroll", true);
-                    user_pref("extensions.formautofill.addresses.enabled", false);
-                    user_pref("extensions.formautofill.creditCards.enabled", false);
-                '';
-      userChrome = ''
+  programs.firefox.profiles.xin.userChrome = ''
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;
@@ -473,6 +395,4 @@ Window controls will be all wrong without it
   margin-left: var(--uc-window-drag-space-pre,0px)
 }
 '';
-    };
-  };
 }
