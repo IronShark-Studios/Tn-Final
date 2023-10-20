@@ -8,7 +8,7 @@
       git add .
       git commit -m "Upgrading $HOSTNAME $NIXOS_GENERATION"
       sudo nix flake update
-      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade
+      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade &&
       git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
       git push
     '';

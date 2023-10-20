@@ -388,7 +388,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       #!/bin/sh
 
       git add .
-      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      sudo nixos-rebuild switch --flake .#$HOSTNAME &&
       git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
       git push
     '';
@@ -411,7 +411,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       git add .
       git commit -m "Upgrading $HOSTNAME $NIXOS_GENERATION"
       sudo nix flake update
-      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade
+      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade &&
       git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
       git push
     '';
