@@ -533,7 +533,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     };
 
     profileExtra = ''
-      sudo emacs
     '';
   };
 }
@@ -2040,6 +2039,13 @@ it can be passed in POS."
         # Anything needed by Emacs but not specified in init.el
       ];
     });
+  };
+
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    socketActivation.enable = true;
+    startWithUserSession = "graphical";
   };
 
   home.packages = with pkgs; [

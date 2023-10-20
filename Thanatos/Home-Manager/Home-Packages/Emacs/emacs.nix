@@ -23,6 +23,13 @@
     });
   };
 
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    socketActivation.enable = true;
+    startWithUserSession = "graphical";
+  };
+
   home.packages = with pkgs; [
     fd
     silver-searcher

@@ -24,7 +24,6 @@
     };
 
     profileExtra = ''
-      sudo emacs
     '';
   };
 }
