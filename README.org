@@ -42,7 +42,6 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Copy =~/.config/Thunar= into home-manager
 **** TODO Configure thunar darkmode
 *** TODO Remove un-needed buttons from the top right of app windows
-** TODO ease firefox auto delete rules
 ** TODO fix issue with =nix shell= unfree pkg usage
 - may not be needed. They might have just been weird packages
 ** TODO figure out how to install allusion and pureref
