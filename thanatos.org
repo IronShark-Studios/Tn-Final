@@ -182,6 +182,10 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
     };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 10d";
+    };
   };
 }
 #+end_src
@@ -523,7 +527,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     };
 
     sessionVariables = {
-      NIXOS_GENERATION="$(nix-env --list-generations | tail -n 1 | sed '/s(current)//')";
+      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed '/s(current)//')";
     };
 
     profileExtra = ''
