@@ -27,7 +27,6 @@
     enable = true;
     defaultEditor = true;
     socketActivation.enable = true;
-    startWithUserSession = "graphical";
     extraOptions = [
       "-f"
       "exwm-enable"
