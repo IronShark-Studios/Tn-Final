@@ -2,8 +2,6 @@
 
   environment.etc.secrets.source = ../Tools/Secrets;
 
-  environment.etc.scripts.source = ../Tools/Scripts;
-
   security = {
     sudo.wheelNeedsPassword = false;
     rtkit.enable = true;

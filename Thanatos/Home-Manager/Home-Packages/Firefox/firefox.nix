@@ -13,6 +13,7 @@
                     user_pref("extensions.formautofill.addresses.enabled", false);
                     user_pref("extensions.formautofill.creditCards.enabled", false);
                     user_pref("browser.tabs.closeWindowWithLastTab", false);
+                    user_pref("layers.acceleration.force-enabled", true);
                 '';
     };
   };

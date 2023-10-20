@@ -67,11 +67,21 @@
       };
 
       desktopManager.xfce = {
-        enable = false; #true;
+        enable = true;
         enableScreensaver = false;
-        # noDesktop = true;
-        # enableXfwm = false;
       };
+    };
+
+    unclutter = {
+      enable = true;
+      keystroke = false;
+      threshold = 10;
+      timeout = 1;
+    };
+
+    picom = {
+      enable = true;
+      vSync = true;
     };
   };
 

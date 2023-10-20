@@ -10,6 +10,8 @@
     ./Sub-Modules/pkgs.nix
     ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
+    ./Tools/Scripts/rebuild.nix
+    ./Tools/Scripts/upgrade.nix
   ];
 
   boot = {

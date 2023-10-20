@@ -25,6 +25,8 @@ This section contains all root level or otherwise system wide configuration sett
     ./Sub-Modules/pkgs.nix
     ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
+    ./Tools/Scripts/rebuild.nix
+    ./Tools/Scripts/upgrade.nix
   ];
 
   boot = {
@@ -93,8 +95,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 { inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
 
   environment.etc.secrets.source = ../Tools/Secrets;
-
-  environment.etc.scripts.source = ../Tools/Scripts;
 
   security = {
     sudo.wheelNeedsPassword = false;
@@ -288,11 +288,21 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       };
 
       desktopManager.xfce = {
-        enable = false; #true;
+        enable = true;
         enableScreensaver = false;
-        # noDesktop = true;
-        # enableXfwm = false;
       };
+    };
+
+    unclutter = {
+      enable = true;
+      keystroke = false;
+      threshold = 10;
+      timeout = 1;
+    };
+
+    picom = {
+      enable = true;
+      vSync = true;
     };
   };
 
@@ -360,15 +370,50 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
 **** Scripts
 
-***** placeholder
+***** rebuild.nix
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/placeholder.txt
+:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/rebuild.nix
 :END:
 
-#+begin_src txt
-place holder file
-#+end_src
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
 
+  environment.etc."rebuild.nix" = {
+    target = "scripts/rebuild.sh";
+    text = ''
+      #!/bin/sh
+
+      git add .
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
+      git push
+    '';
+  };
+}
+#+end_src
+***** upgrade.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/upgrade.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."upgrade.nix" = {
+    target = "scripts/upgrade.sh";
+    text = ''
+      #!/bin/sh
+
+      git add .
+      git commit -m "Upgrading $HOSTNAME $NIXOS_GENERATION"
+      sudo nix flake update
+      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade
+      git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
+      git push
+    '';
+  };
+}
+#+end_src
 ** Home-Manager
 
 *** xin-home.nix
@@ -391,8 +436,6 @@ place holder file
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
-    ./Home-Packages/picom.nix
-    ./Home-Packages/unclutter.nix
   ];
 
   programs.home-manager.enable = true;
@@ -472,17 +515,15 @@ place holder file
       logout = "sudo kill -9 -1";
       restart = "sudo reboot";
       eo = "emacsclient -n";
-      seo = ''SUDO_EDITOR=\"emacsclient\" sudo -e'';
-      rebuild = "bash ~/.config/system-scripts/flake-rebuild.sh";
-      upgrade = "bash ~/.config/system-scripts/flake-upgrade.sh";
-      rebuild-reboot = "rebuild && reboot";
+      seo = ''sudo emacsclient -n'';
+      rebuild = "bash /etc/scripts/rebuild.sh";
+      upgrade = "bash /etc/scripts/upgrade.sh";
       clean = "sudo nix-collect-garbage --delete-old && rebuild";
-      reboot-clean = "sudo nix-collect-garbage --delete-old && rebuild-reboot";
       clipboard = "xclip -selection clipboard";
     };
 
     sessionVariables = {
-      WEBKIT_DISABLE_COMPOSITING_MODE=1;
+      NIXOS_GENERATION="$(nix-env --list-generations | tail -n 1 | sed '/s(current)//')";
     };
 
     profileExtra = ''
@@ -514,6 +555,7 @@ place holder file
                     user_pref("extensions.formautofill.addresses.enabled", false);
                     user_pref("extensions.formautofill.creditCards.enabled", false);
                     user_pref("browser.tabs.closeWindowWithLastTab", false);
+                    user_pref("layers.acceleration.force-enabled", true);
                 '';
     };
   };
@@ -2033,33 +2075,4 @@ it can be passed in POS."
 }
 #+end_src
 
-**** picom.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/picom.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  services.picom = {
-    enable = true;
-    vSync = true;
-  };
-}
-#+end_src
-
-**** unclutter.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/unclutter.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  services.unclutter = {
-    enable = true;
-    timeout = 3;
-  };
-}
-#+end_src
 *** Home-Scripts

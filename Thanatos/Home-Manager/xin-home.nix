@@ -12,8 +12,6 @@
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
-    ./Home-Packages/picom.nix
-    ./Home-Packages/unclutter.nix
   ];
 
   programs.home-manager.enable = true;

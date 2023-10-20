@@ -10,17 +10,15 @@
       logout = "sudo kill -9 -1";
       restart = "sudo reboot";
       eo = "emacsclient -n";
-      seo = ''SUDO_EDITOR=\"emacsclient\" sudo -e'';
-      rebuild = "bash ~/.config/system-scripts/flake-rebuild.sh";
-      upgrade = "bash ~/.config/system-scripts/flake-upgrade.sh";
-      rebuild-reboot = "rebuild && reboot";
+      seo = ''sudo emacsclient -n'';
+      rebuild = "bash /etc/scripts/rebuild.sh";
+      upgrade = "bash /etc/scripts/upgrade.sh";
       clean = "sudo nix-collect-garbage --delete-old && rebuild";
-      reboot-clean = "sudo nix-collect-garbage --delete-old && rebuild-reboot";
       clipboard = "xclip -selection clipboard";
     };
 
     sessionVariables = {
-      WEBKIT_DISABLE_COMPOSITING_MODE=1;
+      NIXOS_GENERATION="$(nix-env --list-generations | tail -n 1 | sed '/s(current)//')";
     };
 
     profileExtra = ''

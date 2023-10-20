@@ -15,6 +15,8 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
+** TODO Add a git send with generation number, time, and date and message to rebuild script
+*** TODO add rebuild and upgrade scripts to =/etc=
 ** TODO Sort and update firefox chrome settings
 *** TODO Configure tridactyl
 **** TODO Enable Colemak DH keybindings
@@ -24,6 +26,7 @@ These files are generally specific to each system, and are frequently changed ba
 - store this manually in =~/.config= or =~/.moz...firefox=
 **** TODO Reddit enhancement suite
 **** TODO configure RES and youtube keybindings
+** TODO fix Sudo editing and seo
 ** TODO add note about user chrome to tangle file
 ** TODO Configure XDG settings
 *** TODO Set default directories to
@@ -74,3 +77,6 @@ These files are generally specific to each system, and are frequently changed ba
 -      gimp-with-plugins
 -      inkscape-with-extensions
 ** TODO Fix screen brightness hot keys
+** TODO Fix unclutter cursor hiding
+** TODO Create a first time start up script
+*** TODO First time ssh key set up
