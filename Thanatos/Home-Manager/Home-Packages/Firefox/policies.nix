@@ -26,17 +26,17 @@
       Cookies = {
         Default = true;
         AcceptThirdParty = "always";
-        ExpireAtSessionEnd = true;
+        ExpireAtSessionEnd = false;
         RejectTracker = true;
       };
       SanitizeOnShutdown = {
         Cache = true;
-        Cookies = true;
+        Cookies = false;
         Downloads = true;
         FormData = true;
         History = true;
-        Sessions = true;
-        SiteSettings = true;
+        Sessions = false;
+        SiteSettings = false;
         OfflineApps = true;
         Locked = true;
       };

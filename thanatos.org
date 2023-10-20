@@ -600,17 +600,17 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       Cookies = {
         Default = true;
         AcceptThirdParty = "always";
-        ExpireAtSessionEnd = true;
+        ExpireAtSessionEnd = false;
         RejectTracker = true;
       };
       SanitizeOnShutdown = {
         Cache = true;
-        Cookies = true;
+        Cookies = false;
         Downloads = true;
         FormData = true;
         History = true;
-        Sessions = true;
-        SiteSettings = true;
+        Sessions = false;
+        SiteSettings = false;
         OfflineApps = true;
         Locked = true;
       };
