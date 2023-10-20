@@ -28,6 +28,10 @@
     defaultEditor = true;
     socketActivation.enable = true;
     startWithUserSession = "graphical";
+    extraOptions = [
+      "-f"
+      "exwm-enable"
+    ];
   };
 
   home.packages = with pkgs; [
