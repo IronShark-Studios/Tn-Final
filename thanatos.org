@@ -641,6 +641,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/userChrome.nix
 :END:
+This file is generated using [[https://mrotherguy.github.io/firefox-csshacks][MrOtherGuy-CSS-Hacks]] site, along with a few items from mozzila forums at the very top. Other that those =statuspanel= in section. It would generally be better to rewrite the whole thing using the link above rather that trying to modify this one.
 
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
