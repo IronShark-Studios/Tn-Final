@@ -6,11 +6,14 @@
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix
+    ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
+    ./Home-Packages/picom.nix
+    ./Home-Packages/unclutter.nix
   ];
 
   programs.home-manager.enable = true;

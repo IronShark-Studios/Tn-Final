@@ -69,13 +69,10 @@
       desktopManager.xfce = {
         enable = false; #true;
         enableScreensaver = false;
-        noDesktop = true;
-        enableXfwm = false;
+        # noDesktop = true;
+        # enableXfwm = false;
       };
     };
-
-    unclutter-xfixes.enable = true;
-    picom.enable = true;
   };
 
   sound = {

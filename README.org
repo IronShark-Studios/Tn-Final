@@ -18,9 +18,13 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Sort and update firefox chrome settings
 *** TODO Configure tridactyl
 **** TODO Enable Colemak DH keybindings
+**** TODO Add tridactylrc to home-manager
 *** TODO How to add extension configuration files to nixos
 **** TODO YouTube enhancer
+- store this manually in =~/.config= or =~/.moz...firefox=
 **** TODO Reddit enhancement suite
+**** TODO configure RES and youtube keybindings
+** TODO add note about user chrome to tangle file
 ** TODO Configure XDG settings
 *** TODO Set default directories to
 - Downloads
@@ -38,7 +42,6 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Copy =~/.config/Thunar= into home-manager
 **** TODO Configure thunar darkmode
 *** TODO Remove un-needed buttons from the top right of app windows
-** TODO Fixe unclutter and picom
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
 - https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
@@ -52,6 +55,7 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Figure out how echo area applets work
 *** TODO How is nm-applet currently appearing
 *** TODO add blueman-applet, and sound applet
+** TODO integrate tridactyl and emacs exwm-firefox-evil
 ** ----------- Long Term ---------
 ** TODO Finalize =README.org=
 ** TODO Create custom sddm package with theming

@@ -290,13 +290,10 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       desktopManager.xfce = {
         enable = false; #true;
         enableScreensaver = false;
-        noDesktop = true;
-        enableXfwm = false;
+        # noDesktop = true;
+        # enableXfwm = false;
       };
     };
-
-    unclutter-xfixes.enable = true;
-    picom.enable = true;
   };
 
   sound = {
@@ -388,11 +385,14 @@ place holder file
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix
+    ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
+    ./Home-Packages/picom.nix
+    ./Home-Packages/unclutter.nix
   ];
 
   programs.home-manager.enable = true;
@@ -503,7 +503,6 @@ place holder file
 
   programs.firefox = {
     enable = true;
-
     profiles.xin = {
       isDefault = true;
       extraConfig = ''
@@ -514,6 +513,7 @@ place holder file
                     user_pref("general.smoothScroll", true);
                     user_pref("extensions.formautofill.addresses.enabled", false);
                     user_pref("extensions.formautofill.creditCards.enabled", false);
+                    user_pref("browser.tabs.closeWindowWithLastTab", false);
                 '';
     };
   };
@@ -998,6 +998,19 @@ Window controls will be all wrong without it
   margin-left: var(--uc-window-drag-space-pre,0px)
 }
 '';
+}
+#+end_src
+***** tridactyl.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/tridactyl.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.packages = with pkgs; [
+    tridactyl-native
+  ];
 }
 #+end_src
 **** git.nix
@@ -2020,5 +2033,33 @@ it can be passed in POS."
 }
 #+end_src
 
+**** picom.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/picom.nix
+:END:
 
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.picom = {
+    enable = true;
+    vSync = true;
+  };
+}
+#+end_src
+
+**** unclutter.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/unclutter.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.unclutter = {
+    enable = true;
+    timeout = 3;
+  };
+}
+#+end_src
 *** Home-Scripts
