@@ -23,16 +23,6 @@
     });
   };
 
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-    socketActivation.enable = true;
-    extraOptions = [
-      "-f"
-      "exwm-enable"
-    ];
-  };
-
   home.packages = with pkgs; [
     fd
     silver-searcher

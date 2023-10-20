@@ -10,8 +10,6 @@
       logout = "sudo kill -9 -1";
       restart = "sudo reboot";
       eo = "emacsclient -n";
-      # seo = ''sudo emacsclient -n'';
-      seo = "sudo -e";
       rebuild = "bash /etc/scripts/rebuild.sh";
       upgrade = "bash /etc/scripts/upgrade.sh";
       clean = "sudo nix-collect-garbage --delete-old && rebuild";
@@ -24,6 +22,7 @@
     };
 
     profileExtra = ''
+      emacs
     '';
   };
 }
