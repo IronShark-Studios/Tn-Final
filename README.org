@@ -24,7 +24,6 @@ These files are generally specific to each system, and are frequently changed ba
 - store this manually in =~/.config= or =~/.moz...firefox=
 **** TODO Reddit enhancement suite
 **** TODO configure RES and youtube keybindings
-** TODO fix Sudo editing and seo
 ** TODO Configure XDG settings
 *** TODO Set default directories to
 - Downloads
@@ -42,15 +41,6 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Copy =~/.config/Thunar= into home-manager
 **** TODO Configure thunar darkmode
 *** TODO Remove un-needed buttons from the top right of app windows
-** TODO fix issue with =nix shell= unfree pkg usage
-- may not be needed. They might have just been weird packages
-** TODO figure out how to install allusion and pureref
-- wget to download the appImage locally
-- then script to add to Nix-store
-- ^ added to upgrade script, and first time install?
-- https://allusion-app.github.io/
-- https://www.pureref.com/
-- https://musculoskeletalkey.com/the-hand-and-wrist-2/
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
 - https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
@@ -66,6 +56,15 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO add blueman-applet, and sound applet
 ** TODO integrate tridactyl and emacs exwm-firefox-evil
 ** ----------- Long Term ---------
+** TODO fix issue with =nix shell= unfree pkg usage
+- may not be needed. They might have just been weird packages
+** TODO figure out how to install allusion and pureref
+- wget to download the appImage locally
+- then script to add to Nix-store
+- ^ added to upgrade script, and first time install?
+- https://allusion-app.github.io/
+- https://www.pureref.com/
+- https://musculoskeletalkey.com/the-hand-and-wrist-2/
 ** TODO Finalize =README.org=
 ** TODO Create custom sddm package with theming
 ** TODO Enable and configure Tridactly native for firefox

@@ -430,6 +430,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/alacritty.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
@@ -2017,16 +2018,6 @@ it can be passed in POS."
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  home.file.emacs-init = {
-    source = ./init.el;
-    target = ".config/emacs/init.el";
-  };
-
-  home.file.emacs-bookmarks = {
-    source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
-    target = ".config/emacs/bookmarks";
-  };
-
   programs.emacs = {
     enable = true;
     package = (pkgs.emacsWithPackagesFromUsePackage {
@@ -2047,6 +2038,19 @@ it can be passed in POS."
     hunspellDicts.en_US-large
     networkmanagerapplet
   ];
+
+  home.file = {
+    emacs-init = {
+      source = ./init.el;
+      target = ".config/emacs/init.el";
+    };
+
+    emacs-bookmarks = {
+      source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
+      target = ".config/emacs/bookmarks";
+    };
+  };
+
 }
 #+end_src
 
@@ -2080,4 +2084,29 @@ it can be passed in POS."
 }
 #+end_src
 
+**** XDG
+
+***** user-dirs.dirs
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/XDG/user-dirs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file."user-dirs.dirs" = {
+    target = ".config/user-dirs.dirs";
+    text = ''
+      XDG_DESKTOP_DIR="$HOME/Archive"
+      XDG_DOWNLOAD_DIR="$HOME/Downloads"
+      XDG_TEMPLATES_DIR="$HOME/Projects"
+      XDG_PUBLICSHARE_DIR="$HOME/Projects"
+      XDG_DOCUMENTS_DIR="$HOME/Media"
+      XDG_MUSIC_DIR="$HOME/Media"
+      XDG_PICTURES_DIR="$HOME/Media"
+      XDG_VIDEOS_DIR="$HOME/Media"
+    '';
+  };
+}
+#+end_src
 *** Home-Scripts
