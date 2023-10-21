@@ -13,23 +13,25 @@
     });
   };
 
-  home.packages = with pkgs; [
-    fd
-    silver-searcher
-    hunspell
-    hunspellDicts.en_US-large
-    networkmanagerapplet
-  ];
+  home = {
+    packages = with pkgs; [
+      fd
+      silver-searcher
+      hunspell
+      hunspellDicts.en_US-large
+      networkmanagerapplet
+    ];
 
-  home.file = {
-    emacs-init = {
-      source = ./init.el;
-      target = ".config/emacs/init.el";
-    };
+    file = {
+      emacs-init = {
+        source = ./init.el;
+        target = ".config/emacs/init.el";
+      };
 
-    emacs-bookmarks = {
-      source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
-      target = ".config/emacs/bookmarks";
+      emacs-bookmarks = {
+        source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
+        target = ".config/emacs/bookmarks";
+      };
     };
   };
 

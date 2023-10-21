@@ -1062,9 +1062,19 @@ Window controls will be all wrong without it
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  home.packages = with pkgs; [
-    tridactyl-native
-  ];
+  home = {
+    packages = with pkgs; [
+      tridactyl-native
+    ];
+
+    file."tridactyl.nix" = {
+      target = ".config/tridactyl/tridactylrc";
+      text = ''
+        nmap e scrollUp
+        nmap n scrollDown
+      '';
+      };
+  };
 }
 #+end_src
 ***** extensions.nix
@@ -2055,23 +2065,25 @@ it can be passed in POS."
     });
   };
 
-  home.packages = with pkgs; [
-    fd
-    silver-searcher
-    hunspell
-    hunspellDicts.en_US-large
-    networkmanagerapplet
-  ];
+  home = {
+    packages = with pkgs; [
+      fd
+      silver-searcher
+      hunspell
+      hunspellDicts.en_US-large
+      networkmanagerapplet
+    ];
 
-  home.file = {
-    emacs-init = {
-      source = ./init.el;
-      target = ".config/emacs/init.el";
-    };
+    file = {
+      emacs-init = {
+        source = ./init.el;
+        target = ".config/emacs/init.el";
+      };
 
-    emacs-bookmarks = {
-      source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
-      target = ".config/emacs/bookmarks";
+      emacs-bookmarks = {
+        source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
+        target = ".config/emacs/bookmarks";
+      };
     };
   };
 
