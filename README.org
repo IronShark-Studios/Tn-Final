@@ -19,23 +19,12 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Configure tridactyl
 **** TODO Enable Colemak DH keybindings
 **** TODO Add tridactylrc to home-manager
-*** TODO How to add extension configuration files to nixos
-**** TODO YouTube enhancer
-- store this manually in =~/.config= or =~/.moz...firefox=
-**** TODO Reddit enhancement suite
-**** TODO configure RES and youtube keybindings
-** TODO Configure XDG settings
-*** TODO Set default directories to
-- Downloads
-- Projects
-- Archive
 ** TODO Configure Interactive Shell
 *** TODO Switch to and configure ZSH
 **** TODO vim bindings
 *** TODO Switch to and configure Dash as non-interactive shell
 *** TODO Configure Alacritty
 **** TODO vim bindings
-** TODO Install and configure ranger or alternative
 ** TODO Configure XFCE and Thunar settings
 *** TODO Copy =~/.config/xfce4/xfconf/xfce-perchannel-xml/xsetting.xml= into home-manager
 *** TODO Copy =~/.config/Thunar= into home-manager
@@ -89,3 +78,5 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Create a custom function to edit sudo files with tramp.
 *** TODO Try to create a shell command to do the same
 - or second function to reopen current file as root
+
+** TODO configure RES and youtube keybindings

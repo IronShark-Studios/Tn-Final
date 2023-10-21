@@ -8,6 +8,7 @@
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
+    ./Home-Packages/Firefox/extensions.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/polybar.nix
