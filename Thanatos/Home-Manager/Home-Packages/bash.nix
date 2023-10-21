@@ -13,7 +13,7 @@
       rebuild = "bash /etc/scripts/rebuild.sh";
       upgrade = "bash /etc/scripts/upgrade.sh";
       clean = "sudo nix-collect-garbage --delete-old && rebuild";
-      clipboard = "xclip -selection clipboard";
+      cb = "xclip -selection clipboard";
     };
 
     sessionVariables = {
@@ -25,4 +25,9 @@
       emacs
     '';
   };
+
+  home.packages = with pkgs; [
+    ranger
+  ];
+
 }

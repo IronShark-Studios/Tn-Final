@@ -523,7 +523,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       rebuild = "bash /etc/scripts/rebuild.sh";
       upgrade = "bash /etc/scripts/upgrade.sh";
       clean = "sudo nix-collect-garbage --delete-old && rebuild";
-      clipboard = "xclip -selection clipboard";
+      cb = "xclip -selection clipboard";
     };
 
     sessionVariables = {
@@ -535,6 +535,11 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       emacs
     '';
   };
+
+  home.packages = with pkgs; [
+    ranger
+  ];
+
 }
 #+end_src
 
