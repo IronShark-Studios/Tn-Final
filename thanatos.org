@@ -2165,21 +2165,4 @@ it can be passed in POS."
   };
 }
 #+end_src
-**** thunar.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/thunar.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  home.file."Thunar.conf" = {
-    target = ".config/Thunar/Thunar.conf";
-    text = ''
-      [Thunar]
-      theme-name=Adwaita-dark
-    '';
-  };
-}
-#+end_src
 *** Home-Scripts
