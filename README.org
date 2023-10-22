@@ -18,14 +18,8 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Configure Interactive Shell
 *** TODO Switch to and configure ZSH
 **** TODO vim bindings
-*** TODO Switch to and configure Dash as non-interactive shell
 *** TODO Configure Alacritty
 **** TODO vim bindings
-** TODO Configure XFCE and Thunar settings
-*** TODO Copy =~/.config/xfce4/xfconf/xfce-perchannel-xml/xsetting.xml= into home-manager
-*** TODO Copy =~/.config/Thunar= into home-manager
-**** TODO Configure thunar and gparted darkmode
-*** TODO Remove un-needed buttons from the top right of app windows
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
 - https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
