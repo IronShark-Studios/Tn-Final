@@ -15,10 +15,6 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Sort and update firefox chrome settings
-*** TODO Configure tridactyl
-**** TODO Enable Colemak DH keybindings
-**** TODO Add tridactylrc to home-manager
 ** TODO Configure Interactive Shell
 *** TODO Switch to and configure ZSH
 **** TODO vim bindings
