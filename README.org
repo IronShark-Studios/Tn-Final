@@ -24,7 +24,7 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Configure XFCE and Thunar settings
 *** TODO Copy =~/.config/xfce4/xfconf/xfce-perchannel-xml/xsetting.xml= into home-manager
 *** TODO Copy =~/.config/Thunar= into home-manager
-**** TODO Configure thunar darkmode
+**** TODO Configure thunar and gparted darkmode
 *** TODO Remove un-needed buttons from the top right of app windows
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config

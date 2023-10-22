@@ -11,6 +11,7 @@
     ./Home-Packages/Firefox/extensions.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
+    ./Home-Packages/thunar.nix
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
