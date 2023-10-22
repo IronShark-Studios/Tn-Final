@@ -1,6 +1,10 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   programs.firefox.profiles.xin.userChrome = ''
+#titlebar-minbutton, #titlebar-maxbutton, #titlebar-closebutton {
+  display: none !important;
+}
+
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;
