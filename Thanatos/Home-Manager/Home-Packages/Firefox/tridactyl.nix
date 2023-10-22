@@ -8,8 +8,8 @@
     file."tridactyl.nix" = {
       target = ".config/tridactyl/tridactylrc";
       text = ''
-        nmap e scrollUp
-        nmap n scrollDown
+        nmap e scrollline -10
+        nmap n scrollline 10
       '';
       };
   };
