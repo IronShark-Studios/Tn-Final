@@ -16,7 +16,7 @@
 
       save_to_clipboard: true
 
-      padding { x = 1 , y = 1 }
+      padding = { x = 1 , y = 1 }
 
       font = {
         family = "Iosevka"

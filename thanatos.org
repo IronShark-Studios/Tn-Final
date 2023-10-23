@@ -518,7 +518,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
       save_to_clipboard: true
 
-      padding { x = 1 , y = 1 }
+      padding = { x = 1 , y = 1 }
 
       font = {
         family = "Iosevka"
