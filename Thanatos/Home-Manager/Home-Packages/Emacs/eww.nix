@@ -1,10 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.bash = {
+  programs.eww = {
     enable = true;
-
-    profileExtra = ''
-      emacs
-    '';
+    # configDir = path to config dir;
   };
 }

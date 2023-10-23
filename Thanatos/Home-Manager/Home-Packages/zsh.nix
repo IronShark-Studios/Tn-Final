@@ -21,10 +21,6 @@
       NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
     };
 
-    loginExtra = ''
-      emacs
-    '';
-
     enableCompletion = true;
 
     autocd = true;
@@ -32,6 +28,7 @@
 
   home.packages = with pkgs; [
     ranger
+    vim
   ];
 
 }

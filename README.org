@@ -33,6 +33,7 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Figure out how echo area applets work
 *** TODO How is nm-applet currently appearing
 *** TODO add blueman-applet, and sound applet
+** TODO Configure Eww
 ** TODO integrate tridactyl and emacs exwm-firefox-evil
 ** ----------- Long Term ---------
 ** TODO fix issue with =nix shell= unfree pkg usage
