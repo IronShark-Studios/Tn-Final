@@ -70,3 +70,5 @@ These files are generally specific to each system, and are frequently changed ba
 - or second function to reopen current file as root
 
 ** TODO configure RES and youtube keybindings
+** TODO create a tmux + vim ssh config
+*** TODO create a default vimrc

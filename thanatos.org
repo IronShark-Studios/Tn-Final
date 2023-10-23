@@ -94,7 +94,11 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 #+begin_src nix
 { inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
 
-  environment.etc.secrets.source = ../Tools/Secrets;
+  environment = {
+    etc.secrets.source = ../Tools/Secrets;
+    pathsToLink = [ "/share/zsh" ];
+  };
+
 
   security = {
     sudo.wheelNeedsPassword = false;
@@ -437,7 +441,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/Firefox/extensions.nix
-    ./Home-Packages/bash.nix
+    ./Home-Packages/zsh.nix
     ./Home-Packages/git.nix
     ./Home-Packages/thunar.nix
     ./Home-Packages/polybar.nix
@@ -545,6 +549,50 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
+**** zsh.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/zsh.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh = {
+    enable = true;
+
+    shellAliases = {
+      lx = "ls -la";
+      rma = "rm -rf";
+      power-off = "sudo shutdown -h now";
+      logout = "sudo kill -9 -1";
+      restart = "sudo reboot";
+      eo = "emacsclient -n";
+      rebuild = "bash /etc/scripts/rebuild.sh";
+      upgrade = "bash /etc/scripts/upgrade.sh";
+      clean = "sudo nix-collect-garbage --delete-old && rebuild";
+      cb = "xclip -selection clipboard";
+    };
+
+    sessionVariables = {
+      SUDO_EDITOR = "\"emacsclient\"";
+      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
+    };
+
+    loginExtra = ''
+      emacs
+    '';
+
+    enableCompletion = true;
+
+    autocd = true;
+  };
+
+  home.packages = with pkgs; [
+    ranger
+  ];
+
+}
+#+end_src
 **** Firefox
 ***** firefox.nix
 :PROPERTIES:

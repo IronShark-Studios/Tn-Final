@@ -1,6 +1,10 @@
 { inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
 
-  environment.etc.secrets.source = ../Tools/Secrets;
+  environment = {
+    etc.secrets.source = ../Tools/Secrets;
+    pathsToLink = [ "/share/zsh" ];
+  };
+
 
   security = {
     sudo.wheelNeedsPassword = false;
