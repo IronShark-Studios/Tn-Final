@@ -17,8 +17,8 @@
       save_to_clipboard: true
 
       padding:
-        x: 1
-        y: 1
+        x: 3
+        y: 3
 
       font:
         family: "Iosevka"
@@ -29,7 +29,7 @@
 
       colors:
         primary:
-           background: "#191e24"
+           background: "#1d252c"
            foreground: "#C5C8C6"
         cursor:
           text: "#f8f8f2"

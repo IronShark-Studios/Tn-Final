@@ -519,8 +519,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       save_to_clipboard: true
 
       padding:
-        x: 1
-        y: 1
+        x: 3
+        y: 3
 
       font:
         family: "Iosevka"
@@ -531,7 +531,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
       colors:
         primary:
-           background: "#191e24"
+           background: "#1d252c"
            foreground: "#C5C8C6"
         cursor:
           text: "#f8f8f2"
