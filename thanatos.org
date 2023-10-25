@@ -621,7 +621,33 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     syntaxHighlighting = {
       enable = true;
       styles = {
- unknown-token = "fg=#D85908";
+        comment = "fg=#608CAE,underline";
+        constant = "fg=#C0B0CA,bold";
+        entity = "fg=#635687,italic";
+        function = "fg=#2CC6E6";
+        alias = "fg=#F71792";
+        suffix-alias = "fg=#F71792,bold";
+        global-alias = "fg=#F71792,bold";
+        builtin = "fg=#20557A";
+        reserved-word = "fg=#6558A5,bold";
+        hashed-command = "fg=#6558A5";
+        path = "fg=#0B0B2F";
+        globbing = "fg=#6558A5";
+        history-expansion = "fg=#2CC6E6";
+        single-hyphen-option = "fg=#6558A5,bold";
+        double-hyphen-option = "fg=#6558A5,bold";
+        back-quoted-argument = "fg=#0B0B2F";
+        single-quoted-argument = "fg=#0B0B2F";
+        double-quoted-argument = "fg=#0B0B2F";
+        dollar-double-quoted-argument = "fg=#0B0B2F";
+        back-double-quoted-argument = "fg=#0B0B2F";
+        assign = "fg=#FA1593";
+        precommand = "fg=#0B0B2F,italic";
+        autodirectory = "fg=#0B0B2F,bold";
+        commandseparator = "fg=#0B0B2F,bold";
+        command-substitution-delimiter = "fg=#0B0B2F,bold";
+        command-substitution-delimiter-unquoted = "fg=#0B0B2F";
+        unknown-token = "fg=#D85908";
       };
     };
   };
