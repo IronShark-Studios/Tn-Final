@@ -23,6 +23,7 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO Configure Alacritty
 **** TODO vim bindings
 **** TODO figure out themeing to match zsh
+**** TODO configure starship package
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
 - https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
