@@ -28,7 +28,12 @@
 
     enableAutosuggestions = true;
 
-    syntaxHighlighting.enable = true;
+    syntaxHighlighting = {
+      enable = true;
+      styles = {
+ unknown-token = "fg=blue";
+      };
+    };
   };
 
   home.packages = with pkgs; [
