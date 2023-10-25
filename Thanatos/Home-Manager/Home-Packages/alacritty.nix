@@ -41,9 +41,10 @@
         color: '0xffffff'
 
       cursor:
-        style: "block"
-        blinking: Always
-        blink_interval: 500
+        style:
+          shape: "block"
+          blinking: Always
+          blink_interval: 500
 
 
     '';

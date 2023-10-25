@@ -543,9 +543,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
         color: '0xffffff'
 
       cursor:
-        style: "block"
-        blinking: Always
-        blink_interval: 500
+        style:
+          shape: "block"
+          blinking: Always
+          blink_interval: 500
 
 
     '';
