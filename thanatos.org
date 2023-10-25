@@ -547,8 +547,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
           shape: "block"
           blinking: Always
           blink_interval: 500
-
-
     '';
   };
 
@@ -597,6 +595,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
     shellAliases = {
       lx = "ls -la";
+      ll = "ls -l";
       rma = "rm -rf";
       power-off = "sudo shutdown -h now";
       logout = "sudo kill -9 -1";
@@ -616,6 +615,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     enableCompletion = true;
 
     autocd = true;
+
+    enableAutosuggestions = true;
+
+    syntaxHighlighting.enable = true;
   };
 
   home.packages = with pkgs; [

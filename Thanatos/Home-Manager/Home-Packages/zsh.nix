@@ -5,6 +5,7 @@
 
     shellAliases = {
       lx = "ls -la";
+      ll = "ls -l";
       rma = "rm -rf";
       power-off = "sudo shutdown -h now";
       logout = "sudo kill -9 -1";
@@ -24,6 +25,10 @@
     enableCompletion = true;
 
     autocd = true;
+
+    enableAutosuggestions = true;
+
+    syntaxHighlighting.enable = true;
   };
 
   home.packages = with pkgs; [

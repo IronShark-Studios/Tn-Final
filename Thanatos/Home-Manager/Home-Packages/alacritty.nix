@@ -45,8 +45,6 @@
           shape: "block"
           blinking: Always
           blink_interval: 500
-
-
     '';
   };
 
