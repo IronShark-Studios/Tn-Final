@@ -29,7 +29,7 @@
 
       colors:
         primary:
-           background: "#1d252c"
+           background: "#20282f"
            foreground: "#C5C8C6"
         cursor:
           text: "#f8f8f2"
