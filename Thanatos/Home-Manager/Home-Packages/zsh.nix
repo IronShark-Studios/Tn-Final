@@ -31,7 +31,7 @@
     syntaxHighlighting = {
       enable = true;
       styles = {
- unknown-token = "fg=blue";
+ unknown-token = "fg=#D85908";
       };
     };
   };
