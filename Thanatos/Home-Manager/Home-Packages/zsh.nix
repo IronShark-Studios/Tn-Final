@@ -33,13 +33,17 @@
 
     initExtra = ''
       autoload -Uz compinit && compinit
-      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       neofetch
     '';
-      #fortune
 
     oh-my-zsh = {
       enable = true;
+      plugins = [
+        "ag"
+      ];
+      extraConfig = ''
+      '';
     };
 
     syntaxHighlighting = {
@@ -75,15 +79,4 @@
       };
     };
   };
-
-  home.packages = with pkgs; [
-    lf
-    vim
-    starship
-    htop
-    nmon
-    neofetch
-    fortune
-  ];
-
 }

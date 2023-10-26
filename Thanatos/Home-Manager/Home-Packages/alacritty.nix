@@ -44,6 +44,14 @@
     '';
   };
 
+  home.packages = with pkgs; [
+    lf
+    vim
+    htop
+    nmon
+    neofetch
+  ];
+
   home.file = {
     "alacritty-escape.sh" = {
       target = ".config/scripts/alacritty-escape.sh";

@@ -549,6 +549,14 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     '';
   };
 
+  home.packages = with pkgs; [
+    lf
+    vim
+    htop
+    nmon
+    neofetch
+  ];
+
   home.file = {
     "alacritty-escape.sh" = {
       target = ".config/scripts/alacritty-escape.sh";
@@ -622,13 +630,17 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
     initExtra = ''
       autoload -Uz compinit && compinit
-      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       neofetch
     '';
-      #fortune
 
     oh-my-zsh = {
       enable = true;
+      plugins = [
+        "ag"
+      ];
+      extraConfig = ''
+      '';
     };
 
     syntaxHighlighting = {
@@ -664,17 +676,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       };
     };
   };
-
-  home.packages = with pkgs; [
-    lf
-    vim
-    starship
-    htop
-    nmon
-    neofetch
-    fortune
-  ];
-
 }
 #+end_src
 
