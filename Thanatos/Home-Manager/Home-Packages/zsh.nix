@@ -35,8 +35,8 @@
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       neofetch
-      fortune
     '';
+      #fortune
 
     oh-my-zsh = {
       enable = true;
