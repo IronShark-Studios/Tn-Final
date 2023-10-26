@@ -36,7 +36,7 @@
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
-      bindkey -a 'm' vi-back-char
+      bindkey -a 'm' vi-backward-char
       bindkey -v
       neofetch
     '';
