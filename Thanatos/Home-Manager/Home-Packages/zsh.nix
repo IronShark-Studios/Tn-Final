@@ -38,7 +38,6 @@
       fortune
     '';
 
-      #eval "$(starship init zsh)"
     oh-my-zsh = {
       enable = true;
     };

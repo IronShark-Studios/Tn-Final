@@ -626,7 +626,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       fortune
     '';
 
-      #eval "$(starship init zsh)"
     oh-my-zsh = {
       enable = true;
     };
@@ -690,6 +689,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     enable = true;
     enableZshIntegration = true;
     settings = {
+      success_symbol = "[❯](bold blue)";
     };
   };
 }
