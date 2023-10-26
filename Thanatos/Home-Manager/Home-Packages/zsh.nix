@@ -36,6 +36,7 @@
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
+      bindkey -M vicmd 'i' vi-backward-char
       bindkey -v
       neofetch
     '';
@@ -58,7 +59,6 @@
         VI_MODE_SET_CURSOR=true
         VI_MODE_CURSOR_NORMAL=1
         VI_MODE_CURSOR_INSERT=5
-        bindkey -M vicmd 'i' vi-backward-char
       '';
     };
 
