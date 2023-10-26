@@ -51,6 +51,7 @@
     htop
     nmon
     fzf
+    rsync
     neofetch
   ];
 

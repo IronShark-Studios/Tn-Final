@@ -18,16 +18,9 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Configure Interactive Shell
 *** TODO Switch to and configure ZSH
 **** TODO vim bindings
-**** TODO create theme to match emacs
-- https://github.com/doomemacs/themes/blob/master/themes/doom-city-lights-theme.el
-**** TODO create a theme for starship
-**** TODO configure oh-my zsh
 *** TODO Configure Alacritty
 **** TODO vim bindings
-**** TODO figure out themeing to match zsh
-**** TODO configure starship package
 *** TODO Clean up and organize Bash, Zsh, and Alacritty code
-*** TODO Fix integration with =nix-shell= or whatever the newer replacement is
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
@@ -83,4 +76,7 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO create a tmux + vim ssh config
 *** TODO create a default vimrc
 ** TODO change polybar workspace to only show active number
-** TODO have home-manager automattically overwrite files
+** TODO Fix integration with =nix-shell= or whatever the newer replacement is
+- https://ianthehenry.com/posts/how-to-learn-nix/nix-zshell/
+** TODO Create a custom theme set for Allacritty, Zsh, and Starship
+- https://github.com/doomemacs/themes/blob/master/themes/doom-city-lights-theme.el

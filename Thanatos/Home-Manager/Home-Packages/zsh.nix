@@ -4,6 +4,7 @@
     enable = true;
 
     shellAliases = {
+      cd = "z";
       lx = "ls -la";
       ll = "ls -l";
       rma = "rm -rf";
@@ -34,7 +35,8 @@
     initExtra = ''
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-      eval "$(zoxide init --cmd cd zsh)"
+      eval "$(zoxide init zsh)"
+      bindkey -v
       neofetch
     '';
 
@@ -48,8 +50,14 @@
         "copyfile"
         "cp"
         "zoxide"
+        "vi-mode"
+        "colemak"
       ];
       extraConfig = ''
+        VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+        VI_MODE_SET_CURSOR=true
+        VI_MODE_CURSOR_NORMAL=1
+        VI_MODE_CURSOR_INSERT=5
       '';
     };
 
