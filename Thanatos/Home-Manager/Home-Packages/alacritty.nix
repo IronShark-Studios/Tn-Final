@@ -43,7 +43,7 @@
           blink_interval: 500
 
       key_bindings:
-        - { key: Space, mods: Shift, action: "Vi" }
+        - { key: Space, mods: Shift, action: "ToggleViMode" }
 
     '';
   };
