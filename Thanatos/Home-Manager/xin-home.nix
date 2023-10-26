@@ -4,6 +4,7 @@
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/alacritty.nix
+    ./Home-Packages/starship.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix

@@ -438,6 +438,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/alacritty.nix
+    ./Home-Packages/starship.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix
@@ -621,10 +622,11 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     initExtra = ''
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-      eval "$(starship init zsh)"
+      neofetch
       fortune
     '';
 
+      #eval "$(starship init zsh)"
     oh-my-zsh = {
       enable = true;
     };
@@ -673,6 +675,23 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     fortune
   ];
 
+}
+#+end_src
+
+**** starship.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/starship.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+    };
+  };
 }
 #+end_src
 **** Firefox
