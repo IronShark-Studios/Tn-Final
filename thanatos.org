@@ -646,7 +646,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
         VI_MODE_SET_CURSOR=true
         VI_MODE_CURSOR_NORMAL=1
         VI_MODE_CURSOR_INSERT=5
-        bindkey -a 'i' vi-backward-char
+        bindkey -M vicmd 'i' vi-backward-char
       '';
     };
 

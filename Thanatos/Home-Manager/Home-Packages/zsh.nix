@@ -58,7 +58,7 @@
         VI_MODE_SET_CURSOR=true
         VI_MODE_CURSOR_NORMAL=1
         VI_MODE_CURSOR_INSERT=5
-        bindkey -a 'i' vi-backward-char
+        bindkey -M vicmd 'i' vi-backward-char
       '';
     };
 
