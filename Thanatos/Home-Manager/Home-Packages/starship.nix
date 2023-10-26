@@ -4,7 +4,7 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
-      success_symbol = "[❯](bold blue)";
+      success_symbol = "❯(bold blue)";
     };
   };
 }
