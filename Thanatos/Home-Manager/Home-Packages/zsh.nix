@@ -3,10 +3,6 @@
   programs.zsh = {
     enable = true;
 
-    profileExtra = ''
-      emacs
-    '';
-
     shellAliases = {
       lx = "ls -la";
       ll = "ls -l";
@@ -39,6 +35,7 @@
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       eval "$(starship init zsh)"
+      emacs
     '';
 
     oh-my-zsh = {
