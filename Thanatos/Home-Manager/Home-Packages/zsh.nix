@@ -42,6 +42,11 @@
       plugins = [
         "ag"
         "colored-man-pages"
+        "colorize"
+        "copypath"
+        "copyfile"
+        "cp"
+        "zoxide"
       ];
       extraConfig = ''
       '';
