@@ -41,6 +41,7 @@
       enable = true;
       plugins = [
         "ag"
+        "colored-man-pages"
       ];
       extraConfig = ''
       '';
