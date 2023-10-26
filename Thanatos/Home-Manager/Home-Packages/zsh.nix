@@ -3,6 +3,10 @@
   programs.zsh = {
     enable = true;
 
+    profileExtra = ''
+      emacs
+    '';
+
     shellAliases = {
       lx = "ls -la";
       ll = "ls -l";

@@ -8,8 +8,6 @@
       package = pkgs.emacs-unstable;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: with epkgs; [
-#        eww
-counsel-test
       ];
     });
   };

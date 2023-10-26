@@ -574,7 +574,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   programs.bash = {
-    enable = true;
+    enable = false;
 
     profileExtra = ''
       emacs
@@ -593,6 +593,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
   programs.zsh = {
     enable = true;
+
+    profileExtra = ''
+      emacs
+    '';
 
     shellAliases = {
       lx = "ls -la";
@@ -2219,8 +2223,6 @@ it can be passed in POS."
       package = pkgs.emacs-unstable;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: with epkgs; [
-#        eww
-counsel-test
       ];
     });
   };
