@@ -44,11 +44,11 @@
 
       key_bindings:
         - { key: Space, mods: Shift, action: "ToggleViMode" }
-        - { key: u, mode: "Vi", mods: [], action: "ToggleViMode" }
-        - { key: m, mode: "Vi", mods: [], action: "Left" }
-        - { key: n, mode: "Vi", mods: [], action: "Down" }
-        - { key: e, mode: "Vi", mods: [], action: "Up" }
-        - { key: i, mode: "Vi", mods: [], action: "Right" }
+        - { key: U, mode: "Vi", action: "ToggleViMode" }
+        - { key: M, mode: "Vi", action: "Left" }
+        - { key: N, mode: "Vi", action: "Down" }
+        - { key: E, mode: "Vi", action: "Up" }
+        - { key: I, mode: "Vi", action: "Right" }
 
     '';
   };
