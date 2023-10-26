@@ -37,7 +37,6 @@
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
       bindkey -v
-      bindkey -a 'i' vi-backward-char
       neofetch
     '';
 
@@ -59,6 +58,7 @@
         VI_MODE_SET_CURSOR=true
         VI_MODE_CURSOR_NORMAL=1
         VI_MODE_CURSOR_INSERT=5
+        bindkey -a 'i' vi-backward-char
       '';
     };
 
