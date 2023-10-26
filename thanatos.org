@@ -559,18 +559,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     rsync
     neofetch
   ];
-
-  home.file = {
-    "alacritty-escape.sh" = {
-      target = ".config/scripts/alacritty-escape.sh";
-      text = ''
-        #!/bin/sh
-
-        alacritty --send-command set_mode Vi
-        alacritty --send-command keybind escape exit_insert_mode
-      '';
-    };
-  };
 }
 #+end_src
 
@@ -637,6 +625,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
       bindkey -v
+      bindkey -a 'i' vi-backward-char
       neofetch
     '';
 

@@ -18,6 +18,7 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Configure Interactive Shell
 *** TODO Switch to and configure ZSH
 **** TODO vim bindings
+***** TODO fix h/m binding in zsh-colemak
 *** TODO Configure Alacritty
 **** TODO vim bindings
 *** TODO Clean up and organize Bash, Zsh, and Alacritty code

@@ -37,6 +37,7 @@
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
       bindkey -v
+      bindkey -a 'i' vi-backward-char
       neofetch
     '';
 

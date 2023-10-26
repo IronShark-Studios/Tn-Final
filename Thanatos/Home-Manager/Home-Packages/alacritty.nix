@@ -54,16 +54,4 @@
     rsync
     neofetch
   ];
-
-  home.file = {
-    "alacritty-escape.sh" = {
-      target = ".config/scripts/alacritty-escape.sh";
-      text = ''
-        #!/bin/sh
-
-        alacritty --send-command set_mode Vi
-        alacritty --send-command keybind escape exit_insert_mode
-      '';
-    };
-  };
 }
