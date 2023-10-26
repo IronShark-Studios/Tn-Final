@@ -16,10 +16,6 @@
 
       save_to_clipboard: true
 
-      padding:
-        x: 3
-        y: 3
-
       font:
         family: "Iosevka"
         size: 16

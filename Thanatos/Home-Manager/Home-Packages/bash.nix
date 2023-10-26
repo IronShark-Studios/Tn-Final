@@ -1,7 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   programs.bash = {
-    enable = false;
+    enable = true;
 
     profileExtra = ''
       emacs

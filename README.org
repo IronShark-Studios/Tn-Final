@@ -83,3 +83,4 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO create a tmux + vim ssh config
 *** TODO create a default vimrc
 ** TODO change polybar workspace to only show active number
+** TODO have home-manager automattically overwrite files

@@ -519,10 +519,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
       save_to_clipboard: true
 
-      padding:
-        x: 3
-        y: 3
-
       font:
         family: "Iosevka"
         size: 16
@@ -574,7 +570,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   programs.bash = {
-    enable = false;
+    enable = true;
 
     profileExtra = ''
       emacs
@@ -626,7 +622,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       eval "$(starship init zsh)"
-      emacs
+      fortune
     '';
 
     oh-my-zsh = {
