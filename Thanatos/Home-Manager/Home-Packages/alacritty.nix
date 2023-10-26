@@ -44,7 +44,6 @@
 
       key_bindings:
         - { key: Space, mods: Shift, action: "ToggleViMode" }
-        - { key: u, mode: "Vi", action: "ToggleViMode" }
         - { key: m, mode: "Vi", action: "Left" }
         - { key: n, mode: "Vi", action: "Down" }
         - { key: e, mode: "Vi", action: "Up" }
