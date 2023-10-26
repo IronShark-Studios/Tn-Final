@@ -76,9 +76,13 @@
   };
 
   home.packages = with pkgs; [
-    ranger
+    lf
     vim
     starship
+    htop
+    nmon
+    neofetch
+    fortune
   ];
 
 }

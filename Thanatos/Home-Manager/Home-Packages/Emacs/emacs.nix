@@ -8,7 +8,8 @@
       package = pkgs.emacs-unstable;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: with epkgs; [
-        # Anything needed by Emacs but not specified in init.el
+#        eww
+counsel-test
       ];
     });
   };

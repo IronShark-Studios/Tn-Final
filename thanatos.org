@@ -667,9 +667,13 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 
   home.packages = with pkgs; [
-    ranger
+    lf
     vim
     starship
+    htop
+    nmon
+    neofetch
+    fortune
   ];
 
 }
@@ -2215,7 +2219,8 @@ it can be passed in POS."
       package = pkgs.emacs-unstable;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: with epkgs; [
-        # Anything needed by Emacs but not specified in init.el
+#        eww
+counsel-test
       ];
     });
   };
@@ -2245,20 +2250,6 @@ it can be passed in POS."
 }
 #+end_src
 
-***** eww.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/eww.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  programs.eww = {
-    enable = true;
-    # configDir = path to config dir;
-  };
-}
-#+end_src
 **** flameshot.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/flameshot.nix

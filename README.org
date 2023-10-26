@@ -27,6 +27,8 @@ These files are generally specific to each system, and are frequently changed ba
 **** TODO figure out themeing to match zsh
 **** TODO configure starship package
 *** TODO Clean up and organize Bash, Zsh, and Alacritty code
+*** TODO Fix integration with =nix-shell= or whatever the newer replacement is
+** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
 - https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
