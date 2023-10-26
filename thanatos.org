@@ -689,7 +689,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     enable = true;
     enableZshIntegration = true;
     settings = {
-      success_symbol = "❯(bold blue)";
+      character.success_symbol = "[❯](bold blue)";
     };
   };
 }
