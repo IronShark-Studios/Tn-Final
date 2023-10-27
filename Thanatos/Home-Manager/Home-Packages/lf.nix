@@ -2,5 +2,11 @@
 
   programs.lf = {
     enable = true;
+    keybindings = {
+      n = "down";
+      e = "up";
+      enter = "open";
+      space = "up-one-dir";
+    };
   };
 }

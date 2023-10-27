@@ -581,6 +581,12 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
   programs.lf = {
     enable = true;
+    keybindings = {
+      n = "down";
+      e = "up";
+      enter = "open";
+      space = "up-one-dir";
+    };
   };
 }
 #+end_src
