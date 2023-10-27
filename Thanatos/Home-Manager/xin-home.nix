@@ -3,7 +3,8 @@
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/XDG/user-dirs.nix
-    ./Home-Packages/alacritty.nix
+    ./Home-Packages/Alacritty/alacritty.nix
+    ./Home-Packages/Alacritty/alacrittyConfig.nix
     ./Home-Packages/lf.nix
     ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
@@ -12,7 +13,10 @@
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/Firefox/extensions.nix
-    ./Home-Packages/zsh.nix
+    ./Home-Packages/Zsh/zsh.nix
+    ./Home-Packages/Zsh/theme.nix
+    ./Home-Packages/Zsh/alaises.nix
+    ./Home-Packages/Zsh/oh-my-zsh.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/thunar.nix

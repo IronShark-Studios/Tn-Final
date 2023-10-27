@@ -2,6 +2,7 @@
 
   home.file."user-dirs.dirs" = {
     target = ".config/user-dirs.dirs";
+    force = true;
     text = ''
       XDG_DESKTOP_DIR="$HOME/Archive"
       XDG_DOWNLOAD_DIR="$HOME/Downloads"

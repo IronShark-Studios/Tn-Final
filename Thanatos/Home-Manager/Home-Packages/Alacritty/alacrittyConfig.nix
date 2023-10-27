@@ -1,11 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-    };
-  };
-
   home.file."alacritty.yml" = {
     target = ".config/alacritty/alacritty.yml";
     text = ''
@@ -49,17 +43,6 @@
         - { key: N, mode: "Vi", action: "Down" }
         - { key: E, mode: "Vi", action: "Up" }
         - { key: I, mode: "Vi", action: "Right" }
-
     '';
   };
-
-  home.packages = with pkgs; [
-    btop
-    htop
-    nmon
-    fzf
-    rsync
-    zoxide
-    neofetch
-  ];
 }

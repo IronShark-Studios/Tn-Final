@@ -438,7 +438,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/XDG/user-dirs.nix
-    ./Home-Packages/alacritty.nix
+    ./Home-Packages/Alacritty/alacritty.nix
+    ./Home-Packages/Alacritty/alacrittyConfig.nix
     ./Home-Packages/lf.nix
     ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
@@ -447,7 +448,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/Firefox/extensions.nix
-    ./Home-Packages/zsh.nix
+    ./Home-Packages/Zsh/zsh.nix
+    ./Home-Packages/Zsh/theme.nix
+    ./Home-Packages/Zsh/alaises.nix
+    ./Home-Packages/Zsh/oh-my-zsh.nix
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/thunar.nix
@@ -499,9 +503,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-**** alacritty.nix
+**** Alacritty
+***** alacritty.nix
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/alacritty.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Alacritty/alacritty.nix
 :END:
 
 #+begin_src nix
@@ -512,6 +517,24 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     settings = {
     };
   };
+
+  home.packages = with pkgs; [
+    btop
+    htop
+    nmon
+    fzf
+    rsync
+    zoxide
+    neofetch
+  ];
+}
+#+end_src
+***** alacrittyConfig.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Alacritty/alacrittyConfig.nix
+:END:
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
 
   home.file."alacritty.yml" = {
     target = ".config/alacritty/alacritty.yml";
@@ -556,22 +579,176 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
         - { key: N, mode: "Vi", action: "Down" }
         - { key: E, mode: "Vi", action: "Up" }
         - { key: I, mode: "Vi", action: "Right" }
-
     '';
   };
+}
+#+end_src
+**** bash.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/bash.nix
+:END:
 
-  home.packages = with pkgs; [
-    btop
-    htop
-    nmon
-    fzf
-    rsync
-    zoxide
-    neofetch
-  ];
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.bash = {
+    enable = true;
+
+    profileExtra = ''
+      emacs
+    '';
+  };
+}
+#+end_src
+**** Zsh
+***** zsh.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/zsh.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh = {
+    enable = true;
+
+    autocd = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+
+    history.ignoreAllDups = true;
+    historySubstringSearch.enable = true;
+
+    sessionVariables = {
+      SUDO_EDITOR = "\"emacsclient\"";
+      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
+    };
+
+    initExtra = ''
+      autoload -Uz compinit && compinit
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      eval "$(zoxide init zsh)"
+      bindkey -a 'm' vi-backward-char
+      bindkey -v
+      neofetch
+    '';
+  };
 }
 #+end_src
 
+***** theme.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/theme.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.syntaxHighlighting = {
+    enable = true;
+    styles = {
+      comment = "fg=#41505E,underline";
+      constant = "fg=#D95468,bold";
+      entity = "fg=#D98E48,italic";
+      function = "fg=#8BD49C";
+      alias = "fg=#33CED8";
+      suffix-alias = "fg=#33CED8,bold";
+      global-alias = "fg=#33CED8,bold";
+      builtin = "fg=#EBBF83";
+      reserved-word = "fg=#5EC4FF,bold";
+      hashed-command = "fg=#539AFC";
+      path = "fg=#718CA1";
+      globbing = "fg=#E27E8D";
+      history-expansion = "fg=#B62D65";
+      single-hyphen-option = "fg=#70E1E8,bold";
+      double-hyphen-option = "fg=#70E1E8,bold";
+      back-quoted-argument = "fg=#008B94";
+      single-quoted-argument = "fg=#008B94";
+      double-quoted-argument = "fg=#008B94";
+      dollar-double-quoted-argument = "fg=#008B94";
+      back-double-quoted-argument = "fg=#008B94";
+      assign = "fg=#D95468";
+      precommand = "fg=#008B94,italic";
+      autodirectory = "fg=#008B94,bold";
+      commandseparator = "fg=#008B94,bold";
+      command-substitution-delimiter = "fg=#008B94,bold";
+      command-substitution-delimiter-unquoted = "fg=#008B94";
+      unknown-token = "fg=#539AFC";
+    };
+  };
+}
+#+end_src
+***** alaises.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/alaises.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.shellAliases = {
+    cd = "z";
+    lx = "ls -la";
+    ll = "ls -l";
+    rma = "rm -rf";
+    power-off = "sudo shutdown -h now";
+    logout = "sudo kill -9 -1";
+    restart = "sudo reboot";
+    eo = "emacsclient -n";
+    rebuild = "bash /etc/scripts/rebuild.sh";
+    upgrade = "bash /etc/scripts/upgrade.sh";
+    clean = "sudo nix-collect-garbage --delete-old && rebuild";
+    cb = "xclip -selection clipboard";
+  };
+}
+#+end_src
+***** oh-my-zsh.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/oh-my-zsh.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.oh-my-zsh = {
+    enable = true;
+    plugins = [
+      "ag"
+      "colored-man-pages"
+      "colorize"
+      "copypath"
+      "copyfile"
+      "cp"
+      "zoxide"
+      "vi-mode"
+      "colemak"
+    ];
+    extraConfig = ''
+        VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+        VI_MODE_SET_CURSOR=true
+        VI_MODE_CURSOR_NORMAL=1
+        VI_MODE_CURSOR_INSERT=5
+      '';
+  };
+}
+#+end_src
+**** starship.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/starship.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      character.success_symbol = "[❯](bold blue)";
+    };
+  };
+}
+#+end_src
 **** lf.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/lf.nix
@@ -592,167 +769,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-**** vim.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/vim.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  programs.vim = {
-    enable = true;
-    extraConfig = ''
-      map m <Left>
-      map n <Down>
-      map e <Up>
-      map i <Right>
-    '';
-  };
-}
-#+end_src
-
-**** bash.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/bash.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  programs.bash = {
-    enable = true;
-
-    profileExtra = ''
-      emacs
-    '';
-  };
-}
-#+end_src
-
-**** zsh.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/zsh.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  programs.zsh = {
-    enable = true;
-
-    shellAliases = {
-      cd = "z";
-      lx = "ls -la";
-      ll = "ls -l";
-      rma = "rm -rf";
-      power-off = "sudo shutdown -h now";
-      logout = "sudo kill -9 -1";
-      restart = "sudo reboot";
-      eo = "emacsclient -n";
-      rebuild = "bash /etc/scripts/rebuild.sh";
-      upgrade = "bash /etc/scripts/upgrade.sh";
-      clean = "sudo nix-collect-garbage --delete-old && rebuild";
-      cb = "xclip -selection clipboard";
-    };
-
-    sessionVariables = {
-      SUDO_EDITOR = "\"emacsclient\"";
-      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
-    };
-
-    enableCompletion = true;
-
-    autocd = true;
-
-    enableAutosuggestions = true;
-
-    history.ignoreAllDups = true;
-    historySubstringSearch.enable = true;
-
-    initExtra = ''
-      autoload -Uz compinit && compinit
-      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-      eval "$(zoxide init zsh)"
-      bindkey -a 'm' vi-backward-char
-      bindkey -v
-      neofetch
-    '';
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "ag"
-        "colored-man-pages"
-        "colorize"
-        "copypath"
-        "copyfile"
-        "cp"
-        "zoxide"
-        "vi-mode"
-        "colemak"
-      ];
-      extraConfig = ''
-        VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
-        VI_MODE_SET_CURSOR=true
-        VI_MODE_CURSOR_NORMAL=1
-        VI_MODE_CURSOR_INSERT=5
-      '';
-    };
-
-    syntaxHighlighting = {
-      enable = true;
-      styles = {
-        comment = "fg=#41505E,underline";
-        constant = "fg=#D95468,bold";
-        entity = "fg=#D98E48,italic";
-        function = "fg=#8BD49C";
-        alias = "fg=#33CED8";
-        suffix-alias = "fg=#33CED8,bold";
-        global-alias = "fg=#33CED8,bold";
-        builtin = "fg=#EBBF83";
-        reserved-word = "fg=#5EC4FF,bold";
-        hashed-command = "fg=#539AFC";
-        path = "fg=#718CA1";
-        globbing = "fg=#E27E8D";
-        history-expansion = "fg=#B62D65";
-        single-hyphen-option = "fg=#70E1E8,bold";
-        double-hyphen-option = "fg=#70E1E8,bold";
-        back-quoted-argument = "fg=#008B94";
-        single-quoted-argument = "fg=#008B94";
-        double-quoted-argument = "fg=#008B94";
-        dollar-double-quoted-argument = "fg=#008B94";
-        back-double-quoted-argument = "fg=#008B94";
-        assign = "fg=#D95468";
-        precommand = "fg=#008B94,italic";
-        autodirectory = "fg=#008B94,bold";
-        commandseparator = "fg=#008B94,bold";
-        command-substitution-delimiter = "fg=#008B94,bold";
-        command-substitution-delimiter-unquoted = "fg=#008B94";
-        unknown-token = "fg=#539AFC";
-      };
-    };
-  };
-}
-#+end_src
-
-**** starship.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/starship.nix
-:END:
-
-#+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      character.success_symbol = "[❯](bold blue)";
-    };
-  };
-}
-#+end_src
 **** Firefox
 ***** firefox.nix
 :PROPERTIES:
@@ -1495,6 +1511,26 @@ git push";
     lm_sensors
     pciutils
   ];
+}
+#+end_src
+
+**** vim.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/vim.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.vim = {
+    enable = true;
+    extraConfig = ''
+      map m <Left>
+      map n <Down>
+      map e <Up>
+      map i <Right>
+    '';
+  };
 }
 #+end_src
 
@@ -2364,6 +2400,7 @@ it can be passed in POS."
 
   home.file."user-dirs.dirs" = {
     target = ".config/user-dirs.dirs";
+    force = true;
     text = ''
       XDG_DESKTOP_DIR="$HOME/Archive"
       XDG_DOWNLOAD_DIR="$HOME/Downloads"
