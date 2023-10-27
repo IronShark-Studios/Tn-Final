@@ -4,8 +4,8 @@
     enable = true;
 
     profileExtra = ''
-      polybar thanatos &&
-      nm-applet &&
+      polybar thanatos &
+      nm-applet &
       emacs
     '';
   };
