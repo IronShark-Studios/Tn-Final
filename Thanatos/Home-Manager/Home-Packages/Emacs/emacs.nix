@@ -32,11 +32,11 @@
         target = ".config/emacs/bookmarks";
       };
 
-      # emacs-sub-modules = {
-      #   source = ./Sub-Modules;
-      #   target = ".config/emacs/Sub-Modules";
-      #   recursive = true;
-      # };
+      emacs-sub-modules = {
+        source = ./Sub-Modules;
+        target = ".config/emacs/Sub-Modules";
+        recursive = true;
+      };
     };
   };
 
