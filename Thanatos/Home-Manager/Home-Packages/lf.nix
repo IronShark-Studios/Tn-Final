@@ -5,8 +5,8 @@
     keybindings = {
       n = "down";
       e = "up";
-      enter = "open";
-      space = "up-one-dir";
+      o = "open";
+      m = "up-one-dir";
     };
   };
 }
