@@ -813,9 +813,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 { config, lib, pkgs, modulesPath, ... }: {
 
   programs.firefox.package = pkgs.firefox.override {
-    cfg = {
-      enableTridactylNative = true;
-    };
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;
@@ -1535,6 +1532,56 @@ git push";
 #+end_src
 
 **** Emacs
+
+***** emacs.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/emacs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.emacs = {
+    enable = true;
+    package = (pkgs.emacsWithPackagesFromUsePackage {
+      config = ./init.el;
+      defaultInitFile = true;
+      package = pkgs.emacs-unstable;
+      alwaysEnsure = true;
+      extraEmacsPackages = epkgs: with epkgs; [
+      ];
+    });
+  };
+
+  home = {
+    packages = with pkgs; [
+      fd
+      silver-searcher
+      hunspell
+      hunspellDicts.en_US-large
+      networkmanagerapplet
+    ];
+
+    file = {
+      emacs-init = {
+        source = ./init.el;
+        target = ".config/emacs/init.el";
+      };
+
+      emacs-bookmarks = {
+        source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
+        target = ".config/emacs/bookmarks";
+      };
+
+      emacs-sub-modules = {
+        source = config.lib.file.mkOutOfStoreSymlink ./Sub-Modules;
+        target = ".config/emacs/Sub-Modules";
+      };
+    };
+  };
+
+}
+#+end_src
 
 ***** bookmarks
 :PROPERTIES:
@@ -2313,49 +2360,24 @@ it can be passed in POS."
 (global-aggressive-indent-mode 1)
 #+end_src
 
-***** emacs.nix
+***** Sub-Modules
+
+****** Test 1
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/emacs.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/test.txt
 :END:
 
 #+begin_src nix
-{ inputs, outputs, lib, config, pkgs, ... }: {
+test
+#+end_src
 
-  programs.emacs = {
-    enable = true;
-    package = (pkgs.emacsWithPackagesFromUsePackage {
-      config = ./init.el;
-      defaultInitFile = true;
-      package = pkgs.emacs-unstable;
-      alwaysEnsure = true;
-      extraEmacsPackages = epkgs: with epkgs; [
-      ];
-    });
-  };
+****** Test 2
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/test2.txt
+:END:
 
-  home = {
-    packages = with pkgs; [
-      fd
-      silver-searcher
-      hunspell
-      hunspellDicts.en_US-large
-      networkmanagerapplet
-    ];
-
-    file = {
-      emacs-init = {
-        source = ./init.el;
-        target = ".config/emacs/init.el";
-      };
-
-      emacs-bookmarks = {
-        source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
-        target = ".config/emacs/bookmarks";
-      };
-    };
-  };
-
-}
+#+begin_src nix
+test
 #+end_src
 
 **** flameshot.nix
