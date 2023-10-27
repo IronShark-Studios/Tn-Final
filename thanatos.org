@@ -595,6 +595,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     enable = true;
 
     profileExtra = ''
+      polybar thanatos &&
+      nm-applet &&
       emacs
     '';
   };
@@ -1614,13 +1616,15 @@ git push";
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/init.el
 :END:
 
+Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split into multiple files. Instead I am splitting it into pseudo files, each focused around a specific idea.
+
 ****** early
 
 #+begin_src emacs-lisp
 ;; test text 1
-(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
+;; (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
 
-(start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
+;; (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
 #+end_src
 ****** init.el
 
