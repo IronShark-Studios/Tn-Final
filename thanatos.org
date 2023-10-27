@@ -109,14 +109,14 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
     mutableUsers = false;
     users = {
       root = {
-        passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
+        hashedPasswordFile = "/etc/secrets/root/root-usrPasswd.nix";
       };
 
       xin = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ ];
         extraGroups = [ "wheel" ];
-        passwordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
+        hashedPasswordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
       };
     };
   };

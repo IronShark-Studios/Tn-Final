@@ -15,14 +15,14 @@
     mutableUsers = false;
     users = {
       root = {
-        passwordFile = "/etc/secrets/root/root-usrPasswd.nix";
+        hashedPasswordFile = "/etc/secrets/root/root-usrPasswd.nix";
       };
 
       xin = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ ];
         extraGroups = [ "wheel" ];
-        passwordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
+        hashedPasswordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
       };
     };
   };
