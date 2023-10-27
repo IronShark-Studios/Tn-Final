@@ -1621,47 +1621,24 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ****** early
 
 #+begin_src emacs-lisp
-;; test text 1
-;; (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
-
-;; (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
-#+end_src
-****** init.el
-
-#+begin_src emacs-lisp
-;; test text 2
-
-(setq package-enable-at-startup nil)
-
-(setq use-package-always-ensure t) ;Adds the require argument to all use-package statements.
-
-(setq vc-follow-symlinks t)
-
-(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
-(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
-
-(setq warning-minimum-level ":error")
-
 (server-start)
-
-(menu-bar-mode -1)
-
-(tool-bar-mode -1)
-
-(scroll-bar-mode -1)
-
-(set-fringe-mode 5)
-
-(global-hl-line-mode 1)
-
-(setq column-number-mode t)
 
 (bookmark-load bookmark-default-file t)
 
-(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+(setq warning-minimum-level ":error")
+#+end_src
 
-(defvar Tn/default-font-size 120)
+****** package-management
 
+#+begin_src emacs-lisp
+(setq package-enable-at-startup nil
+      use-package-always-ensure t
+      vc-follow-symlinks t)
+#+end_src
+
+****** core fonts
+
+#+begin_src emacs-lisp
 (set-face-attribute 'default nil
                     :font "Iosevka"
                     :weight 'regular
@@ -1677,11 +1654,45 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                     :weight 'regular
                     :height 180)
 
+(defvar Tn/default-font-size 120)
+
 (prefer-coding-system 'utf-8)
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+#+end_src
 
-(global-display-line-numbers-mode t)
+****** personal-info
+
+#+begin_src emacs-lisp
+(setq calendar-latitude 42.33
+      calendar-longitude -83.04
+      calendar-location-name "Detroit,MI"
+      user-login-name "xin"
+      user-mail-address "xin@ironshark.org")
+#+end_src
+
+****** gui-settings
+
+#+begin_src emacs-lisp
+(setq menu-bar-mode -1
+      visible-bell t
+      tool-bar-mode -1
+      scroll-bar-mode -1
+      set-fringe-mode 5
+      show-paren-mode t
+      global-hl-line-mode 1
+      column-number-mode t
+      global-auto-revert-mode 1
+      global-visual-line-mode t
+      ring-bell-function 'ignore
+      global-display-line-numbers-mode t
+      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+(setq-default fill-column 80
+              indent-tabs-mode nil
+              sentence-end-double-space nil)
+
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (dolist (mode '(pdf-view-mode-hook
                 term-mode-hook
@@ -1690,21 +1701,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                 text-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+#+end_src
 
-(setq calendar-latitude 42.33
-      calendar-longitude -83.04
-      calendar-location-name "Detroit,MI"
-      user-login-name "xin"
-      user-mail-address "xin@ironshark.org")
+****** global-keybindings
 
-(global-visual-line-mode t)
-
-(setq-default fill-column 80)
-
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-
-(global-set-key (kbd "<escape>")  'keyboard-escape-quit)
-
+#+begin_src emacs-lisp
 (defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
   (let (orig-one-window-p)
     (fset 'orig-one-window-p (symbol-function 'one-window-p))
@@ -1713,53 +1714,53 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
         ad-do-it
       (fset 'one-window-p (symbol-function 'orig-one-window-p)))))
 
+(global-set-key (kbd "<escape>")  'keyboard-escape-quit)
 (global-set-key (kbd "C-x c")  'centered-cursor-mode)
-
 (global-set-key (kbd "C-S-v") 'clipboard-yank)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
+#+end_src
 
-(add-hook 'before-save-hook #'whitespace-cleanup)
-(setq-default sentence-end-double-space nil)
+****** exwm
+******* modelines
 
-(global-auto-revert-mode 1)
+#+begin_src emacs-lisp
+(defun Tm-update-title ()
+  (pcase-class-name
+    ("fi" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
+     (sede-line-format nil))
 
-(fset 'yes-or-no-p 'y-or-n-p)
+    ("obn" (exwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(setq visible-bell t
-      ring-bell-function 'ignore)
+    ("Alty" (exwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(show-paren-mode t)
+    ("kr(exwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(setq-default indent-tabs-mode nil)
+    ("Bl" (exwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(use-package alsamixer)
+    ("Giexwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(use-package burly)
+    ("di" (exwm-input-release-keyboard)
+     (sede-line-format nil))
 
-(defun Tn/exwm-update-title ()
-  (pcase exwm-class-name
-    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
-     (setq mode-line-format nil))
-    ("obsidian" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("Alacritty" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("krita" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("Blender" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("Gimp" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("discord" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("Bitwarden" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-    ("XIVLauncher.Core" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))))
+    ("Bien" (exwm-input-release-keyboard)
+     (sede-line-format nil))
 
+    ("ffx11.exe" (exwm-input-release-keyboard)
+     (sede-line-format nil))
+
+    ("XIcher.Core" (exwm-input-release-keyboard)
+     (sede-line-format nil))))
+#+end_sr
+
+******* keyboard functions
+
+#+begin_src emacs-lisp
 (defun Tn/dmenu-launch ()
   (interactive)
   (execute-extended-command "" "dmenu"))
@@ -1803,18 +1804,41 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (defun Tn/brightness-down ()
   (interactive)
   (shell-command "sudo light -U 5"))
+#+end_src
+
+******* packages
+
+#+begin_src emacs-lisp
+(use-package alsamixer)
+
+(use-package burly)
 
 (use-package exwm
+#+end_src
+
+******* systemtray
+
+#+begin_src emacs-lisp
   :config
 
 (require 'exwm-systemtray)
 (exwm-systemtray-enable)
 
-(setq exwm-workspace-number 9)
+(setq exwm-workspace-number 9
+      exwm-layout-show-all-buffers t)
 
-(setq exwm-layout-show-all-buffers t)
+,@(mapcar (lambda (i)
+            `(,(kbd (format "s-%d"  i)) .
+              (lambda ()
+                (interactive)
+                (exwm-workspace-switch-create ,(- i 1)))))
+          (number-sequence 1 9))
+#+end_src
 
-;(setq exwm-workspace-show-all-buffers t)
+******* general keybindings
+
+#+begin_src emacs-lisp
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
 (setq exwm-input-prefix-keys
   '(?\C-x
@@ -1829,19 +1853,29 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
     ?\C-\     ;; Ctrl+Space
     ))
 
-(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+(unless (get 'exwm-input-simulation-keys 'saved-value)
+  (setq exwm-input-simulation-keys
+        '(([?\C-b] . [left])
+          ([?\C-f] . [right])
+          ([?\C-p] . [up])
+          ([?\C-n] . [down])
+          ([?\C-a] . [home])
+          ([?\C-e] . [end])
+          ([?\M-v] . [prior])
+          ([?\C-v] . [next])
+          ([?\C-d] . [delete])
+          ([?\C-k] . [S-end delete]))))
+#+end_src
 
+******* global keybindings
+
+#+begin_src emacs-lisp
 (setq exwm-input-global-keys
       `(
-
 ([?\s-r] . exwm-reset)
-
 ([?\s-c] . org-capture)
-
 ([?\s-a] . org-agenda)
-
 ([?\s-\M-a] . org-agenda-exit)
-
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
              (start-process-shell-command command nil command)))
@@ -1888,29 +1922,12 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ([?\s-|] . enlarge-window)
 ([?\s-}] . enlarge-window-horizontally)
 ([?\s-{] . shrink-window-horizontally)
-
-,@(mapcar (lambda (i)
-            `(,(kbd (format "s-%d"  i)) .
-              (lambda ()
-                (interactive)
-                (exwm-workspace-switch-create ,(- i 1)))))
-          (number-sequence 1 9))
-
 ))
+#+end_src
 
-(unless (get 'exwm-input-simulation-keys 'saved-value)
-  (setq exwm-input-simulation-keys
-        '(([?\C-b] . [left])
-          ([?\C-f] . [right])
-          ([?\C-p] . [up])
-          ([?\C-n] . [down])
-          ([?\C-a] . [home])
-          ([?\C-e] . [end])
-          ([?\M-v] . [prior])
-          ([?\C-v] . [next])
-          ([?\C-d] . [delete])
-          ([?\C-k] . [S-end delete]))))
+******* general setting
 
+#+begin_src emacs-lisp
 (add-hook 'exwm-update-class-hook
           (lambda ()
           (exwm-workspace-rename-buffer exwm-class-name)))
@@ -1918,6 +1935,35 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
 
 (exwm-enable))
+#+end_src
+
+****** init.el
+
+#+begin_src emacs-lisp
+;; test text 2
+
+
+
+(add-hook 'before-save-hook #'whitespace-cleanup)
+(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
+
+
+
+
+
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+
+
+
+
+
+
+
+
+
+
+
 
 (use-package helm)
 (setq helm-mode-fuzzy-match t)

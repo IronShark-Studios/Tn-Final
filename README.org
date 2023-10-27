@@ -15,13 +15,7 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Configure Interactive Shell
-*** TODO Switch to and configure ZSH
-**** TODO vim bindings
-***** TODO fix h/m binding in zsh-colemak
-*** TODO Configure Alacritty
-**** TODO vim bindings
-*** TODO Clean up and organize Bash, Zsh, and Alacritty code
+** TODO Add volume and screen brightness system applet
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Convert init.el to a modular config
@@ -38,6 +32,7 @@ These files are generally specific to each system, and are frequently changed ba
 *** TODO add blueman-applet, and sound applet
 ** TODO Configure Eww
 ** TODO integrate tridactyl and emacs exwm-firefox-evil
+** TODO see if (setq exwm-layout-show-all-buffers t) will hide text buffers across workspaces
 ** ----------- Long Term ---------
 ** TODO fix issue with =nix shell= unfree pkg usage
 - may not be needed. They might have just been weird packages

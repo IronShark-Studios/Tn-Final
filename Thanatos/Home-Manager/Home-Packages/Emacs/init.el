@@ -1,40 +1,10 @@
-;; test text 1
-;; (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
-
-;; (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
-
-;; test text 2
-
-(setq package-enable-at-startup nil)
-
-(setq use-package-always-ensure t) ;Adds the require argument to all use-package statements.
-
-(setq vc-follow-symlinks t)
-
-(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
-(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
+(server-start)
 
 (setq warning-minimum-level ":error")
 
-(server-start)
-
-(menu-bar-mode -1)
-
-(tool-bar-mode -1)
-
-(scroll-bar-mode -1)
-
-(set-fringe-mode 5)
-
-(global-hl-line-mode 1)
-
-(setq column-number-mode t)
-
-(bookmark-load bookmark-default-file t)
-
-(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
-
-(defvar Tn/default-font-size 120)
+(setq package-enable-at-startup nil
+      use-package-always-ensure t
+      vc-follow-symlinks t)
 
 (set-face-attribute 'default nil
                     :font "Iosevka"
@@ -51,11 +21,29 @@
                     :weight 'regular
                     :height 180)
 
+(defvar Tn/default-font-size 120)
+
 (prefer-coding-system 'utf-8)
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-(global-display-line-numbers-mode t)
+(setq calendar-latitude 42.33
+      calendar-longitude -83.04
+      calendar-location-name "Detroit,MI"
+      user-login-name "xin"
+      user-mail-address "xin@ironshark.org")
+
+(setq menu-bar-mode -1
+      tool-bar-mode -1
+      scroll-bar-mode -1
+      set-fringe-mode 5
+      global-hl-line-mode 1
+      column-number-mode t
+      global-visual-line-mode t
+      global-display-line-numbers-mode t
+      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+(setq-default fill-column 80)
 
 (dolist (mode '(pdf-view-mode-hook
                 term-mode-hook
@@ -65,17 +53,23 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(setq calendar-latitude 42.33
-      calendar-longitude -83.04
-      calendar-location-name "Detroit,MI"
-      user-login-name "xin"
-      user-mail-address "xin@ironshark.org")
+;; test text 2
 
-(global-visual-line-mode t)
 
-(setq-default fill-column 80)
+(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
 
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+
+
+(bookmark-load bookmark-default-file t)
+
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+
+
+
+
+
 
 (global-set-key (kbd "<escape>")  'keyboard-escape-quit)
 
