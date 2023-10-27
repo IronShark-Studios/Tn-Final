@@ -59,6 +59,7 @@
     nmon
     fzf
     rsync
+    zoxide
     neofetch
   ];
 }

@@ -566,6 +566,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     nmon
     fzf
     rsync
+    zoxide
     neofetch
   ];
 }
@@ -585,7 +586,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       n = "down";
       e = "up";
       o = "open";
-      m = "up-one-dir";
+      m = "updir";
     };
   };
 }

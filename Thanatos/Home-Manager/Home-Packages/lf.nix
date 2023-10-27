@@ -6,7 +6,7 @@
       n = "down";
       e = "up";
       o = "open";
-      m = "up-one-dir";
+      m = "updir";
     };
   };
 }
