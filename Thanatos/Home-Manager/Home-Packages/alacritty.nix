@@ -54,8 +54,6 @@
   };
 
   home.packages = with pkgs; [
-    lf
-    vim
     btop
     htop
     nmon

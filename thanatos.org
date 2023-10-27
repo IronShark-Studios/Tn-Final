@@ -439,6 +439,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/Emacs/emacs.nix
     ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/alacritty.nix
+    ./Home-Packages/lf.nix
+    ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
@@ -559,8 +561,6 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 
   home.packages = with pkgs; [
-    lf
-    vim
     btop
     htop
     nmon
@@ -568,6 +568,34 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     rsync
     neofetch
   ];
+}
+#+end_src
+
+**** lf.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/lf.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.lf = {
+    enable = true;
+  };
+}
+#+end_src
+
+**** vim.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/vim.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.vim = {
+    enable = true;
+  };
 }
 #+end_src
 
@@ -1295,7 +1323,6 @@ Window controls will be all wrong without it
 
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
-
 
   programs.git = {
     enable = true;
