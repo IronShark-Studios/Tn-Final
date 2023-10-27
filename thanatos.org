@@ -1572,12 +1572,6 @@ git push";
         source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
         target = ".config/emacs/bookmarks";
       };
-
-      emacs-sub-modules = {
-        source = ./Sub-Modules;
-        target = ".config/emacs/Sub-Modules";
-        recursive = true;
-      };
     };
   };
 
@@ -1620,10 +1614,18 @@ git push";
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/init.el
 :END:
 
+****** early
+
 #+begin_src emacs-lisp
+;; test text 1
 (start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
 
 (start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
+#+end_src
+****** init.el
+
+#+begin_src emacs-lisp
+;; test text 2
 
 (setq package-enable-at-startup nil)
 
@@ -2361,34 +2363,6 @@ it can be passed in POS."
 (global-aggressive-indent-mode 1)
 #+end_src
 
-***** Sub-Modules
-
-****** early.el
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/early.el
-:END:
-
-#+begin_src emacs-lisp
-(provide 'Tn-early)
-(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
-
-(start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
-#+end_src
-
-****** EXWM
-******* exwm.el
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/EXWM/exwm.el
-:END:
-
-#+begin_src emacs-lisp
-#+end_src
-******* exwm-mode-lines.el
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/EXWM/exwm-mode-lines.el
-:END:
-#+begin_src emacs-lisp
-#+end_src
 **** flameshot.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/flameshot.nix
