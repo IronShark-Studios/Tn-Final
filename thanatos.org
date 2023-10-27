@@ -2363,24 +2363,32 @@ it can be passed in POS."
 
 ***** Sub-Modules
 
-****** Test 1
+****** early.el
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/test.txt
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/early.el
 :END:
 
-#+begin_src nix
-test
+#+begin_src emacs-lisp
+(provide 'Tn-early)
+(start-process-shell-command "PolyBar StartUp" "*Messages*" "polybar thanatos")
+
+(start-process-shell-command "nm-applet" "*Messages*" "nm-applet")
 #+end_src
 
-****** Test 2
+****** EXWM
+******* exwm.el
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/test2.txt
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/EXWM/exwm.el
 :END:
 
-#+begin_src nix
-test
+#+begin_src emacs-lisp
 #+end_src
-
+******* exwm-mode-lines.el
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/Sub-Modules/EXWM/exwm-mode-lines.el
+:END:
+#+begin_src emacs-lisp
+#+end_src
 **** flameshot.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/flameshot.nix
