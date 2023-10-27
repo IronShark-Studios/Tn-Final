@@ -33,7 +33,7 @@
       };
 
       emacs-sub-modules = {
-        source = config.lib.file.mkOutOfStoreSymlink ./Sub-Modules;
+        source = ./Sub-Modules;
         target = ".config/emacs/Sub-Modules";
         recursive = true;
       };
