@@ -1770,17 +1770,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (interactive)
   (shell-command "sudo slock"))
 
-(defun Tn/audio-up ()
+(defun Tn/audio-set ()
   (interactive)
-  (shell-command "pulseaudio-ctl up"))
-
-(defun Tn/audio-down ()
-  (interactive)
-  (shell-command "pulseaudio-ctl down"))
-
-(defun Tn/audio-mute ()
-  (interactive)
-  (shell-command "pulseaudio-ctl mute"))
+  (execute-extended-command "" "alsamixer-set-volume"))
 
 (defun Tn/single-collumn-template ()
   (interactive)
@@ -1912,9 +1904,10 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 ([?\s-p] . helm-projectile)
 
-([?\s-.] . Tn/audio-up)
-([?\s-,] . Tn/audio-down)
-([?\s-/] . Tn/audio-mute)
+([?\s-.] . alsamixer-up-volume)
+([?\s-,] . alsamixer-down-volume)
+([?\s-\M-/] . Tn/audio-set)
+([?\s-/] . alsamixer-toggle-mute)
 
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
