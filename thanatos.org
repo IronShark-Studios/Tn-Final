@@ -1674,18 +1674,19 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ****** gui-settings
 
 #+begin_src emacs-lisp
-(setq menu-bar-mode -1
-      visible-bell t
-      tool-bar-mode -1
-      scroll-bar-mode -1
-      set-fringe-mode 5
-      show-paren-mode t
-      global-hl-line-mode 1
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(show-paren-mode t)
+(set-fringe-mode 5)
+(scroll-bar-mode -1)
+(global-hl-line-mode 1)
+(global-auto-revert-mode 1)
+(global-visual-line-mode t)
+(global-display-line-numbers-mode t)
+
+(setq visible-bell t
       column-number-mode t
-      global-auto-revert-mode 1
-      global-visual-line-mode t
       ring-bell-function 'ignore
-      global-display-line-numbers-mode t
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
 (setq-default fill-column 80
