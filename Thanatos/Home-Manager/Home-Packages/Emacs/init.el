@@ -1,5 +1,7 @@
 (server-start)
 
+(bookmark-load bookmark-default-file t)
+
 (setq warning-minimum-level ":error")
 
 (setq package-enable-at-startup nil
@@ -32,6 +34,7 @@
       calendar-location-name "Detroit,MI"
       user-login-name "xin"
       user-mail-address "xin@ironshark.org")
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (show-paren-mode t)
@@ -61,23 +64,6 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
-(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
-
-
-
-
-(bookmark-load bookmark-default-file t)
-
-(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
-
-
-
-
-
-
-(global-set-key (kbd "<escape>")  'keyboard-escape-quit)
-
 (defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
   (let (orig-one-window-p)
     (fset 'orig-one-window-p (symbol-function 'one-window-p))
@@ -86,50 +72,42 @@
         ad-do-it
       (fset 'one-window-p (symbol-function 'orig-one-window-p)))))
 
+(global-set-key (kbd "<escape>")  'keyboard-escape-quit)
 (global-set-key (kbd "C-x c")  'centered-cursor-mode)
-
 (global-set-key (kbd "C-S-v") 'clipboard-yank)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
 
-(add-hook 'before-save-hook #'whitespace-cleanup)
-(setq-default sentence-end-double-space nil)
-
-(global-auto-revert-mode 1)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(setq visible-bell t
-      ring-bell-function 'ignore)
-
-(show-paren-mode t)
-
-(setq-default indent-tabs-mode nil)
-
-(use-package alsamixer)
-
-(use-package burly)
-
 (defun Tn/exwm-update-title ()
   (pcase exwm-class-name
+
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
      (setq mode-line-format nil))
+
     ("obsidian" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("krita" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("Blender" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("Gimp" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("discord" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("Bitwarden" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
+
     ("XIVLauncher.Core" (exwm-input-release-keyboard)
      (setq mode-line-format nil))))
 
@@ -177,17 +155,26 @@
   (interactive)
   (shell-command "sudo light -U 5"))
 
+(use-package alsamixer)
+(use-package burly)
+
 (use-package exwm
   :config
 
 (require 'exwm-systemtray)
 (exwm-systemtray-enable)
 
-(setq exwm-workspace-number 9)
+(setq exwm-workspace-number 9
+      exwm-layout-show-all-buffers t)
 
-(setq exwm-layout-show-all-buffers t)
+,@(mapcar (lambda (i)
+            `(,(kbd (format "s-%d"  i)) .
+              (lambda ()
+                (interactive)
+                (exwm-workspace-switch-create ,(- i 1)))))
+          (number-sequence 1 9))
 
-;(setq exwm-workspace-show-all-buffers t)
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
 (setq exwm-input-prefix-keys
   '(?\C-x
@@ -202,19 +189,25 @@
     ?\C-\     ;; Ctrl+Space
     ))
 
-(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+(unless (get 'exwm-input-simulation-keys 'saved-value)
+  (setq exwm-input-simulation-keys
+        '(([?\C-b] . [left])
+          ([?\C-f] . [right])
+          ([?\C-p] . [up])
+          ([?\C-n] . [down])
+          ([?\C-a] . [home])
+          ([?\C-e] . [end])
+          ([?\M-v] . [prior])
+          ([?\C-v] . [next])
+          ([?\C-d] . [delete])
+          ([?\C-k] . [S-end delete]))))
 
 (setq exwm-input-global-keys
       `(
-
 ([?\s-r] . exwm-reset)
-
 ([?\s-c] . org-capture)
-
 ([?\s-a] . org-agenda)
-
 ([?\s-\M-a] . org-agenda-exit)
-
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
              (start-process-shell-command command nil command)))
@@ -261,28 +254,7 @@
 ([?\s-|] . enlarge-window)
 ([?\s-}] . enlarge-window-horizontally)
 ([?\s-{] . shrink-window-horizontally)
-
-,@(mapcar (lambda (i)
-            `(,(kbd (format "s-%d"  i)) .
-              (lambda ()
-                (interactive)
-                (exwm-workspace-switch-create ,(- i 1)))))
-          (number-sequence 1 9))
-
 ))
-
-(unless (get 'exwm-input-simulation-keys 'saved-value)
-  (setq exwm-input-simulation-keys
-        '(([?\C-b] . [left])
-          ([?\C-f] . [right])
-          ([?\C-p] . [up])
-          ([?\C-n] . [down])
-          ([?\C-a] . [home])
-          ([?\C-e] . [end])
-          ([?\M-v] . [prior])
-          ([?\C-v] . [next])
-          ([?\C-d] . [delete])
-          ([?\C-k] . [S-end delete]))))
 
 (add-hook 'exwm-update-class-hook
           (lambda ()
@@ -291,6 +263,31 @@
 (add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
 
 (exwm-enable))
+
+;; test text 2
+
+
+
+(add-hook 'before-save-hook #'whitespace-cleanup)
+(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
+
+
+
+
+
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+
+
+
+
+
+
+
+
+
+
+
 
 (use-package helm)
 (setq helm-mode-fuzzy-match t)

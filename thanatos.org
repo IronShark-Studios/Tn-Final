@@ -1723,41 +1723,42 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 #+end_src
 
 ****** exwm
-******* modelines
+******* modeline functions
 
 #+begin_src emacs-lisp
-(defun Tm-update-title ()
-  (pcase-class-name
-    ("fi" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
-     (sede-line-format nil))
+(defun Tn/exwm-update-title ()
+  (pcase exwm-class-name
 
-    ("obn" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
+     (setq mode-line-format nil))
 
-    ("Alty" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("obsidian" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("kr(exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("Alacritty" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("Bl" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("krita" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("Giexwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("Blender" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("di" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("Gimp" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("Bien" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("discord" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("ffx11.exe" (exwm-input-release-keyboard)
-     (sede-line-format nil))
+    ("Bitwarden" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
 
-    ("XIcher.Core" (exwm-input-release-keyboard)
-     (sede-line-format nil))))
-#+end_sr
+    ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("XIVLauncher.Core" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))))
+#+end_src
 
 ******* keyboard functions
 
@@ -1811,17 +1812,15 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 #+begin_src emacs-lisp
 (use-package alsamixer)
-
 (use-package burly)
 
 (use-package exwm
+  :config
 #+end_src
 
-******* systemtray
+******* systemtray and work spaces
 
 #+begin_src emacs-lisp
-  :config
-
 (require 'exwm-systemtray)
 (exwm-systemtray-enable)
 
