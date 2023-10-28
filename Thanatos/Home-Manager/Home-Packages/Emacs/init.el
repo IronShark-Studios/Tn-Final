@@ -32,18 +32,26 @@
       calendar-location-name "Detroit,MI"
       user-login-name "xin"
       user-mail-address "xin@ironshark.org")
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(show-paren-mode t)
+(set-fringe-mode 5)
+(scroll-bar-mode -1)
+(global-hl-line-mode 1)
+(global-auto-revert-mode 1)
+(global-visual-line-mode t)
+(global-display-line-numbers-mode t)
 
-(setq menu-bar-mode -1
-      tool-bar-mode -1
-      scroll-bar-mode -1
-      set-fringe-mode 5
-      global-hl-line-mode 1
+(setq visible-bell t
       column-number-mode t
-      global-visual-line-mode t
-      global-display-line-numbers-mode t
+      ring-bell-function 'ignore
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
-(setq-default fill-column 80)
+(setq-default fill-column 80
+              indent-tabs-mode nil
+              sentence-end-double-space nil)
+
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (dolist (mode '(pdf-view-mode-hook
                 term-mode-hook
@@ -52,9 +60,6 @@
                 text-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-;; test text 2
-
 
 (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
 (setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
