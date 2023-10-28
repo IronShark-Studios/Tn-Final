@@ -170,6 +170,8 @@
 (use-package exwm
   :config
 
+(exwm-enable)
+
 (require 'exwm-systemtray)
 
 (exwm-systemtray-enable)
@@ -198,6 +200,19 @@
     ))
 
 (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+(unless (get 'exwm-input-simulation-keys 'saved-value)
+  (setq exwm-input-simulation-keys
+        '(([?\C-b] . [left])
+          ([?\C-f] . [right])
+          ([?\C-p] . [up])
+          ([?\C-n] . [down])
+          ([?\C-a] . [home])
+          ([?\C-e] . [end])
+          ([?\M-v] . [prior])
+          ([?\C-v] . [next])
+          ([?\C-d] . [delete])
+          ([?\C-k] . [S-end delete]))))
 
 (setq exwm-input-global-keys
       `(
@@ -262,22 +277,7 @@
                 (interactive)
                 (exwm-workspace-switch-create ,(- i 1)))))
           (number-sequence 1 9))
-))
-
-(unless (get 'exwm-input-simulation-keys 'saved-value)
-  (setq exwm-input-simulation-keys
-        '(([?\C-b] . [left])
-          ([?\C-f] . [right])
-          ([?\C-p] . [up])
-          ([?\C-n] . [down])
-          ([?\C-a] . [home])
-          ([?\C-e] . [end])
-          ([?\M-v] . [prior])
-          ([?\C-v] . [next])
-          ([?\C-d] . [delete])
-          ([?\C-k] . [S-end delete]))))
-
-(exwm-enable))
+))) ;; last paren closes exwm block
 
 ;; test text 2
 
