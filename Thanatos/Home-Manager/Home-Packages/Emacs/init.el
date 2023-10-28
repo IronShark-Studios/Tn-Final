@@ -78,13 +78,107 @@
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
 
+(defun Tn/exwm-update-title ()
+  (pcase exwm-class-name
+
+    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
+     (setq mode-line-format nil))
+
+    ("obsidian" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Alacritty" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("krita" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Blender" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Gimp" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("discord" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Bitwarden" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("XIVLauncher.Core" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))))
+
+(defun Tn/dmenu-launch ()
+  (interactive)
+  (execute-extended-command "" "dmenu"))
+
+(defun Tn/lock-screen ()
+  (interactive)
+  (shell-command "sudo slock"))
+
+(defun Tn/audio-up ()
+  (interactive)
+  (shell-command "pulseaudio-ctl up"))
+
+(defun Tn/audio-down ()
+  (interactive)
+  (shell-command "pulseaudio-ctl down"))
+
+(defun Tn/audio-mute ()
+  (interactive)
+  (shell-command "pulseaudio-ctl mute"))
+
+(defun Tn/single-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: single-collumn"))
+
+(defun Tn/double-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: double-collumn"))
+
+(defun Tn/triple-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: triple-collumn"))
+
+(defun Tn/left-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: left-focus-collumn"))
+
+(defun Tn/right-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: right-focus-collumn"))
+
+(defun Tn/center-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: center-focus-collumn"))
+
+(defun Tn/brightness-up ()
+  (interactive)
+  (shell-command "sudo light -A 5"))
+
+(defun Tn/brightness-down ()
+  (interactive)
+  (shell-command "sudo light -U 5"))
+
+(use-package burly)
+
+(use-package alsamixer)
+
 (use-package exwm
   :config
+
 (require 'exwm-systemtray)
+
 (exwm-systemtray-enable)
+
 (setq exwm-workspace-number 9)
-(setq exwm-layout-show-all-buffers t)
+
+;(setq exwm-layout-show-all-buffers t)
 ;(setq exwm-workspace-show-all-buffers t)
+
 (setq exwm-input-prefix-keys
   '(?\C-x
     ?\C-u
@@ -97,41 +191,55 @@
     ?\C-\M-j  ;; Buffer list
     ?\C-\     ;; Ctrl+Space
     ))
+
 (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
 (setq exwm-input-global-keys
       `(
+
 ([?\s-r] . exwm-reset)
+
 ([?\s-c] . org-capture)
+
 ([?\s-a] . org-agenda)
+
 ([?\s-\M-a] . org-agenda-exit)
+
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
              (start-process-shell-command command nil command)))
+
 ([s-left] . windmove-left)
 ([s-right] . windmove-right)
 ([s-up] . windmove-up)
 ([s-down] . windmove-down)
+
 ([?\s-\ ] . helm-buffers-list)
 ([s-backspace] . ibuffer)
 ([?\s-b] . switch-to-buffer)
 ([\C-s-right] . next-buffer)
 ([\C-s-left] . previous-buffer)
+
 ([?\s-x] . Tn/dmenu-launch)
 ([?\s-f] . helm-find-files)
 ([?\s-q] . Tn/lock-screen)
+
 ([?\s-p] . helm-projectile)
-([?\s-.] . alsamixer-up-volume)
-([?\s-,] . alsamixer-down-volume)
-([?\s-\M-/] . Tn/audio-set)
-([?\s-/] . alsamixer-toggle-mute)
+
+([?\s-.] . Tn/audio-up)
+([?\s-,] . Tn/audio-down)
+([?\s-/] . Tn/audio-mute)
+
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
+
 ([?\s-\C-1] . Tn/single-collumn-template)
 ([?\s-\C-2] . Tn/double-collumn-template)
 ([?\s-\C-3] . Tn/triple-collumn-template)
 ([?\s-\C-4] . Tn/left-focus-collumn-template)
 ([?\s-\C-4] . Tn/right-focus-collumn-template)
 ([?\s-\C-4] . Tn/center-focus-collumn-template)
+
 ([?\s-=] . balance-windows)
 ([?\s-D] . kill-buffer-and-widow)
 ([?\s-d] . kill-this-buffer)
@@ -142,6 +250,7 @@
 ([?\s-|] . enlarge-window)
 ([?\s-}] . enlarge-window-horizontally)
 ([?\s-{] . shrink-window-horizontally)
+
 ,@(mapcar (lambda (i)
             `(,(kbd (format "s-%d"  i)) .
               (lambda ()
@@ -149,6 +258,7 @@
                 (exwm-workspace-switch-create ,(- i 1)))))
           (number-sequence 1 9))
 ))
+
 (unless (get 'exwm-input-simulation-keys 'saved-value)
   (setq exwm-input-simulation-keys
         '(([?\C-b] . [left])
@@ -161,23 +271,14 @@
           ([?\C-v] . [next])
           ([?\C-d] . [delete])
           ([?\C-k] . [S-end delete]))))
+
 (add-hook 'exwm-update-class-hook
           (lambda ()
           (exwm-workspace-rename-buffer exwm-class-name)))
+
 (add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
+
 (exwm-enable))
-
-
-
-
-
-
-
-
-
-
-
-
 
 ;; test text 2
 
