@@ -174,10 +174,15 @@
 
 (exwm-systemtray-enable)
 
-(setq exwm-workspace-number 9)
+(setq exwm-workspace-number 9
+      exwm-layout-show-all-buffers t
+      exwm-workspace-show-all-buffers t)
 
-;(setq exwm-layout-show-all-buffers t)
-;(setq exwm-workspace-show-all-buffers t)
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+          (exwm-workspace-rename-buffer exwm-class-name)))
+
+(add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
 
 (setq exwm-input-prefix-keys
   '(?\C-x
@@ -271,12 +276,6 @@
           ([?\C-v] . [next])
           ([?\C-d] . [delete])
           ([?\C-k] . [S-end delete]))))
-
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-          (exwm-workspace-rename-buffer exwm-class-name)))
-
-(add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
 
 (exwm-enable))
 
