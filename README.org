@@ -18,21 +18,14 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Add volume and screen brightness system applet
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
-** TODO Convert init.el to a modular config
-- https://stackoverflow.com/questions/2079095/how-to-modularize-an-emacs-configuration
-- https://www.emacswiki.org/emacs/DotEmacsModular
 ** TODO Configure Org-Roam
 ** TODO Switch from Helm to something else
-** TODO Figure out what I need =silver-searcher= for and if I can use =rip-grep=
 ** TODO Create (M-x programName) functions for all frequently used programs
 ** TODO Switch (M-x term) to call Alacritty
 ** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
-** TODO Figure out how echo area applets work
-*** TODO How is nm-applet currently appearing
-*** TODO add blueman-applet, and sound applet
+** TODO make sure sound applet appear in echo area system tray
 ** TODO Configure Eww
 ** TODO integrate tridactyl and emacs exwm-firefox-evil
-** TODO see if (setq exwm-layout-show-all-buffers t) will hide text buffers across workspaces
 ** ----------- Long Term ---------
 ** TODO fix issue with =nix shell= unfree pkg usage
 - may not be needed. They might have just been weird packages

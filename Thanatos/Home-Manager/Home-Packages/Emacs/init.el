@@ -64,6 +64,13 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
+
+(use-package doom-themes
+  :init (load-theme 'doom-city-lights t))
+
 (defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
   (let (orig-one-window-p)
     (fset 'orig-one-window-p (symbol-function 'one-window-p))
@@ -77,6 +84,7 @@
 (global-set-key (kbd "C-S-v") 'clipboard-yank)
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
+(global-set-key (kbd "C-M-u") 'universal-argument)
 
 (defun Tn/exwm-update-title ()
   (pcase exwm-class-name
@@ -272,59 +280,6 @@
           (number-sequence 1 9))
 ))) ;; last paren closes exwm block
 
-;; test text 2
-
-
-
-(add-hook 'before-save-hook #'whitespace-cleanup)
-(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files")))
-(setq backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
-
-
-
-
-
-(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
-
-
-
-
-
-
-
-
-
-
-
-
-(use-package helm)
-(setq helm-mode-fuzzy-match t)
-(helm-mode 1)
-
-(setq _helm-exciting-buffer-regexp-list
-      (quote
-       ("\\*magit:"
-        )))
-
-(setq helm-boring-buffer-regexp-list
-      (quote
-       (  "\\Minibuf.+\\*"
-               "\\` "
-               "\\*.+\\*"
-                  )))
-
-;(global-set-key (kbd "M-x") 'helm-M-x)
-
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-
-(define-key helm-find-files-map (kbd "<SPC>") 'helm-find-files-up-one-level)
-
-(use-package helm-projectile)
-
-(custom-set-variables
- '(git-gutter:modified-sign "~")
- '(org-export-backends '(ascii html icalendar latex md odt freemind)))
-
 (use-package emojify)
 
 (use-package all-the-icons
@@ -351,7 +306,8 @@
   (ligature-set-ligatures 't ligatures-fixed)
   (global-ligature-mode t))
 
-(use-package centered-cursor-mode)
+(use-package aggressive-indent)
+(global-aggressive-indent-mode 1)
 
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -362,12 +318,36 @@
   (require 'smartparens-config)
   :diminish smartparens-mode)
 
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+(add-hook 'before-save-hook #'whitespace-cleanup)
 
-(use-package doom-themes
-  :init (load-theme 'doom-city-lights t))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+(use-package helm)
+(setq helm-mode-fuzzy-match t)
+(helm-mode 1)
+
+(setq _helm-exciting-buffer-regexp-list
+      (quote
+       ("\\*magit:"
+        )))
+
+(setq helm-boring-buffer-regexp-list
+      (quote
+       (  "\\Minibuf.+\\*"
+               "\\` "
+               "\\*.+\\*"
+                  )))
+
+;(global-set-key (kbd "M-x") 'helm-M-x)
+
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(define-key helm-find-files-map (kbd "<SPC>") 'helm-find-files-up-one-level)
+
+(use-package helm-projectile)
 
 (use-package evil
   :init
@@ -386,13 +366,14 @@
   (evil-ex-define-cmd "q" 'kill-this-buffer) ;Evil nomral mode ':q' kills active buffer
   (evil-ex-define-cmd "Q" 'kill-buffer-and-window)) ; Evil normal mode ':Q' kills buffer and window
 
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
+
 (use-package evil-snipe
   :after evil
   :config
   (evil-snipe-mode +1)
   (evil-snipe-override-mode +1))
 
-(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
 (evil-define-key 'visual evil-snipe-local-mode-map "z" 'evil-snipe-s)
 (evil-define-key 'visual evil-snipe-local-mode-map "Z" 'evil-snipe-S)
 
@@ -460,9 +441,6 @@
               " " filename)))
 
 (with-eval-after-load 'ibuf-ext
-  ;; Create a case-insensitive ibuffer sort command.  Derived from
-  ;; `ibuffer-do-sort-by-alphabetic' which is defined in ibuf-ext.el
-  ;; by (define-ibuffer-sorter alphabetic ...).
   (define-ibuffer-sorter alphabetic-ignore-case
     "Sort the buffers by their names, ignoring case."
     (:description "buffer name")
@@ -476,12 +454,32 @@
   (put 'ibuffer-make-column-name 'header-mouse-map
        ibuffer-name-header-map))
 
+(setq ibuffer-expert t)
 (setq-default ibuffer-default-sorting-mode 'alphabetic-ignore-case)
 
 (add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
-
-(setq ibuffer-expert t)
 (remove-hook 'kill-buffer-query-functions 'process-kill-buffer-query-function)
+
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda ()
+                   (flyspell-mode 1))))
+
+(add-hook 'prog-mode-hook #'flyspell-prog-mode)
+(add-hook 'text-mode-hook #'flyspell-mode)
+
+(use-package undo-tree)
+(global-undo-tree-mode 1)
+(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files"))
+      backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
+
+(use-package magit)
+(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+
+(use-package projectile
+  :init
+  (projectile-mode +1))
+
+;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
@@ -494,49 +492,6 @@
   :config
   (which-key-mode)
   (setq which-key-idle-delay 1))
-
-(use-package undo-tree)
-(global-undo-tree-mode 1)
-
-(use-package dmenu)
-
-(dolist (hook '(text-mode-hook))
-  (add-hook hook (lambda ()
-                   (flyspell-mode 1))))
-
-(add-hook 'prog-mode-hook #'flyspell-prog-mode)
-
-(add-hook 'text-mode-hook #'flyspell-mode)
-
-(use-package magit)
-
-(add-hook 'with-editor-mode-hook 'evil-insert-state)
-
-(use-package git-gutter)
-
-(custom-set-variables
- '(git-gutter:modified-sign "~")) ;; two space
-
-(set-face-foreground 'git-gutter:modified "deep sky blue") ;; background color
-(set-face-foreground 'git-gutter:added "green")
-(set-face-foreground 'git-gutter:deleted "red")
-
-(global-set-key (kbd "C-c G") 'git-gutter-mode)
-
-(use-package projectile
-  :init
-  (projectile-mode +1))
-
-;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
-
-(use-package ag)
-
-(use-package rg)
-
-(global-set-key (kbd "C-s") #'rg-menu)
-
-(use-package nix-mode
-  :mode "\\.nix\\'")
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
@@ -735,11 +690,19 @@ it can be passed in POS."
 
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
 
+(setq org-export-backends '(ascii html icalendar latex md odt freemind))
+
 (use-package ox-hugo
   :after ox)
 
 (use-package visual-fill-column
   :hook (org-mode . Tn/org-mode-visual-fill))
 
-(use-package aggressive-indent)
-(global-aggressive-indent-mode 1)
+(use-package centered-cursor-mode)
+
+(use-package dmenu)
+
+(use-package ag)
+
+(use-package rg)
+(global-set-key (kbd "C-s") #'rg-menu)
