@@ -19,13 +19,16 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Switch from Helm to something else
-- Selectrum, Marginalia, Orderless, Consult, Embark
+- ivy, Marginalia, Orderless, Consult, Embark
+- possibly use system crafters set up as a base
 ** TODO Configure Org-Roam
 ** TODO Create (M-x programName) functions for all frequently used programs
-** TODO Switch (M-x term) to call Alacritty
+** TODO (M-x shell) to call Alacritty
 ** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
 ** TODO make sure sound applet appear in echo area system tray
 ** TODO Configure Eww
+** TODO configure eshell
+** TODO configure dired
 ** TODO integrate tridactyl and emacs exwm-firefox-evil
 ** ----------- Long Term ---------
 ** TODO fix issue with =nix shell= unfree pkg usage
