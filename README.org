@@ -18,8 +18,9 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Add volume and screen brightness system applet
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
-** TODO Configure Org-Roam
 ** TODO Switch from Helm to something else
+- Selectrum, Marginalia, Orderless, Consult, Embark
+** TODO Configure Org-Roam
 ** TODO Create (M-x programName) functions for all frequently used programs
 ** TODO Switch (M-x term) to call Alacritty
 ** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
