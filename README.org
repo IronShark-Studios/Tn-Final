@@ -61,6 +61,8 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Fix unclutter cursor hiding
 ** TODO Create a first time start up script
 *** TODO First time ssh key set up
+** TODO clean and rebuild polybar
+*** TODO have only current workspace number show on bar
 ** TODO Create a custom function to edit sudo files with tramp.
 *** TODO Try to create a shell command to do the same
 - or second function to reopen current file as root
