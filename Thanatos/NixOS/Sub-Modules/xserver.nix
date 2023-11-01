@@ -3,6 +3,9 @@
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
+      networkmanagerapplet
+      pavucontrol
+      pnmixer
       sddm-chili-theme
       pavucontrol
       xorg.xev
