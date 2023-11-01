@@ -598,6 +598,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
     profileExtra = ''
       polybar thanatos &
+      volumeicon &
       nm-applet &
       emacs
     '';
@@ -1565,6 +1566,8 @@ git push";
       hunspell
       hunspellDicts.en_US-large
       networkmanagerapplet
+      pavucontrol
+      volumeicon
     ];
 
     file = {
@@ -1834,7 +1837,6 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 #+begin_src emacs-lisp
 (require 'exwm-systemtray)
-
 (exwm-systemtray-enable)
 
 (setq exwm-workspace-number 9

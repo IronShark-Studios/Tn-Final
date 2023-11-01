@@ -18,9 +18,6 @@ These files are generally specific to each system, and are frequently changed ba
 ** TODO Add volume and screen brightness system applet
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
-** TODO Switch from Helm to something else
-- ivy, Marginalia, Orderless, Consult, Embark
-- possibly use system crafters set up as a base
 ** TODO Configure Org-Roam
 ** TODO Create (M-x programName) functions for all frequently used programs
 ** TODO (M-x shell) to call Alacritty

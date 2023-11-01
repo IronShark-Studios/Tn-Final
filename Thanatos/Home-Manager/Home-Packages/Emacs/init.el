@@ -173,7 +173,6 @@
 (exwm-enable)
 
 (require 'exwm-systemtray)
-
 (exwm-systemtray-enable)
 
 (setq exwm-workspace-number 9

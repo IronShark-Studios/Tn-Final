@@ -19,6 +19,8 @@
       hunspell
       hunspellDicts.en_US-large
       networkmanagerapplet
+      pavucontrol
+      volumeicon
     ];
 
     file = {
