@@ -1,81 +1,63 @@
-#+Title: Technonomicon ReadMe
-
-
-* This repository is a work in progress
-This is the final iteration of my person system configuration repository. It currently only holds the configuration for =Voyager=, my travel laptop. Eventually this flake will be moved into its own sub directory, and used as a template for other systems.
-
-* This configuration use Emacs Org Tangle
-I am attempting to combine literate programming. Via Org Tangle, with a modular configuration style to make it easier to remember the reasoning behind configuration choices. Generally each Directory level or file should equate to an Org Heading in a similar relative position.
-
-** Flake.org
-These file are rarely changed, and are generic across system configurations.
-
-** System.org
-These files are generally specific to each system, and are frequently changed based on daily needs.
-
-* TODO's
-** TODO Finalize =README.org=
-** TODO Configure Org Core
-** TODO Configure Org-Roam
-** TODO Configure Supporting Org stuff
-*** TODO Bibtex
-*** TODO LaTex
-*** TODO Graphviz
-*** TODO hugo
-** TODO OpenSCAD
-** TODO Create (M-x programName) functions for all frequently used programs
-** TODO (M-x shell) to call Alacritty
-** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
-** TODO Improve Firefox integration
-*** TODO integrate tridactyl and emacs exwm-firefox-evil
-*** TODO increase default text size of tridactyl windows
-*** TODO create hot key to open bookmarks manager
-*** TODO create hot key to open current page in eww
-*** TODO rebind tridactyl tab to space
-** TODO Manage Secrets using git crypt
-*** TODO Automatically encrypt ~.../Tn-Template/secrets~ with Git
-** TODO figure out how to install allusion and pureref
+* TODO Finalize =README.org=
+* TODO Configure Org Core
+* TODO Configure Org-Roam
+* TODO Configure Supporting Org stuff
+** TODO Bibtex
+** TODO LaTex
+** TODO Graphviz
+** TODO hugo
+* TODO OpenSCAD
+* TODO Create (M-x programName) functions for all frequently used programs
+* TODO (M-x shell) to call Alacritty
+* TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
+* TODO Improve Firefox integration
+** TODO integrate tridactyl and emacs exwm-firefox-evil
+** TODO increase default text size of tridactyl windows
+** TODO create hot key to open bookmarks manager
+** TODO create hot key to open current page in eww
+** TODO rebind tridactyl tab to space
+* TODO Manage Secrets using git crypt
+** TODO Automatically encrypt ~.../Tn-Template/secrets~ with Git
+* TODO figure out how to install allusion and pureref
 - wget to download the appImage locally
 - then script to add to Nix-store
 - ^ added to upgrade script, and first time install?
 - https://allusion-app.github.io/
 - https://www.pureref.com/
 - https://musculoskeletalkey.com/the-hand-and-wrist-2/
-** TODO Create custom sddm package with theming
-** TODO Enable and configure Tridactly native for firefox
-*** TODO Customize keymap for colemak-dh
-** TODO Look into using Modifying core system
-*** TODO Repeatable disk partitioning using a machine specific script.
-*** TODO Use of Zen kernel with older normal kernel fallback
-*** TODO Use of ZFS for file system
-*** TODO Use of TMPFS and Impermance modules
-*** TODO Use of Libreboot Bios
-*** TODO Full disk encryption
-** TODO Figure out how to create custom systemd services
-*** TODO autolock screen when laptop lid is closed
-*** TODO auto run rebuild, upgrade, and clean nightly
-** TODO Add these programs to work computer
+* TODO Create custom sddm package with theming
+* TODO Enable and configure Tridactly native for firefox
+** TODO Customize keymap for colemak-dh
+* TODO Look into using Modifying core system
+** TODO Repeatable disk partitioning using a machine specific script.
+** TODO Use of Zen kernel with older normal kernel fallback
+** TODO Use of ZFS for file system
+** TODO Use of TMPFS and Impermance modules
+** TODO Use of Libreboot Bios
+** TODO Full disk encryption
+* TODO Figure out how to create custom systemd services
+** TODO autolock screen when laptop lid is closed
+** TODO auto run rebuild, upgrade, and clean nightly
+* TODO Add these programs to work computer
 -      gimp-with-plugins
 -      inkscape-with-extensions
-** TODO Fix screen brightness hot keys
-** TODO Fix unclutter cursor hiding
-** TODO Create a first time start up script
-*** TODO First time ssh key set up
-** TODO clean and rebuild polybar
-*** TODO have only current workspace number show on bar
-** TODO Create a custom function to edit sudo files with tramp.
-*** TODO Try to create a shell command to do the same
+* TODO Fix screen brightness hot keys
+* TODO Fix unclutter cursor hiding
+* TODO Create a first time start up script
+** TODO First time ssh key set up
+* TODO clean and rebuild polybar
+** TODO have only current workspace number show on bar
+* TODO Create a custom function to edit sudo files with tramp.
+** TODO Try to create a shell command to do the same
 - or second function to reopen current file as root
 
-** TODO configure RES and youtube keybindings
-** TODO create a tmux + vim ssh config
-*** TODO create a default vimrc
-** TODO change polybar workspace to only show active number
-** TODO Fix integration with =nix-shell= or whatever the newer replacement is
-- https://ianthehenry.com/posts/how-to-learn-nix/nix-zshell/
-** TODO Create a custom theme set for Allacritty, Zsh, and Starship
+* TODO configure RES and youtube keybindings
+* TODO create a tmux + vim ssh config
+** TODO create a default vimrc
+* TODO change polybar workspace to only show active number
+* TODO Create a custom theme set for Allacritty, Zsh, and Starship
 - https://github.com/doomemacs/themes/blob/master/themes/doom-city-lights-theme.el
-** TODO create script to enable wacom tablet driver and set bindings
+* TODO create script to enable wacom tablet driver and set bindings
 
 #+begin_src nix
   home.file."wacom-tablet-bindings.sh" = {
@@ -108,13 +90,10 @@ These files are generally specific to each system, and are frequently changed ba
   };
 #+end_src
 
-* Organize Your Life in Plaintext
-** Config Changes
-*** Misc
-**** TODO Remove evil ~(C-h)~ binding
-**** TODO add empty line and point start position to org code block templates
-**** TODO revert buffer ~(C-x x g)~ with out confirmation prompt
-*** Change Org Todo heading and colors
+* TODO Misc
+** TODO add empty line and point start position to org code block templates
+** TODO revert buffer ~(C-x x g)~ with out confirmation prompt
+* TODO Change Org Todo heading and colors
 #+begin_src emacs-lisp
  (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -130,17 +109,17 @@ These files are generally specific to each system, and are frequently changed ba
               ("MEETING" :foreground "gainboro" :weight bold)
               ("PHONE" :foreground "gainboro" :weight bold))))
 #+end_src
-**** TODO add evil-insert hook to state based captures
-*** Toggle through all todo headings
+** TODO add evil-insert hook to state based captures
+* TODO Toggle through all todo headings
 #+begin_src emacs-lisp
 (setq org-use-fast-todo-selection t)
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
 #+end_src
-*** Change Starting Day of Org agenda Weekly View
+* TODO Change Starting Day of Org agenda Weekly View
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
 #+end_src
-*** Auto add tags based on todo state
+* TODO Auto add tags based on todo state
 #+begin_src emacs-lisp
 (setq org-todo-state-tags-triggers
       (quote (("CANCELLED" ("CANCELLED" . t))
@@ -151,7 +130,7 @@ These files are generally specific to each system, and are frequently changed ba
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 #+end_src
-*** Org capture settings
+* TODO Org capture settings
 #+begin_src emacs-lisp
 (setq org-directory "~/Grimoire")
 (setq org-default-notes-file "~/git/org/refile.org")
@@ -175,11 +154,11 @@ These files are generally specific to each system, and are frequently changed ba
               ("h" "Habit" entry (file "~/git/org/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 #+end_src
-**** TODO Decide if org-file is needed
-**** TODO sort through capture templates to customize for my use
-**** TODO Integrate current eating capture templates with this
-***** TODO Possibly create a better template including tables for macros
-*** Clean up empty Clock Drawers
+** NEXT Decide if org-file is needed
+** NEXT sort through capture templates to customize for my use
+** NEXT Integrate current eating capture templates with this
+*** NEXT Possibly create a better template including tables for macros
+* TODO Clean up empty Clock Drawers
 #+begin_src emacs-lisp
 ;; Remove empty LOGBOOK drawers on clock out
 (defun Tn/remove-empty-drawer-on-clock-out ()
@@ -190,7 +169,7 @@ These files are generally specific to each system, and are frequently changed ba
 
 (add-hook 'org-clock-out-hook 'Tn/remove-empty-drawer-on-clock-out 'append)
 #+end_src
-*** Refilling
+* TODO Refilling
 #+begin_src emacs-lisp
 ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
@@ -216,13 +195,13 @@ These files are generally specific to each system, and are frequently changed ba
 
 (setq org-refile-target-verify-function 'Tn/verify-refile-target)
 #+end_src
-**** TODO Create evil normal mode map for org task
-***** TODO Copy and Refile
-****** TODO Confirm wether state changes are shared across all copies of a heading
-******* TODO If not, create tag to exclude non current daily node todos from agenda
+** NEXT Create evil normal mode map for org task
+*** NEXT Copy and Refile
+**** NEXT Confirm wether state changes are shared across all copies of a heading
+***** NEXT If not, create tag to exclude non current daily node todos from agenda
 - I think I already have something done for this wich uses tags to mark roam node so be included. So I should only need to set something up to remove it form non active node.
-***** TODO Confirm what ~org-indirect-buffer-display~ does.
-*** Agenda Displays
+*** NEXT Confirm what ~org-indirect-buffer-display~ does.
+* TODO Agenda Displays
 #+begin_src emacs-lisp
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
@@ -304,9 +283,9 @@ These files are generally specific to each system, and are frequently changed ba
                        (org-tags-match-list-sublevels nil))))
                nil))))
 #+end_src
-**** TODO Update this to match custom templates
-**** TODO update function namespaces
-*** Agenda Filtering Based on tags
+** NEXT Update this to match custom templates
+** NEXT update function namespaces
+* TODO Agenda Filtering Based on tags
 #+begin_src emacs-lisp
 (defun bh/org-auto-exclude-function (tag)
   "Automatic task exclusion in the agenda with / RET"
@@ -319,8 +298,8 @@ These files are generally specific to each system, and are frequently changed ba
 
 (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
 #+end_src
-**** TODO Replace ~farm~ with one or more custom tags to be selectively excluded from org agenda
-*** Org Clocking
+** NEXT Replace ~farm~ with one or more custom tags to be selectively excluded from org agenda
+* TODO Org Clocking
 #+begin_src emacs-lisp
 ;; Resume clocking task when emacs is restarted
 (org-clock-persistence-insinuate)
@@ -442,7 +421,7 @@ as the default task."
 
 (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
-**** TODO Fix Namespaces
+** NEXT Fix Namespaces
 #+begin_src emacs-lisp
 (require 'org-id)
 (defun bh/clock-in-task-by-id (id)
@@ -468,14 +447,14 @@ A prefix arg forces clock in of the default task."
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
 #+end_src
-***** TODO Find out if clock in id is usefull
-***** TODO Fix Namespaces
-***** TODO Create ~(s-t)~ time tracking hydra?
-*** Log Time in discrete minute intervals
+*** NEXT Find out if clock in id is usefull
+*** NEXT Fix Namespaces
+*** NEXT Create ~(s-t)~ time tracking hydra?
+* TODO Log Time in discrete minute intervals
 #+begin_src emacs-lisp
 (setq org-time-stamp-rounding-minutes (quote (1 1)))
 #+end_src
-*** Log time consistency check
+* TODO Log time consistency check
 #+begin_src emacs-lisp
 (setq org-agenda-clock-consistency-checks
       (quote (:max-duration "4:00"
@@ -483,8 +462,8 @@ A prefix arg forces clock in of the default task."
               :max-gap 0
               :gap-ok-around ("4:00"))))
 #+end_src
-**** TODO Confirm what the 4:00 setting does
-*** Configure Org Clock monthly Report
+** NEXT Confirm what the 4:00 setting does
+* TODO Configure Org Clock monthly Report
 #+begin_src emacs-lisp
 ;; Agenda clock report parameters
 (setq org-agenda-clockreport-parameter-plist
@@ -492,24 +471,24 @@ A prefix arg forces clock in of the default task."
 ;; Agenda log mode items to display (closed and state changes by default)
 (setq org-agenda-log-mode-items (quote (closed state)))
 #+end_src
-**** TODO Incorporate this into a GTD style /monthly review/
-*** Prevent Projects from being marked done while incomplete
+** NEXT Incorporate this into a GTD style /monthly review/
+* TODO Prevent Projects from being marked done while incomplete
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies 1)
 #+end_src
-**** Over ride this behavior on a specific heading with
+** TODO Over ride this behavior on a specific heading with
 #+begin_src emacs-lisp
   :PROPERTIES:
   :NOBLOCKING: t
   :END:
 #+end_src
-**** Enforces Dependencies to be completed in order
+** TODO Enforces Dependencies to be completed in order
 #+begin_src emacs-lisp
   :PROPERTIES:
   :ORDERED: t
   :END:
 #+end_src
-*** Create Tag Groups and hotkeys
+* TODO Create Tag Groups and hotkeys
 #+begin_src emacs-lisp
 ; Tags with fast selection keys
 (setq org-tag-alist (quote ((:startgroup)
@@ -536,18 +515,16 @@ A prefix arg forces clock in of the default task."
 ; For tag searches ignore tasks with scheduled and deadline dates
 (setq org-agenda-tags-todo-honor-ignore-options t)
 #+end_src
-**** TODO Sort through and create tags that are useful to me.
+** NEXT Sort through and create tags that are useful to me.
 - Tags could include, people, places, activities, ect. They are used for Context.
-*** Hide Blank Lines between folded headings
+* TODO Hide Blank Lines between folded headings
 #+begin_src emacs-lisp
 (setq org-cycle-separator-lines 0)
 (setq org-blank-before-new-entry (quote ((heading)
                                          (plain-list-item . auto))))
 #+end_src
-*** TODO Follow up With Integrating Contact lists using BBDB
+* TODO Follow up With Integrating Contact lists using BBDB
 #+begin_src emacs-lisp
-
-
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
 (setq org-capture-templates
       (quote (...
@@ -592,15 +569,15 @@ A prefix arg forces clock in of the default task."
                        (t "NameOfCaller")))
     (insert caller)))
 #+end_src
-*** Limit default agenda display to today
+* TODO Limit default agenda display to today
 #+begin_src emacs-lisp
 (setq org-agenda-span 'day)
 #+end_src
-*** Configure Org Mode Stuck Projects
+* TODO Configure Org Mode Stuck Projects
 #+begin_src emacs-lisp
 (setq org-stuck-projects (quote ("" nil nil "")))
 #+end_src
-*** Configure Projects
+* TODO Configure Projects
 #+begin_src emacs-lisp
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask"
@@ -856,9 +833,9 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         nil
       next-headline)))
 #+end_src
-**** TODO Fix NameSpaces
-**** TODO Confirm what each function does.
-*** Archiving
+** NEXT Fix NameSpaces
+** NEXT Confirm what each function does.
+* TODO Archiving
 #+begin_src emacs-lisp
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
@@ -886,16 +863,16 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
             (or subtree-end (point-max)))
         next-headline))))
 #+end_src
-**** TODO Confirm use case
-**** TODO update target sub heading
-*** Exporting
+** NEXT Confirm use case
+** NEXT update target sub heading
+* TODO Exporting
 #+begin_src emacs-lisp
 (setq org-alphabetical-lists t)
 
 ;; Explicitly load required exporters
 (require 'ox-latex)
 #+end_src
-**** Org Babel Export
+** TODO Org Babel Export
 #+begin_src emacs-list
 (setq org-ditaa-jar-path "~/git/org-mode/contrib/scripts/ditaa.jar")
 (setq org-plantuml-jar-path "~/java/plantuml.jar")
@@ -934,25 +911,25 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ; Use fundamental mode when editing plantuml blocks with C-c '
 (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 #+end_src
-***** TODO Update paths
-***** TODO Update Namespaces
-***** TODO Install system packages
-****** TODO graphviz
-****** TODO PlantUML
-**** TODO Figure out how to integrate with phone
+*** NEXT Update paths
+*** NEXT Update Namespaces
+*** NEXT Install system packages
+**** NEXT graphviz
+**** NEXT PlantUML
+** NEXT Figure out how to integrate with phone
 #+begin_src emacs-lisp
 ;; Don't enable this because it breaks access to emacs from my Android phone
 (setq org-startup-with-inline-images nil)
 #+end_src
-**** Configure agenda / diary integration
+** TODO Configure agenda / diary integration
 #+begin_src emacs-lisp
 (setq org-agenda-include-diary nil)
 (setq org-agenda-diary-file "~/git/org/diary.org")
 (setq org-agenda-insert-diary-extract-time t)
 #+end_src
-***** TODO Decide how to use diary.
-***** TODO update path
-**** Agenda Sorting
+*** NEXT Decide how to use diary.
+*** NEXT update path
+** TODO Agenda Sorting
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
 (setq org-agenda-repeating-timestamp-show-all t)
@@ -1071,31 +1048,31 @@ Late deadlines first, then scheduled, then non-late deadlines"
 (defun bh/is-scheduled-late (date-str)
   (string-match "Sched\.\\(.*\\)x:" date-str))
 #+end_src
-***** TODO test each to see if any are useful
-**** enable opening multiple agendas together
+*** NEXT test each to see if any are useful
+** TODO enable opening multiple agendas together
 #+begin_src emacs-lisp
 ;; Use sticky agenda's so they persist
 (setq org-agenda-sticky t)
 #+end_src
-**** Show notes in the order they are taken
+** TODO Show notes in the order they are taken
 #+begin_src emacs-lisp
 (setq org-reverse-note-order nil)
 #+end_src
-**** Only display tasks due within 30 days
+** TODO Only display tasks due within 30 days
 #+begin_src emacs-lisp
 (setq org-deadline-warning-days 30)
 #+end_src
-***** Recurring tasks can be configured to only appear on the specific day with the timerstamp
+*** TODO Recurring tasks can be configured to only appear on the specific day with the timerstamp
 #+begin_src emacs-lisp
  DEADLINE: <2009-07-01 Wed +1m -0d>
 #+end_src
-**** Time Logging Settings
+** TODO Time Logging Settings
 #+begin_src emacs-lisp
 (setq org-log-done (quote time))
 (setq org-log-into-drawer t)
 (setq org-log-state-notes-insert-after-drawers nil)
 #+end_src
-**** Enable Modules
+** TODO Enable Modules
 #+begin_src emacs-lisp
 ; Enable habit tracking (and a bunch of other modules)
 (setq org-modules (quote (org-bbdb
@@ -1116,16 +1093,16 @@ Late deadlines first, then scheduled, then non-late deadlines"
                           org-wl
                           org-w3m)))
 #+end_src
-***** TODO Sort modules to find useful ones
-**** Configure Org habit display
+*** NEXT Sort modules to find useful ones
+** TODO Configure Org habit display
 #+begin_src emacs-lisp
 ; position the habit graph on the agenda to the right of the default
 (setq org-habit-graph-column 50)
 
 (run-at-time "05:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 #+end_src
-***** TODO figure out how to use ~run-at-time~ for other stuff
-**** Org Encryption
+*** NEXT figure out how to use ~run-at-time~ for other stuff
+** TODO Org Encryption
 #+begin_src emacs-lisp
 (require 'org-crypt)
 ; Encrypt all entries before saving
@@ -1136,19 +1113,19 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-crypt-disable-auto-save nil)
 #+end_src
-***** TODO Check on ~org-crypt-key~
-***** TODO Find how to encrypt elisp files
-**** Configure Org Protocol with firefox
+*** NEXT Check on ~org-crypt-key~
+*** NEXT Find how to encrypt elisp files
+** TODO Configure Org Protocol with firefox
 #+begin_src emacs-lisp
 (require 'org-protocol)
 
 (setq org-return-follows-link t)
 #+end_src
-**** Append empty line to file
+** TODO Append empty line to file
 #+begin_src emacs-lisp
 (setq require-final-newline t)
 #+end_src
-**** Configure agenda display.
+** TODO Configure agenda display.
 #+begin_src emacs-lisp
 (setq org-agenda-persistent-filter t)
 
@@ -1156,9 +1133,9 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-agenda-skip-additional-timestamps-same-entry t)
 #+end_src
-***** TODO check if tag sublevel is usefull
-***** TODO Consider auto resetting filters daily
-**** Automatically convert ~next~ tasks to projects
+*** NEXT check if tag sublevel is usefull
+*** NEXT Consider auto resetting filters daily
+** TODO Automatically convert ~next~ tasks to projects
 #+begin_src emacs-lisp
 (defun bh/mark-next-parent-tasks-todo ()
   "Visit each parent task and change NEXT states to TODO"
@@ -1174,146 +1151,76 @@ Late deadlines first, then scheduled, then non-late deadlines"
 (add-hook 'org-after-todo-state-change-hook 'bh/mark-next-parent-tasks-todo 'append)
 (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
 #+end_src
-***** TODO Update namespaces
-**** Prevent invisible eddits
+*** NEXT Update namespaces
+** TODO Prevent invisible eddits
 #+begin_src emacs-lisp
 (setq org-catch-invisible-edits 'error)
 #+end_src
-**** Log time in hours only
+** TODO Log time in hours only
 #+begin_src emacs-lisp
 (setq org-time-clocksum-format
       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 #+end_src
-** General Notes
-*** TODO Consider additional Packages
-**** TODO Org-wild-notifier
-**** TODO org-super-agenda
-**** TODO Gnu go
-**** TODO gnu cash
+* TODO Consider additional Packages
+** TODO Org-wild-notifier
+** TODO org-super-agenda
+** TODO Gnu go
+** TODO gnu cash
 - if compatable with hledger
-**** TODO hledger
-*** TODO Change evil ~s~ and ~r~ so they jump to the character not before it
-*** TODO Consider adding emacs save hook to evil normal mode hook.
+** TODO hledger
+* TODO Change evil ~s~ and ~r~ so they jump to the character not before it
+* TODO Consider adding emacs save hook to evil normal mode hook.
 - Goal of saving every time i enter normal mode
 - Needs better working knowledge of undo tree
 - Would work best with a rolling back up save system
-*** TODO Add ~emacs --batch~ terminal command to update emacs along with nixos
-*** Todo Heading Workflow
+* TODO Heading Workflow
 - http://doc.norang.ca/normal_task_states.png
-*** Projects
-- A project is any todo heading with todo subheading
-- Projects can be created at any sub heading level
-- A project without a sub-heading marked as ~next~ will be added to a stuck projects list
-*** Tags
-- tags are used to filter todo's based on type
-- Use tags to separate recurring and non recurring task in agenda view
-- ~#+FILETAGS:~ Can be added at the top of a file to apply one or more tags to the entire file
-- Tags can be grouped together so only one can be applied to a heading at a time.
-- Tags can be added using the ~C-c C-q~ Hotkey
-*** Interrupts
-- Created in a completed state, Grouped as either digital (phone/text/email/ect) or in person.
-- Tracked as part of an org capture template.
-*** Capturing
-- Minimal number of capture templates, all pointing to a single ~"inbox"~ org file. Part of dialy journal
-  - Inbox file cleaned out daily
-- Separate things to be captured into groups
-  - Digital Sync Conversation
-  - Digital A-Sync Conversation
-  - In Person Conversation
-  - New Task
-  - New Habit (recurring Task)
-  - New Note
-  - Interruptions (short unexpected tasks, in the middle of a larger one(?))
-*** Refilling
-- Have a permanent section of the daily journal with this heading ~#+FILETAGS: REFILE~ where all org captures are stored until copied into their proper place.
-- Ultimately this should be a part of the ROAM dailies template.
-*** Clocking
-- Create a default task that that will automatically be clocked into when not doing something else.
-- When moving a clocked todo to done status. Org will automatically start clocking with the parent todo if there is one. Otherwise it returns to the default clock target.
-*** Storing Todos
-- Possibly create a series of files to store non project specific todos with file inheritance
-  - Example Tag for file heading ~#+FILETAGS: PERSONAL~
-*** TODO Follow up with organizing your life in plain text 10.2
-- If time estimates become needed or usefull
-*** Archives
-- General tasks can be refilled into a ~Archive.org~
-- Each ~project.org~ file should have a ~* Archived Tasks~ Sub-heading
-- Tasks should be archived after being marked completed for more than 30 days.
-- After an entire project is completed its directory should be moved into an archival directory.
-- When creating a project the first task should describe the overall project and act as the final task to be closed.
-**** TODO use refile-copy to timestamp and archive all completed tasks in a single chronological file for the active year when a task is marked done
-*** TODO Follow Up on 16.3 16.6
-*** TODO Use Google Calendar notifications for appointment reminders
-*** TODO Follow Up on ~abbrev mode~
-*** TODO Use emacs dairy long term recurring tasks?
-*** TODO configure org-checklist to reset sub-tasks when parents are marked done
-*** TODO Use ~(C-c C-z)~ to add bullet notes to a heading
-**** TODO add evil-insert-hook to capture hook
-*** TODO Follow up on using attachments with org files
+* TODO use refile-copy to timestamp and archive all completed tasks in a single chronological
+* TODO Use Google Calendar notifications for appointment reminders
+* TODO Follow Up on ~abbrev mode~
+* TODO Use emacs dairy long term recurring tasks?
+* TODO configure org-checklist to reset sub-tasks when parents are marked done
+* TODO Use ~(C-c C-z)~ to add bullet notes to a heading
+** TODO add evil-insert-hook to capture hook
+* TODO Follow up on using attachments with org files
 #+begin_src emacs-lisp
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 #+end_src
-**** allows moving tasks without breaking links
-*** TODO Move org tangle hook to before save
-*** TODO Follow up with adding attachments to org files
-**** TODO Figure out how to configure default directory for org attachments
-* Org-Super Agenda
+- allows moving tasks without breaking links
+* TODO Move org tangle hook to before save
+* TODO Follow up with adding attachments to org files
+** TODO Figure out how to configure default directory for org attachments
+* TODO Org-Super Agenda
 ** TODO Follow up on this once I have more experience with agenda
 - https://github.com/alphapapa/org-super-agenda
-* Emacs Diary
+* TODO Big Brother Data Base
+- Follow up when I am configuring Communication and news stuff
+* TODO Emacs Diary
 - Use the diary file to track recurring events that are permanent and fixed.
   - Holidays
   - Birthdays
   - Paydays
   - ect
-* Big Brother Data Base
-** TODO Follow up when I am configuring Communication and news stuff
-* Org Roam Ecosystem
-** Org Roam
-*** TODO Go through old config and pull useful parts
-*** TODO use full sql instead of sql-lite
-** Org Roam Bibtex
+* TODO Org Roam Bibtex
 - https://github.com/org-roam/org-roam-bibtex
-*** General notes
 - Extends Org-Roam to support citations. Works along with ~helm-bibtex~
-**** TODO Install ~helm-bibtex~
-** Org Roam UI
+** TODO Install ~helm-bibtex~
+* TODO Org Roam UI
 - https://github.com/org-roam/org-roam-ui
 *** General Notes
 - A graphical front end to display connections between existing nodes
 - Opens in your default web browser
 
-* using nvidia Graphics Drivers
-Enables the use of a Nvidia Graphics card. Exports all graphics processing to the GPU.
-#+begin_src nix
-services.xserver.videoDrivers = [ "nvidia" ];
-hardware.nvidia.modesetting.enable = true;
-hardware.nvidia.prime = {
-  sync.enable = true;
-  nvidiaBusId = "PCI:01:00:0";  # Found with lspci | grep VGA
-  intelBusId = "PCI:00:02:0";  # Found with lspci | grep VGA
-};
-#+end_src
-
-* Communication
-** TODO Integrate Other communications programs with emacs
-*** TODO Email
-**** TODO Google Voice via Email
-*** TODO Twitter (?)
-*** TODO Mastadon
-*** TODO Tumbler (?)
-*** TODO Reddit : https://www.reddit.com/r/emacs/comments/eaf2r0/how_i_use_reddit_from_inside_emacs/
+* TODO Integrate Other communications programs with emacs
+** TODO Email
+*** TODO Google Voice via Email
+** TODO Twitter (?)
+** TODO Mastadon
+** TODO Tumbler (?)
+** TODO Reddit : https://www.reddit.com/r/emacs/comments/eaf2r0/how_i_use_reddit_from_inside_emacs/
 ** Discord
-General Chat Program
-#+begin_src nix
-discord
-#+end_src
 *** TODO Integrate Discord with Emacs
 ** Wee Chat
-IRC / Matrix Chat client
-#+begin_src nix
-weechat
-#+end_src
 *** TODO Compare Weechat with other graphical clients
 *** TODO Integrate IRC / Matrix with Emacs
 * TODO create function to split window Vertically and Balance all windows in single button
@@ -1377,3 +1284,57 @@ weechat
 - https://www.reddit.com/r/emacs/comments/jj269n/display_helm_frames_in_the_center_of_emacs/
   - This one in particular seemed promising but doesn't work correctly. Good of an e-lisp project.
 * TODO Find a free and feature matched self hoasted alternative to gsuite, and bitwarden
+
+* Organizing Your Life in Plain Text : General Notes
+** TODO Follow up with organizing your life in plain text 10.2, 16.3, 16.6
+** Projects
+- A project is any todo heading with todo subheading
+- Projects can be created at any sub heading level
+- A project without a sub-heading marked as ~next~ will be added to a stuck projects list
+** Tags
+- tags are used to filter todo's based on type
+- Use tags to separate recurring and non recurring task in agenda view
+- ~#+FILETAGS:~ Can be added at the top of a file to apply one or more tags to the entire file
+- Tags can be grouped together so only one can be applied to a heading at a time.
+- Tags can be added using the ~C-c C-q~ Hotkey
+** Interrupts
+- Created in a completed state, Grouped as either digital (phone/text/email/ect) or in person.
+- Tracked as part of an org capture template.
+** Capturing
+- Minimal number of capture templates, all pointing to a single ~"inbox"~ org file. Part of dialy journal
+  - Inbox file cleaned out daily
+- Separate things to be captured into groups
+  - Digital Sync Conversation
+  - Digital A-Sync Conversation
+  - In Person Conversation
+  - New Task
+  - New Habit (recurring Task)
+  - New Note
+  - Interruptions (short unexpected tasks, in the middle of a larger one(?))
+** Refilling
+- Have a permanent section of the daily journal with this heading ~#+FILETAGS: REFILE~ where all org captures are stored until copied into their proper place.
+- Ultimately this should be a part of the ROAM dailies template.
+** Clocking
+- Create a default task that that will automatically be clocked into when not doing something else.
+- When moving a clocked todo to done status. Org will automatically start clocking with the parent todo if there is one. Otherwise it returns to the default clock target.
+** Storing Todos
+- Possibly create a series of files to store non project specific todos with file inheritance
+  - Example Tag for file heading ~#+FILETAGS: PERSONAL~
+** Archives
+- General tasks can be refilled into a ~Archive.org~
+- Each ~project.org~ file should have a ~* Archived Tasks~ Sub-heading
+- Tasks should be archived after being marked completed for more than 30 days.
+- After an entire project is completed its directory should be moved into an archival directory.
+- When creating a project the first task should describe the overall project and act as the final task to be closed.
+file for the active year when a task is marked done
+* Saved for later : using nvidia Graphics Drivers
+Enables the use of a Nvidia Graphics card. Exports all graphics processing to the GPU.
+#+begin_src nix
+services.xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia.modesetting.enable = true;
+hardware.nvidia.prime = {
+  sync.enable = true;
+  nvidiaBusId = "PCI:01:00:0";  # Found with lspci | grep VGA
+  intelBusId = "PCI:00:02:0";  # Found with lspci | grep VGA
+};
+#+end_src
