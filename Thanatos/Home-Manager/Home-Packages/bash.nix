@@ -6,7 +6,7 @@
     profileExtra = ''
       polybar thanatos &
       pnmixer &
-      # nm-applet &
+      nm-applet &
       emacs
     '';
   };
