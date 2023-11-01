@@ -5,8 +5,8 @@
 
     profileExtra = ''
       polybar thanatos &
-      pnmixer &
       nm-applet &
+      pnmixer &
       emacs
     '';
   };

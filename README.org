@@ -15,7 +15,6 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** ----- Nixos Core ---------
-** TODO Add volume and screen brightness system applet
 ** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Configure Org-Roam

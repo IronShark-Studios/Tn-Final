@@ -396,10 +396,13 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
-      git add .
+      git status &&
+      echo -n \"Commit Message: \" &&
+      read -r commitMessage &&
+      git add . &&
       sudo nixos-rebuild switch --flake .#$HOSTNAME &&
-      git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
-      git push
+      git commit -m \"$HOSTNAME Rebuilt: $NIXOS_GENERATION $commitMessage\" &&
+      git push &&
       echo
       echo System Generation $NIXOS_GENERATION Active.
     '';
@@ -601,8 +604,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
     profileExtra = ''
       polybar thanatos &
-      pnmixer &
       nm-applet &
+      pnmixer &
       emacs
     '';
   };
@@ -1372,12 +1375,14 @@ Window controls will be all wrong without it
       ".*.swp"
     ];
     aliases = {
-      send = "! git status &&
-echo -n \"Commit Message: \" &&
-read -r commitMessage &&
-git add . &&
-git commit -m \"$commitMessage\" &&
-git push";
+      send = ''
+        git status &&
+        echo -n \"Commit Message: \" &&
+        read -r commitMessage &&
+        git add . &&
+        git commit -m \"$commitMessage\" &&
+        git push
+      '';
     };
     extraConfig = {
       init = {

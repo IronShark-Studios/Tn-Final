@@ -14,12 +14,14 @@
       ".*.swp"
     ];
     aliases = {
-      send = "! git status &&
-echo -n \"Commit Message: \" &&
-read -r commitMessage &&
-git add . &&
-git commit -m \"$commitMessage\" &&
-git push";
+      send = ''
+        git status &&
+        echo -n \"Commit Message: \" &&
+        read -r commitMessage &&
+        git add . &&
+        git commit -m \"$commitMessage\" &&
+        git push
+      '';
     };
     extraConfig = {
       init = {
