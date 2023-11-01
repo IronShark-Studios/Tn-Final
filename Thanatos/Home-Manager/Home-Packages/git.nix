@@ -17,9 +17,9 @@
       send = ''
         ! git status &&
         echo -n Commit Message:  &&
-        read -r commitMessage &&
+        read -r CommitMessage &&
         git add . &&
-        git commit -m \"$commitMessage\" &&
+        git commit -m "$CommitMessage" &&
         git push
       '';
     };
