@@ -409,6 +409,27 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
+
+***** test.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/test.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."test.nix" = {
+    target = "scripts/test.sh";
+    text = ''
+      #!/bin/sh
+
+      sudo nixos-rebuild test --flake .#$HOSTNAME &&
+      echo
+      echo System Generation Temporarily $NIXOS_GENERATION Active.
+    '';
+  };
+}
+#+end_src
 ***** upgrade.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/upgrade.nix
