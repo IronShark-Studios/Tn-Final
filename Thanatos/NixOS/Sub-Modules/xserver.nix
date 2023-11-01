@@ -54,6 +54,7 @@
       layout = "us";
       xkbVariant = "colemak_dh";
       xkbOptions = "caps:escape";
+      videoDrivers = [ "modesetting" ];
       excludePackages = with pkgs; [
         xterm
       ];
