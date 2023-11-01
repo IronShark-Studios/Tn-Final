@@ -396,12 +396,12 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
-      git status &&
-      echo -n \"Commit Message: \" &&
-      read -r commitMessage &&
       git add . &&
+      git status &&
+      echo -n Commit Message: &&
+      read -r CommitMessage &&
       sudo nixos-rebuild switch --flake .#$HOSTNAME &&
-      git commit -m \"$HOSTNAME Rebuilt: $NIXOS_GENERATION $commitMessage\" &&
+      git commit -m "$HOST Rebuild: $NIXOS_GENERATION $CommitMessage" &&
       git push &&
       echo
       echo System Generation $NIXOS_GENERATION Active.
@@ -1377,7 +1377,7 @@ Window controls will be all wrong without it
     aliases = {
       send = ''
         git status &&
-        echo -n \"Commit Message: \" &&
+        echo -n Commit Message:  &&
         read -r commitMessage &&
         git add . &&
         git commit -m \"$commitMessage\" &&

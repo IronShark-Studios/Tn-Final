@@ -14,8 +14,6 @@ These file are rarely changed, and are generic across system configurations.
 These files are generally specific to each system, and are frequently changed based on daily needs.
 
 * TODO's
-** ----- Nixos Core ---------
-** TODO Add commit message to rebuild script
 ** --------- Emacs Core ------------
 ** TODO Configure Org-Roam
 ** TODO Create (M-x programName) functions for all frequently used programs

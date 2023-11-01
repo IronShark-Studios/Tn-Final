@@ -16,7 +16,7 @@
     aliases = {
       send = ''
         git status &&
-        echo -n \"Commit Message: \" &&
+        echo -n Commit Message:  &&
         read -r commitMessage &&
         git add . &&
         git commit -m \"$commitMessage\" &&
