@@ -6,7 +6,7 @@
     profileExtra = ''
       polybar thanatos &
       volumeicon &
-      nm-applet &
+      # nm-applet &
       emacs
     '';
   };
