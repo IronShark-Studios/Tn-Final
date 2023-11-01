@@ -12,7 +12,7 @@
 
     sessionVariables = {
       SUDO_EDITOR = "\"emacsclient\"";
-      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
+      NIXOS_GENERATION = "$(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -n 1 | sed 's/(current)//')";
     };
 
     initExtra = ''

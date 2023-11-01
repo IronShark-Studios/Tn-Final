@@ -15,15 +15,22 @@ These files are generally specific to each system, and are frequently changed ba
 
 * TODO's
 ** --------- Emacs Core ------------
+** TODO Configure Org Core
 ** TODO Configure Org-Roam
+** TODO Configure Supporting Org stuff
+*** TODO Bibtex
+*** TODO LaTex
+*** TODO Graphviz
+** TODO OpenSCAD
 ** TODO Create (M-x programName) functions for all frequently used programs
 ** TODO (M-x shell) to call Alacritty
 ** TODO Configure Emacs bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
-** TODO make sure sound applet appear in echo area system tray
-** TODO Configure Eww
-** TODO configure eshell
-** TODO configure dired
-** TODO integrate tridactyl and emacs exwm-firefox-evil
+** TODO Improve Firefox integration
+*** TODO integrate tridactyl and emacs exwm-firefox-evil
+*** TODO increase defualt text size of tridactyl windows
+*** TODO create hot key to open bookmarks manager
+*** TODO create hot key to open current page in eww
+*** TODO rebind tab to space
 ** ----------- Long Term ---------
 ** TODO fix issue with =nix shell= unfree pkg usage
 - may not be needed. They might have just been weird packages

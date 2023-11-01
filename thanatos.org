@@ -340,7 +340,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 { inputs, outputs, lib, config, pkgs, ... }: {
 
   networking = {
-    hostName = "thanatos";
+    hostName = "Thanatos";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
   };
@@ -632,7 +632,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
     sessionVariables = {
       SUDO_EDITOR = "\"emacsclient\"";
-      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
+      NIXOS_GENERATION = "$(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -n 1 | sed 's/(current)//')";
     };
 
     initExtra = ''
@@ -1376,12 +1376,12 @@ Window controls will be all wrong without it
     ];
     aliases = {
       send = ''
-        git status &&
+        status &&
         echo -n Commit Message:  &&
         read -r commitMessage &&
-        git add . &&
-        git commit -m \"$commitMessage\" &&
-        git push
+        add . &&
+        commit -m \"$commitMessage\" &&
+        push
       '';
     };
     extraConfig = {

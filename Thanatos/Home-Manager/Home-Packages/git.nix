@@ -15,12 +15,12 @@
     ];
     aliases = {
       send = ''
-        git status &&
+        status &&
         echo -n Commit Message:  &&
         read -r commitMessage &&
-        git add . &&
-        git commit -m \"$commitMessage\" &&
-        git push
+        add . &&
+        commit -m \"$commitMessage\" &&
+        push
       '';
     };
     extraConfig = {

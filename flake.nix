@@ -47,7 +47,7 @@
   homeManagerModules = import ./Flake/Modules/Home-Manager;
 
   nixosConfigurations = {
-    thanatos = nixpkgs.lib.nixosSystem {
+    Thanatos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs outputs; };
       modules = [
         nur.nixosModules.nur
