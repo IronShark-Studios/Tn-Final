@@ -11,17 +11,21 @@
 *** TODO Follow up about Helm settings
 - https://tuhdo.github.io/helm-intro.html
 - [[https://github.com/thierryvolpiatto/emacs-config/blob/main/init-helm.el][Example Helm Config]]
-**** TODO Get HelmPosframe working
+- [[https://tuhdo.github.io/helm-intro.html][A Package in a League of it own]]
+**** TODO Test if HelmPosframe can work
 - https://melpa.org/#/helm-posframe
 - https://www.reddit.com/r/emacs/comments/df7lpc/is_posframe_what_i_am_looking_for/
 - https://www.reddit.com/r/emacs/comments/jj269n/display_helm_frames_in_the_center_of_emacs/
   - This one in particular seemed promising but doesn't work correctly. Good of an e-lisp project.
+**** TODO [[https://melpa.org/#/helm-company][Helm-Company]]
+**** TODO [[https://melpa.org/#/flyspell-correct-helm][Fly-Spell Helm]]
 *** TODO Configure default starting message
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode)
 #+end_src
 *** TODO Create a custom function to edit sudo files with tramp.
 - Try to create a shell command =seo= to do the same or second function to reopen current file as root
+- [[https://emacs.stackexchange.com/questions/52/edit-file-with-super-user-rights]]
 *** TODO Use ~(C-c C-z)~ to add bullet notes to a heading
 **** TODO add evil-insert-hook to capture hook
 *** TODO use refile-copy to timestamp and archive all completed tasks in a single chronological
@@ -59,29 +63,41 @@
 *** TODO Refine Evil Jumps
 **** TODO Easymotion
 **** TODO [[https://github.com/otavioschwanck/harpoon.el][Harpoon]]
-*** TODO Install addition packages
+*** TODO Test addition packages
 **** TODO [[https://github.com/bbatsov/crux][crux]]
+**** TODO [[https://github.com/nverno/llvm-mode][LLVM IR Mode]]
+**** TODO [[https://melpa.org/#/paredit][paredit]]
+**** TODO [[https://melpa.org/#/company][company]]
 ** TODO Configure Org Core
 - [[https://hugocisneros.com/org-config/][Example Config]]
+*** TODO Test Additional Packages
+**** TODO [[https://melpa.org/#/helm-org][Helm-Org]]
 *** TODO add empty line and point start position to org code block templates
 *** TODO Create Note taking workflow
-- [[https://jonathanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
-- [[https://karthinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
-- [[https://castel.dev/post/lecture-notes-1/][Latex + Vim Notes]]
-**** TODO Single large notes file
-- Integrate with Roam. By either the main file being indexed, or the top level headlines being Indexed.
-**** TODO Insight based / zettles
-*** TODO Knowledge Management Workflow
-- https://zk.zettel.page/examples
-- https://www.mentalnodes.com/taking-raw-notes-is-useless
-**** TODO Capture Information from Web
-- https://github.com/abo-abo/orca
-**** TODO PDF Viewer
-- [[https://github.com/vedang/pdf-tools]]
-- https://rgoswami.me/posts/org-note-workflow/#org-noter
-- https://alberto.am/2020-04-11-pdf-tools-as-default-pdf-viewer.html
-**** TODO Integrate wikipedia links using EWW and Org
-*** TODO Including a Math Workflow
+- [[https://jonhanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
+- [[https://karinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
+- [[https://casl.dev/post/lecture-notes-1/][Latex + Vim Notes]]
+**** TODO Singllarge notes file
+- Integrate witRoam. By either the main file being indexed, or the top level headlines being Indexed.
+**** TODO Insig based / zettles
+*** TODO Create Knowledge Management Workflow
+- https://zk.zeel.page/examples
+- https://www.mtalnodes.com/taking-raw-notes-is-useless
+- https://whhoncom/posts/para-org-mode/
+- https://www.bldingasecondbrain.com/
+- [[https://wwweddit.com/r/emacs/comments/10hm92r/emacs_and_knowledge_management_for_scientists/][Knowledge management for scientists]]
+- [[https://jetokuan.github.io/org-roam-guide/][Taking notes with org roam]]
+- [[https://tony-zorman.com/posts/my-phd-workflow.html][PhD Workflow]]
+- [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][How to take smart notes with Org Mode]]
+- [[https://rgoswami.me/posts/org-note-workflow/][Org Mode Note Workflow]]
+**** TODO Captu Information from Web
+- https://githucom/abo-abo/orca
+**** TODO PDF Vwer
+- [[https://gitb.com/vedang/pdf-tools]]
+- https://rgoswi.me/posts/org-note-workflow/#org-noter
+- https://alber.am/2020-04-11-pdf-tools-as-default-pdf-viewer.html
+**** TODO Integte wikipedia links using EWW and Org
+*** TODO Create Math Workflow
 **** TODO Doing Math with Org-mode
 ***** TODO Tables
 ***** TODO Elisp / Haskell (?) Code blocks
@@ -93,11 +109,18 @@
 **** TODO Latex inline code Support
 **** TODO Export org docs to pdf
 *** TODO Create Programming Workflow
+**** TODO Figure Out what TreeSitter is
+**** TODO Figure Out What LSP is
+- https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+- https://taingram.org/blog/emacs-lsp-ide.html
+**** TODO FIgure Out what DAP mode is]
+    - https://github.com/emacs-lsp/dap-mode
 **** TODO Including Magit Workflow
 *** TODO Create Task Management Workflow
 - [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][Checklists in Org-Mode]]
 - [[https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Task Management with Org Roam]]
 - [[https://writequit.org/denver-emacs/presentations/2017-04-11-time-clocking-with-org.html][Clocking Time With Org-Mode]]
+- [[https://melpa.org/#/org-pomodoro][Work Cycling with Org Pomodoro]]
 *** TODO Change Org Todo heading and colors
 #+begin_src emacs-lisp
  (setq org-todo-keywords
@@ -182,6 +205,7 @@
 (setq org-blank-before-new-entry (quote ((heading)
                                          (plain-list-item . auto))))
 #+end_src
+*** TODO [[https://emacs.stackexchange.com/questions/13820/inline-verbatim-and-code-with-quotes-in-org-mode][Consider adding to inline highlight block REGX]]
 *** TODO Refilling
 #+begin_src emacs-lisp
 ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
@@ -366,6 +390,7 @@
 *** TODO Add Support for images in org-mode
 - https://emacs.stackexchange.com/questions/42281/org-mode-is-it-possible-to-display-online-images
 - https://github.com/abo-abo/org-download
+- https://org-roam.discourse.group/t/is-there-a-solution-for-images-organization-in-org-roam/925
 ** TODO Configure Org-Agenda
 *** TODO Agenda Displays
 #+begin_src emacs-lisp
@@ -834,6 +859,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 #+end_src
 **** NEXT Update namespaces
 ** TODO Configure Org-Roam
+- https://discourse.nixos.org/t/how-to-install-org-roam-declaratively-doom-emacs/24459/9
 *** TODO Org Roam Bibtex
 - https://github.com/org-roam/org-roam-bibtex
 - Extends Org-Roam to support citations. Works along with ~helm-bibtex~
@@ -852,6 +878,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 *** TODO LaTex
 *** TODO Graphviz
 *** TODO hugo
+- [[https://willschenk.com/howto/2019/using_org_mode_in_hugo/][Using Hugo with Org Mode]]
 *** TODO Configure Org Mode Stuck Projects
 #+begin_src emacs-lisp
 (setq org-stuck-projects (quote ("" nil nil "")))
@@ -1155,6 +1182,8 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 *** TODO bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
 *** TODO Improve Firefox integration
 **** TODO integrate tridactyl and emacs exwm-firefox-evil
+- [[https://codeberg.org/emacs-weirdware/exwm-firefox/src/branch/main/exwm-firefox.el][EXWM FireFox]]
+- [[https://github.com/walseb/exwm-firefox-core][exwm firefox core]]
 **** TODO increase default text size of tridactyl windows
 **** TODO create hot key to open bookmarks manager
 **** TODO create hot key to open current page in eww
@@ -1175,6 +1204,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ***** TODO Matrix
 ***** TODO Slack
 ***** TODO Mastadon?
+- [[https://blog.nawaz.org/posts/2022/Dec/rendering-latex-formulae-in-mastodonel/][Adding LaTeX to Mastadon]]
 ***** TODO Reddit?
 ***** TODO Tumbler?
 ***** TODO HootSuite (just curious)
@@ -1193,6 +1223,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ****** TODO Compare Weechat with other graphical clients
 ****** TODO Integrate IRC / Matrix with Emacs
 *** TODO Integrate Contact lists using BBDB
+- https://www.jwz.org/bbdb/
 #+begin_src emacs-lisp
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, and org-protocol
 (setq org-capture-templates
@@ -1325,16 +1356,20 @@ file for the active year when a task is marked done
 **** Heading Workflow
 - http://doc.norang.ca/normal_task_states.png
 *** [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Taking notes with org-mode and org-roam]]
+*** [[https://ianthehenry.com/posts/how-to-learn-nix/][Ian Henry]]
 *** [[https://www.haskellforall.com/2017/01/typed-nix-programming-using-dhall.html][Typed Nix Programming Using Dhall]]
 *** [[https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab][Nix + Bazel]]
-*** [[https://tech.toryanderson.com/2021/01/08/adding-a-new-monitor-to-my-exwm-setup/][Multi Monitor EXWM]]
 *** [[https://sachachua.com/dotemacs/index.html][Sasha Chuas Config]]
 *** [[https://config.daviwil.com/emacs][David Wilson Config]]
 *** [[https://github.com/Phundrak/dotfiles][Phundrak Config]]
+*** [[https://github.com/tlater/dotfiles][TLater Config]]
 *** [[https://karthinks.com/][Karthinks Blog]]
 *** [[https://karl-voit.at/2020/06/14/Zettelkasten-concerns/][Zettlekasten Concerns]]
+*** [[https://ebzzry.com/en/emacs-pairs/#introduction][Smart Parens and Indentation]]
 ** Books
 *** [[https://gettingthingsdone.com/][Getting Things Done]]
+*** [[https://www.amazon.com/Building-Second-Brain-Organize-Potential/dp/1982167386][Building a second brain]]
+*** [[https://www.amazon.com/PARA-Method-Simplify-Organize-Digital-ebook/dp/B0C2QPWBP4][PARA Method]]
 * Long Term
 ** TODO Finalize =README.org=
 ** TODO Write new blog article on config refactor
@@ -1343,6 +1378,7 @@ file for the active year when a task is marked done
 *** TODO Repeatable disk partitioning using a machine specific script.
 *** TODO Use of Zen kernel with older normal kernel fallback
 *** TODO Use of ZFS for file system
+- [[https://danieldk.eu/Posts/2019-05-01-NixOS-Dropbox-ZFS.html][Dropbox with ZFS]]
 *** TODO Use of TMPFS and Impermance modules
 *** TODO Use of Libreboot Bios
 *** TODO Full disk encryption
@@ -1358,7 +1394,11 @@ file for the active year when a task is marked done
 ** TODO Figure out how to create custom systemd services
 - https://www.codyhiar.com/blog/repeated-tasks-with-systemd-service-timers-on-nixos/
 *** TODO autolock screen when laptop lid is closed
+- https://discourse.nixos.org/t/slock-when-suspend/22457/2
 *** TODO auto run rebuild, upgrade, and clean nightly
+** TODO Configure SSH to Use PGP
+- https://rzetterberg.github.io/yubikey-gpg-nixos.html
+- https://framagit.org/Glandos/bw-ssh/
 ** TODO Create a first time start up script
 *** TODO First time ssh key set up
 ** TODO create a tmux + vim ssh config
@@ -1408,3 +1448,11 @@ file for the active year when a task is marked done
 - https://github.com/zerolfx/copilot.el
 ** TODO Learn How to Create Dev Env with Nix
 - [[https://determinate.systems/posts/nix-direnv][Nix-Direnv]]
+** TODO Advanced EXWM Config
+- [[https://tech.toryanderson.com/2021/01/08/adding-a-new-monitor-to-my-exwm-setup/][Multi Monitor EXWM]]
+- [[https://github.com/johanwiden/exwm-setup#overview-of-the-setup][EXWM Example Config]]
+- [[https://sqrtminusone.xyz/posts/2022-01-03-exwm/][EXWM and Perspective]]
+- [[https://github.com/johanwiden/exwm-setup#overview-of-the-setup][EXWM Advanced Configuration]]
+** TODO Fitness and Nutrition Tracking with Emacs
+- https://gist.github.com/alphapapa/982467abc1bf29f57c5cd2c408a77bd5
+- https://gist.github.com/iocanel/0b8bcdb3d69fb7731069cb872f836507
