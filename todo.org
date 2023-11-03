@@ -10,11 +10,16 @@
 ***** TODO Research xmonad style video fullscreening
 *** TODO Follow up about Helm settings
 - https://tuhdo.github.io/helm-intro.html
+- [[https://github.com/thierryvolpiatto/emacs-config/blob/main/init-helm.el][Example Helm Config]]
 **** TODO Get HelmPosframe working
 - https://melpa.org/#/helm-posframe
 - https://www.reddit.com/r/emacs/comments/df7lpc/is_posframe_what_i_am_looking_for/
 - https://www.reddit.com/r/emacs/comments/jj269n/display_helm_frames_in_the_center_of_emacs/
   - This one in particular seemed promising but doesn't work correctly. Good of an e-lisp project.
+*** TODO Configure default starting message
+#+begin_src emacs-lisp
+(setq initial-major-mode 'org-mode)
+#+end_src
 *** TODO Create a custom function to edit sudo files with tramp.
 - Try to create a shell command =seo= to do the same or second function to reopen current file as root
 *** TODO Use ~(C-c C-z)~ to add bullet notes to a heading
@@ -57,26 +62,42 @@
 *** TODO Install addition packages
 **** TODO [[https://github.com/bbatsov/crux][crux]]
 ** TODO Configure Org Core
+- [[https://hugocisneros.com/org-config/][Example Config]]
 *** TODO add empty line and point start position to org code block templates
 *** TODO Create Note taking workflow
+- [[https://jonathanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
+- [[https://karthinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
+- [[https://castel.dev/post/lecture-notes-1/][Latex + Vim Notes]]
 **** TODO Single large notes file
 - Integrate with Roam. By either the main file being indexed, or the top level headlines being Indexed.
 **** TODO Insight based / zettles
-**** TODO Long Term Knowledge review workflow integration
-**** TODO Including a Math Workflow
-***** TODO Doing Math with Org-mode
-****** TODO Tables
-****** TODO Elisp / Haskell (?) Code blocks
+*** TODO Knowledge Management Workflow
+- https://zk.zettel.page/examples
+- https://www.mentalnodes.com/taking-raw-notes-is-useless
+**** TODO Capture Information from Web
+- https://github.com/abo-abo/orca
+**** TODO PDF Viewer
+- [[https://github.com/vedang/pdf-tools]]
+- https://rgoswami.me/posts/org-note-workflow/#org-noter
+- https://alberto.am/2020-04-11-pdf-tools-as-default-pdf-viewer.html
+**** TODO Integrate wikipedia links using EWW and Org
+*** TODO Including a Math Workflow
+**** TODO Doing Math with Org-mode
+***** TODO Tables
+***** TODO Elisp / Haskell (?) Code blocks
 - https://wiki.haskell.org/Haskell_and_mathematics
-****** TODO LaTeX Engine
+***** TODO LaTeX Engine
 - https://www.latex-project.org/help/documentation/
 - https://texdoc.org/serve/latex2e.pdf/0
-***** TODO GNU calc and plot integration
-***** TODO Latex inline code Support
-***** TODO Export org docs to pdf
-***** TODO PDF Viewer
+**** TODO GNU calc and plot integration
+**** TODO Latex inline code Support
+**** TODO Export org docs to pdf
 *** TODO Create Programming Workflow
 **** TODO Including Magit Workflow
+*** TODO Create Task Management Workflow
+- [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][Checklists in Org-Mode]]
+- [[https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Task Management with Org Roam]]
+- [[https://writequit.org/denver-emacs/presentations/2017-04-11-time-clocking-with-org.html][Clocking Time With Org-Mode]]
 *** TODO Change Org Todo heading and colors
 #+begin_src emacs-lisp
  (setq org-todo-keywords
@@ -332,16 +353,19 @@
 (setq org-return-follows-link t)
 #+end_src
 *** TODO Figure out how to integrate with phone
+**** TODO Figure out if this is needed.
 #+begin_src emacs-lisp
 ;; Don't enable this because it breaks access to emacs from my Android phone
 (setq org-startup-with-inline-images nil)
 #+end_src
-**** TODO Figure out if this is needed.
 **** TODO Orgzly to access todos from phone
 *** TODO Show notes in the order they are taken
 #+begin_src emacs-lisp
 (setq org-reverse-note-order nil)
 #+end_src
+*** TODO Add Support for images in org-mode
+- https://emacs.stackexchange.com/questions/42281/org-mode-is-it-possible-to-display-online-images
+- https://github.com/abo-abo/org-download
 ** TODO Configure Org-Agenda
 *** TODO Agenda Displays
 #+begin_src emacs-lisp
@@ -780,7 +804,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (run-at-time "05:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 #+end_src
-**** NEXT figure out how to use ~run-at-time~ for other stuff
+**** TODO figure out how to use ~run-at-time~ for other stuff
 *** TODO Configure agenda display.
 #+begin_src emacs-lisp
 (setq org-agenda-persistent-filter t)
@@ -789,8 +813,9 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq org-agenda-skip-additional-timestamps-same-entry t)
 #+end_src
-**** NEXT check if tag sublevel is usefull
-**** NEXT Consider auto resetting filters daily
+**** TODO check if tag sublevel is usefull
+**** TODO Consider auto resetting filters daily
+**** TODO [[https://protesilaos.com/codelog/2021-12-09-emacs-org-block-agenda/][Example Org Agenda Config]]
 *** TODO Automatically convert ~next~ tasks to projects
 #+begin_src emacs-lisp
 (defun bh/mark-next-parent-tasks-todo ()
@@ -820,6 +845,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 - Opens in your default web browser
 
 *** TODO Org Bibtex
+- [[https://www.jonathanleroux.org/bibtex-mode.html#0300][Installing Bibtex]]
 **** TODO Integrate Org-Bibtex with Org-Roam
 ** TODO Configure Supporting Org stuff
 *** TODO Bibtex
@@ -1121,6 +1147,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 *** TODO Org Flash Cards
 *** TODO [[https://github.com/nobiot/org-transclusion#original-idea-by-john-kitchin][Org Transclusion]]
 ** TODO Configure Magit
+- https://github.com/dandavison/magit-delta
 ** TODO Configure interaction with non-emacs programs
 *** TODO Use Google Calendar notifications for appointment reminders
 *** TODO exorcism (programming tutorial)
@@ -1251,23 +1278,23 @@ hardware.nvidia.prime = {
   intelBusId = "PCI:00:02:0";  # Found with lspci | grep VGA
 };
 #+end_src
-
-** [[http://doc.norang.ca/org-mode.html][Organizing your life in plain text]]
-*** TODO Follow up with organizing your life in plain text 10.2, 16.3, 16.6
-*** Projects
+** Blogs
+*** [[http://doc.norang.ca/org-mode.html][Organizing your life in plain text]]
+**** TODO Follow up with organizing your life in plain text 10.2, 16.3, 16.6
+**** Projects
 - A project is any todo heading with todo subheading
 - Projects can be created at any sub heading level
 - A project without a sub-heading marked as ~next~ will be added to a stuck projects list
-*** Tags
+**** Tags
 - tags are used to filter todo's based on type
 - Use tags to separate recurring and non recurring task in agenda view
 - ~#+FILETAGS:~ Can be added at the top of a file to apply one or more tags to the entire file
 - Tags can be grouped together so only one can be applied to a heading at a time.
 - Tags can be added using the ~C-c C-q~ Hotkey
-*** Interrupts
+**** Interrupts
 - Created in a completed state, Grouped as either digital (phone/text/email/ect) or in person.
 - Tracked as part of an org capture template.
-*** Capturing
+**** Capturing
 - Minimal number of capture templates, all pointing to a single ~"inbox"~ org file. Part of dialy journal
   - Inbox file cleaned out daily
 - Separate things to be captured into groups
@@ -1278,16 +1305,16 @@ hardware.nvidia.prime = {
   - New Habit (recurring Task)
   - New Note
   - Interruptions (short unexpected tasks, in the middle of a larger one(?))
-*** Refilling
+**** Refilling
 - Have a permanent section of the daily journal with this heading ~#+FILETAGS: REFILE~ where all org captures are stored until copied into their proper place.
 - Ultimately this should be a part of the ROAM dailies template.
-*** Clocking
+**** Clocking
 - Create a default task that that will automatically be clocked into when not doing something else.
 - When moving a clocked todo to done status. Org will automatically start clocking with the parent todo if there is one. Otherwise it returns to the default clock target.
-*** Storing Todos
+**** Storing Todos
 - Possibly create a series of files to store non project specific todos with file inheritance
   - Example Tag for file heading ~#+FILETAGS: PERSONAL~
-*** Archives
+**** Archives
 - General tasks can be refilled into a ~Archive.org~
 - Each ~project.org~ file should have a ~* Archived Tasks~ Sub-heading
 - Tasks should be archived after being marked completed for more than 30 days.
@@ -1295,9 +1322,19 @@ hardware.nvidia.prime = {
 - When creating a project the first task should describe the overall project and act as the final task to be closed.
 file for the active year when a task is marked done
 
-*** Heading Workflow
+**** Heading Workflow
 - http://doc.norang.ca/normal_task_states.png
-** [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Taking notes with org-mode and org-roam]]
+*** [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Taking notes with org-mode and org-roam]]
+*** [[https://www.haskellforall.com/2017/01/typed-nix-programming-using-dhall.html][Typed Nix Programming Using Dhall]]
+*** [[https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab][Nix + Bazel]]
+*** [[https://tech.toryanderson.com/2021/01/08/adding-a-new-monitor-to-my-exwm-setup/][Multi Monitor EXWM]]
+*** [[https://sachachua.com/dotemacs/index.html][Sasha Chuas Config]]
+*** [[https://config.daviwil.com/emacs][David Wilson Config]]
+*** [[https://github.com/Phundrak/dotfiles][Phundrak Config]]
+*** [[https://karthinks.com/][Karthinks Blog]]
+*** [[https://karl-voit.at/2020/06/14/Zettelkasten-concerns/][Zettlekasten Concerns]]
+** Books
+*** [[https://gettingthingsdone.com/][Getting Things Done]]
 * Long Term
 ** TODO Finalize =README.org=
 ** TODO Write new blog article on config refactor
@@ -1319,6 +1356,7 @@ file for the active year when a task is marked done
 - ffmpeg
 - blind
 ** TODO Figure out how to create custom systemd services
+- https://www.codyhiar.com/blog/repeated-tasks-with-systemd-service-timers-on-nixos/
 *** TODO autolock screen when laptop lid is closed
 *** TODO auto run rebuild, upgrade, and clean nightly
 ** TODO Create a first time start up script
@@ -1366,3 +1404,7 @@ file for the active year when a task is marked done
 ** TODO Find a free and feature matched self hoasted alternative to gsuite, and bitwarden
 ** TODO Find a better way to ID active buffer
 - Create a secondary modeline that is only a 2px colored line. that goes gray when buffer is inactive.
+** TODO Add LLM Style Interaction
+- https://github.com/zerolfx/copilot.el
+** TODO Learn How to Create Dev Env with Nix
+- [[https://determinate.systems/posts/nix-direnv][Nix-Direnv]]
