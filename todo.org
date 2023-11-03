@@ -7,6 +7,8 @@
 ***** TODO Emacs-Winner mode for faster layout management
 ***** TODO Emacs-Perspectives for layout management
 ***** TODO Consider Dynamic Tiling package
+- https://www.youtube.com/watch?v=gbdE7oZEdtA&list=WL&index=351&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=_qXZNfRcNnw&list=WL&index=354&pp=gAQBiAQB
 ***** TODO Research xmonad style video fullscreening
 *** TODO Follow up about Helm settings
 - https://tuhdo.github.io/helm-intro.html
@@ -40,6 +42,7 @@
 **** TODO gnu cash
 - if compatable with hledger
 **** TODO hledger
+- https://www.youtube.com/watch?v=cjoCNRpLanY&list=WL&index=472&pp=gAQBiAQB
 *** TODO Change evil ~s~ and ~r~ so they jump to the character not before it
 *** TODO Follow Up on ~abbrev mode~
 *** TODO Follow up on using attachments with org files
@@ -61,6 +64,11 @@
 (setq require-final-newline t)
 #+end_src
 *** TODO Refine Evil Jumps
+- https://www.youtube.com/watch?v=FrMRyXtiJkc&list=WL&index=62&t=190s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=wT_jUtEGfeg&list=WL&index=350&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=FtieBc3KptU&list=WL&index=468&t=915s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=3TX3kV3TICU&list=WL&index=469&t=55s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=JWD1Fpdd4Pc&list=WL&index=473&t=1353s&pp=gAQBiAQB
 **** TODO Easymotion
 **** TODO [[https://github.com/otavioschwanck/harpoon.el][Harpoon]]
 *** TODO Test addition packages
@@ -70,6 +78,9 @@
 **** TODO [[https://melpa.org/#/company][company]]
 ** TODO Configure Org Core
 - [[https://hugocisneros.com/org-config/][Example Config]]
+- https://www.youtube.com/watch?v=qz9tSMsMDII&list=WL&index=406&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=oJTwQvgfgMM&list=WL&index=420&t=1503s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=SzA2YODtgK4&list=WL&index=474&t=2848s&pp=gAQBiAQB
 *** TODO Test Additional Packages
 **** TODO [[https://melpa.org/#/helm-org][Helm-Org]]
 *** TODO add empty line and point start position to org code block templates
@@ -77,9 +88,15 @@
 - [[https://jonhanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
 - [[https://karinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
 - [[https://casl.dev/post/lecture-notes-1/][Latex + Vim Notes]]
-**** TODO Singllarge notes file
+- https://www.youtube.com/watch?v=4-YqqGGIkHg&list=WL&index=87&pp=gAQBiAQB (and other videos on channel)
+- https://www.youtube.com/watch?v=wB89lJs5A3s&list=WL&index=244&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=njibNuFQwjw&list=WL&index=245&t=605s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=5Q9435eIOVI&list=WL&index=265&t=296s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=bTbiC6SamT4&list=WL&index=279&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=Bpmkeh4D98s&list=WL&index=470&t=1646s&pp=gAQBiAQB
+**** TODO Single large notes file
 - Integrate witRoam. By either the main file being indexed, or the top level headlines being Indexed.
-**** TODO Insig based / zettles
+**** TODO Insight based / zettles
 *** TODO Create Knowledge Management Workflow
 - https://zk.zeel.page/examples
 - https://www.mtalnodes.com/taking-raw-notes-is-useless
@@ -108,6 +125,7 @@
 - https://www.latex-project.org/help/documentation/
 - https://texdoc.org/serve/latex2e.pdf/0
 - https://www.youtube.com/watch?v=xBctAt2TVew
+- https://www.youtube.com/watch?v=331YxgOJUGw&list=WL&index=280&pp=gAQBiAQB
 **** TODO GNU calc and plot integration
 **** TODO Latex inline code Support
 **** TODO Export org docs to pdf
@@ -116,6 +134,7 @@
 **** TODO Figure Out What LSP is
 - https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
 - https://taingram.org/blog/emacs-lsp-ide.html
+- https://www.youtube.com/watch?v=w7i4amO_zaE&list=WL&index=63&t=215s&pp=gAQBiAQB
 **** TODO FIgure Out what DAP mode is]
     - https://github.com/emacs-lsp/dap-mode
 **** TODO Including Magit Workflow
@@ -235,12 +254,12 @@
 
 (setq org-refile-target-verify-function 'Tn/verify-refile-target)
 #+end_src
-**** NEXT Create evil normal mode map for org task
-***** NEXT Copy and Refile
-****** NEXT Confirm wether state changes are shared across all copies of a heading
-******* NEXT If not, create tag to exclude non current daily node todos from agenda
+**** TODO Create evil normal mode map for org task
+***** TODO Copy and Refile
+****** TODO Confirm wether state changes are shared across all copies of a heading
+******* TODO If not, create tag to exclude non current daily node todos from agenda
 - I think I already have something done for this wich uses tags to mark roam node so be included. So I should only need to set something up to remove it form non active node.
-***** NEXT Confirm what ~org-indirect-buffer-display~ does.
+***** TODO Confirm what ~org-indirect-buffer-display~ does.
 *** TODO Change Starting Day of Org agenda Weekly View
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
@@ -367,12 +386,12 @@
 ; Use fundamental mode when editing plantuml blocks with C-c '
 (add-to-list 'org-src-lang-modes (quote ("plantuml" . fundamental)))
 #+end_src
-**** NEXT Update paths
-**** NEXT Update Namespaces
-**** NEXT Install system packages
-***** NEXT graphviz
+**** TODO Update paths
+**** TODO Update Namespaces
+**** TODO Install system packages
+***** TODO graphviz
 - [[https://www.graphviz.org/docs/layouts/][Graphviz Manual]]
-***** NEXT PlantUML
+***** TODO PlantUML
 *** TODO Configure Org Protocol with firefox
 #+begin_src emacs-lisp
 (require 'org-protocol)
@@ -386,6 +405,7 @@
 (setq org-startup-with-inline-images nil)
 #+end_src
 **** TODO Orgzly to access todos from phone
+**** TODO Find a way to take voice notes and transcribe them into plain text
 *** TODO Show notes in the order they are taken
 #+begin_src emacs-lisp
 (setq org-reverse-note-order nil)
@@ -874,6 +894,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 - Opens in your default web browser
 
 *** TODO Org Bibtex
+- https://www.youtube.com/watch?v=2t925KRBbFc&list=WL&index=264&t=89s&pp=gAQBiAQB
 - [[https://www.jonathanleroux.org/bibtex-mode.html#0300][Installing Bibtex]]
 **** TODO Integrate Org-Bibtex with Org-Roam
 ** TODO Configure Supporting Org stuff
@@ -1202,7 +1223,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 - https://emacsnotes.wordpress.com/2018/07/08/your-google-drive-now-within-your-emacs/
 *** TODO Emacs Communication Suite
 **** TODO Polybar Notifications
-- Systemcrafter polybar video
+- https://www.youtube.com/watch?v=usCfMstCZ7E&list=WL&index=353&t=790s&pp=gAQBiAQB
 **** TODO Emacs Email Client
 **** TODO WeeChat or similar
 ***** TODO Discord
@@ -1371,10 +1392,13 @@ file for the active year when a task is marked done
 *** [[https://karthinks.com/][Karthinks Blog]]
 *** [[https://karl-voit.at/2020/06/14/Zettelkasten-concerns/][Zettlekasten Concerns]]
 *** [[https://ebzzry.com/en/emacs-pairs/#introduction][Smart Parens and Indentation]]
+*** [[https://www.youtube.com/watch?v=WgV6M1LyfNY&list=WL&index=22&t=639s&pp=gAQBiAQB][The Unreasonable effectiveness of Plain Text]]
 ** Books
 *** [[https://gettingthingsdone.com/][Getting Things Done]]
 *** [[https://www.amazon.com/Building-Second-Brain-Organize-Potential/dp/1982167386][Building a second brain]]
 *** [[https://www.amazon.com/PARA-Method-Simplify-Organize-Digital-ebook/dp/B0C2QPWBP4][PARA Method]]
+*** [[https://www.audible.com/pd/How-to-Read-a-Book-Audiobook/B09GHYQ8WN][How to Read a Book]]
+*** [[https://www.audible.com/pd/The-Extended-Mind-Audiobook/B0B1QWHMTZ][The Extended Mind]]
 * Long Term
 ** TODO Finalize =README.org=
 ** TODO Write new blog article on config refactor
@@ -1411,6 +1435,8 @@ file for the active year when a task is marked done
 *** TODO First time ssh key set up
 ** TODO create a tmux + vim ssh config
 - https://www.reddit.com/r/emacs/comments/xyo2fo/orgmode_vterm_tmux/
+- https://www.youtube.com/watch?v=stCXFxC4OH0&list=WL&index=11&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=DzNmUNvnB04&list=WL&index=99&t=100s&pp=gAQBiAQB
 *** TODO create a default vimrc
 ** TODO create script to enable wacom tablet driver and set bindings
 
@@ -1459,6 +1485,11 @@ file for the active year when a task is marked done
 ** TODO Learn How to Create Dev Env with Nix
 - [[https://determinate.systems/posts/nix-direnv][Nix-Direnv]]
 - https://notes.abhinavsarkar.net/2022/just-nix-podman-combo
+- https://www.youtube.com/watch?v=LjyQ7baj-KM&list=WL&index=78&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=KaIRpx11qrc&list=WL&index=79&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=6Le0IbPRzOE&list=WL&index=81&t=1844s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=0uixRE8xlbY&list=WL&index=82&t=770s&pp=gAQBiAQB
+- https://www.youtube.com/watch?v=5XY3K8DH55M&list=WL&index=83&t=428s&pp=gAQBiAQB
 ** TODO Advanced EXWM Config
 - [[https://tech.toryanderson.com/2021/01/08/adding-a-new-monitor-to-my-exwm-setup/][Multi Monitor EXWM]]
 - [[https://github.com/johanwiden/exwm-setup#overview-of-the-setup][EXWM Example Config]]
@@ -1468,3 +1499,12 @@ file for the active year when a task is marked done
 - https://gist.github.com/alphapapa/982467abc1bf29f57c5cd2c408a77bd5
 - https://gist.github.com/iocanel/0b8bcdb3d69fb7731069cb872f836507
 - https://www.reddit.com/r/emacs/comments/a4zipp/fitnessorg_an_emacs_foodweightworkout_tracker/
+** TODO Install additional System Packages
+*** TODO [[https://youtu.be/Zv1P6-kUn0c][WirePlumber]]
+*** TODO [[https://www.youtube.com/watch?v=yufC22262I4&list=WL&index=6&t=552s&pp=gAQBiAQB][LocalSend]]
+*** TODO [[https://www.youtube.com/watch?v=-RW546svPOc&list=WL&index=170&t=629s&pp=gAQBiAQB][CURL]] utils
+*** TODO GH and Gitlab equivalent
+* Media Center Config Stuff
+** TODO Find a way to control tv ir via usb
+** TODO Build simplified Config
+*** TODO Use Xmonad instead of EXWM
