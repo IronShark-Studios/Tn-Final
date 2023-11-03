@@ -90,8 +90,10 @@
 - [[https://tony-zorman.com/posts/my-phd-workflow.html][PhD Workflow]]
 - [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][How to take smart notes with Org Mode]]
 - [[https://rgoswami.me/posts/org-note-workflow/][Org Mode Note Workflow]]
-**** TODO Captu Information from Web
+**** TODO Capture Information from Web
 - https://githucom/abo-abo/orca
+- https://github.com/ArchiveBox/ArchiveBox
+- https://www.youtube.com/watch?v=eaZUZCzaIgw
 **** TODO PDF Vwer
 - [[https://gitb.com/vedang/pdf-tools]]
 - https://rgoswi.me/posts/org-note-workflow/#org-noter
@@ -105,6 +107,7 @@
 ***** TODO LaTeX Engine
 - https://www.latex-project.org/help/documentation/
 - https://texdoc.org/serve/latex2e.pdf/0
+- https://www.youtube.com/watch?v=xBctAt2TVew
 **** TODO GNU calc and plot integration
 **** TODO Latex inline code Support
 **** TODO Export org docs to pdf
@@ -1172,6 +1175,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 **** NEXT Confirm use case
 **** NEXT update target sub heading
 *** TODO Org Flash Cards
+- https://www.reddit.com/r/emacs/comments/i0n100/is_there_a_way_to_transform_orgroam_files_to_anki/
 *** TODO [[https://github.com/nobiot/org-transclusion#original-idea-by-john-kitchin][Org Transclusion]]
 ** TODO Configure Magit
 - https://github.com/dandavison/magit-delta
@@ -1185,6 +1189,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 - [[https://codeberg.org/emacs-weirdware/exwm-firefox/src/branch/main/exwm-firefox.el][EXWM FireFox]]
 - [[https://github.com/walseb/exwm-firefox-core][exwm firefox core]]
 **** TODO increase default text size of tridactyl windows
+**** TODO [[https://www.reddit.com/r/archlinux/][change default tridactyl search engine]]
 **** TODO create hot key to open bookmarks manager
 **** TODO create hot key to open current page in eww
 **** TODO rebind tridactyl tab to space
@@ -1380,6 +1385,7 @@ file for the active year when a task is marked done
 *** TODO Use of ZFS for file system
 - [[https://danieldk.eu/Posts/2019-05-01-NixOS-Dropbox-ZFS.html][Dropbox with ZFS]]
 *** TODO Use of TMPFS and Impermance modules
+- https://www.reddit.com/r/NixOS/comments/su5bwl/whos_here_runs_nixos_with_opt_in_state/
 *** TODO Use of Libreboot Bios
 *** TODO Full disk encryption
 ** TODO Add these programs to work computer
@@ -1391,6 +1397,8 @@ file for the active year when a task is marked done
 - obs
 - ffmpeg
 - blind
+*** TODO Manage some program configurations with out of store symlinks
+- https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/
 ** TODO Figure out how to create custom systemd services
 - https://www.codyhiar.com/blog/repeated-tasks-with-systemd-service-timers-on-nixos/
 *** TODO autolock screen when laptop lid is closed
@@ -1402,6 +1410,7 @@ file for the active year when a task is marked done
 ** TODO Create a first time start up script
 *** TODO First time ssh key set up
 ** TODO create a tmux + vim ssh config
+- https://www.reddit.com/r/emacs/comments/xyo2fo/orgmode_vterm_tmux/
 *** TODO create a default vimrc
 ** TODO create script to enable wacom tablet driver and set bindings
 
@@ -1444,10 +1453,12 @@ file for the active year when a task is marked done
 ** TODO Find a free and feature matched self hoasted alternative to gsuite, and bitwarden
 ** TODO Find a better way to ID active buffer
 - Create a secondary modeline that is only a 2px colored line. that goes gray when buffer is inactive.
+- https://www.youtube.com/watch?v=Qf_DLPIA9Cs
 ** TODO Add LLM Style Interaction
 - https://github.com/zerolfx/copilot.el
 ** TODO Learn How to Create Dev Env with Nix
 - [[https://determinate.systems/posts/nix-direnv][Nix-Direnv]]
+- https://notes.abhinavsarkar.net/2022/just-nix-podman-combo
 ** TODO Advanced EXWM Config
 - [[https://tech.toryanderson.com/2021/01/08/adding-a-new-monitor-to-my-exwm-setup/][Multi Monitor EXWM]]
 - [[https://github.com/johanwiden/exwm-setup#overview-of-the-setup][EXWM Example Config]]
@@ -1456,3 +1467,4 @@ file for the active year when a task is marked done
 ** TODO Fitness and Nutrition Tracking with Emacs
 - https://gist.github.com/alphapapa/982467abc1bf29f57c5cd2c408a77bd5
 - https://gist.github.com/iocanel/0b8bcdb3d69fb7731069cb872f836507
+- https://www.reddit.com/r/emacs/comments/a4zipp/fitnessorg_an_emacs_foodweightworkout_tracker/
