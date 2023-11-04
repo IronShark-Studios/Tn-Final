@@ -533,8 +533,9 @@
 
 (require 'org-tempo)
 (add-to-list 'org-structure-template-alist
-             '(("el" . "src emacs-lisp\n")
-               ("en" . "src nix\n")))
+             '("el" . "src emacs-lisp\n"))
+(add-to-list 'org-structure-template-alist
+             '("en" . "src nix\n"))
 
 (defun Tn/org-mode-setup ()
   (org-indent-mode 1)
