@@ -1219,7 +1219,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ** TODO Configure interaction with non-emacs programs
 *** TODO Use Google Calendar notifications for appointment reminders
 *** TODO exorcism (programming tutorial)
-*** TODO OpenSCAD
 *** TODO bluetooth manager using [[https://github.com/emacsmirror/bluetooth][bluetooth.el]]
 *** TODO Improve Firefox integration
 **** TODO integrate tridactyl and emacs exwm-firefox-evil
@@ -1502,6 +1501,7 @@ file for the active year when a task is marked done
 *** TODO Zsh
 *** TODO Starship
 *** TODO SSDM
+*** TODO OpenSCAD
 ** TODO Find a free and feature matched self hoasted alternative to gsuite, and bitwarden
 ** TODO Find a better way to ID active buffer
 - Create a secondary modeline that is only a 2px colored line. that goes gray when buffer is inactive.

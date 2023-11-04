@@ -482,7 +482,17 @@
 (use-package org-appear)
 (add-hook 'org-mode-hook 'org-appear-mode)
 
-(setq org-appear-trigger 'manual)
+(setq org-appear-trigger 'manual
+      org-appear-autoemphasis t
+      org-appear-autolinks t
+      org-link-descriptive t
+      org-pretty-entities t
+      org-appear-autoentities t
+      org-appear-autosubmarkers t
+      org-appear-autokeywords t
+      org-hidden-keywords t
+      org-appear-inside-latex t)
+
 (add-hook 'org-mode-hook (lambda ()
                            (add-hook 'evil-insert-state-entry-hook
                                      #'org-appear-manual-start
@@ -492,6 +502,39 @@
                                      #'org-appear-manual-stop
                                      nil
                                      t)))
+
+(defun Tn/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . Tn/org-mode-visual-fill))
+
+(use-package ox-hugo
+  :after ox)
+
+(setq org-export-backends '(ascii html icalendar latex md odt freemind))
+
+(require 'org-agenda)
+
+(setq org-agenda-files (append
+                        (directory-files-recursively "~/Projects/" "\\todo.org$")
+                        ))
+
+(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
+(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
+(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
+
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist
+             '(("el" . "src emacs-lisp\n")
+               ("en" . "src nix\n")))
 
 (defun Tn/org-mode-setup ()
   (org-indent-mode 1)
@@ -529,9 +572,7 @@
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
 (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
-
-)
+(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 (defun Tn/org-find-time-file-property (property &optional anywhere)
   "Return the position of the time file PROPERTY if it exists.
@@ -580,25 +621,17 @@ it can be passed in POS."
   (when (derived-mode-p 'org-mode)
     (Tn/org-set-time-file-property "LAST_MODIFIED")))
 
-;; (setq org-capture-templates
-;;   '(("j" "Journal Entry"
-;;          entry (file+datetree "~/Grimoire/temp-journal.org")
-;;          "* %<%H:%M> %?"
-;;          :empty-lines 1)
-;;     ("f" "Food Log"
-;;          entry (file+datetree "~/Grimoire/temp-food-log.org")
-;;          "* %<%H:%M> %?"
-;;          :empty-lines 1)))
+(setq org-capture-templates
+  '(("j" "Journal Entry"
+         entry (file+datetree "~/Grimoire/temp-journal.org")
+         "* %<%H:%M> %?"
+         :empty-lines 1)
+    ("f" "Food Log"
+         entry (file+datetree "~/Grimoire/temp-food-log.org")
+         "* %<%H:%M> %?"
+         :empty-lines 1)))
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-
-;; (setq org-agenda-files (append
-                        ;; (directory-files-recursively "~/Grimoire/" "\\.org$")
-                        ;; (directory-files-recursively "~/Projects/" "\\.org$")
-                        ;; ))
-
-;; (define-key org-agenda-mode-map "j" 'evil-next-line)
-;; (define-key org-agenda-mode-map "k" 'evil-previous-line)
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -614,22 +647,6 @@ it can be passed in POS."
               ("MEETING" :foreground "gainboro" :weight bold)
               ("PHONE" :foreground "gainboro" :weight bold))))
 
-(add-to-list 'org-structure-template-alist
-             '("en" . "src nix"))
-
-(defun Tn/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package org
-
-:hook (org-mode . Tn/org-mode-setup)
-      (org-mode . Tn/org-font-setup)
-      (after-save . org-babel-tangle)
-      (before-save . Tn/org-set-last-modified)
-
-:config
 (setq org-ellipsis " ▾"
       org-hide-emphasis-markers t
       org-src-fontify-natively t
@@ -644,6 +661,14 @@ it can be passed in POS."
       org-confirm-babel-evaluate nil
       org-capture-bookmark nil)
 
+(use-package org
+:hook
+(org-mode . Tn/org-mode-setup)
+(org-mode . Tn/org-font-setup)
+(after-save . org-babel-tangle)
+(before-save . Tn/org-set-last-modified)
+
+:config
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -651,33 +676,7 @@ it can be passed in POS."
    (latex . t)
    (scheme . t)))
 
-(push '("conf-unix" . conf-unix) org-src-lang-modes)
-
-)
-
-(require 'org-tempo)
-(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-
-(require 'org-agenda)
-
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
-(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
-
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
-
-(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
-
-(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
-
-(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
-
-(setq org-export-backends '(ascii html icalendar latex md odt freemind))
-
-(use-package ox-hugo
-  :after ox)
-
-(use-package visual-fill-column
-  :hook (org-mode . Tn/org-mode-visual-fill))
+(push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (use-package scad-mode)
 
