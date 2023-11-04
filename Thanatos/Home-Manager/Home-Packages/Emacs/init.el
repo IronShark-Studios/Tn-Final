@@ -697,6 +697,11 @@ it can be passed in POS."
 (use-package visual-fill-column
   :hook (org-mode . Tn/org-mode-visual-fill))
 
+(use-package scad-mode)
+
+(use-package scad-dbus
+  :after scad-mode)
+
 (use-package centered-cursor-mode)
 
 (use-package dmenu)

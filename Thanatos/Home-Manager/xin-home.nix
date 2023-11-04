@@ -6,6 +6,7 @@
     ./Home-Packages/Alacritty/alacritty.nix
     ./Home-Packages/Alacritty/alacrittyConfig.nix
     ./Home-Packages/lf.nix
+    ./Home-Packages/openscad.nix
     ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
     ./Home-Packages/Firefox/firefox.nix

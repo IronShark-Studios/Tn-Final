@@ -469,6 +469,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/Alacritty/alacritty.nix
     ./Home-Packages/Alacritty/alacrittyConfig.nix
     ./Home-Packages/lf.nix
+    ./Home-Packages/openscad.nix
     ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
     ./Home-Packages/Firefox/firefox.nix
@@ -1566,6 +1567,28 @@ Window controls will be all wrong without it
 }
 #+end_src
 
+**** OpenSCAD
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/openscad.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home = {
+    packages = with pkgs; [
+      openscad
+    ];
+
+    # file."tridactyl.nix" = {
+    #   target = ".config/tridactyl/tridactylrc";
+    #   text = ''
+    #   '';
+    #   };
+    };
+}
+#+end_src
+
 **** Emacs
 
 ***** emacs.nix
@@ -2448,7 +2471,14 @@ it can be passed in POS."
   :hook (org-mode . Tn/org-mode-visual-fill))
 
 #+end_src
+****** OpenSCAD
 
+#+begin_src emacs-lisp
+(use-package scad-mode)
+
+(use-package scad-dbus
+  :after scad-mode)
+#+end_src
 ****** misc.
 
 #+begin_src emacs-lisp
