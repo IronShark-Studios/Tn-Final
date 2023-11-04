@@ -1,3 +1,5 @@
+* Current Focus :
+Get basic functions of Org-Roam working.
 * Tn-Final Remainder
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
@@ -1322,7 +1324,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 *** TODO have only current workspace number show on bar
 *** TODO remove un-needed code
 *** TODO change name
-
 * Reading List
 ** Saved for later : using nvidia Graphics Drivers
 Enables the use of a Nvidia Graphics card. Exports all graphics processing to the GPU.
@@ -1501,10 +1502,12 @@ file for the active year when a task is marked done
 - https://www.reddit.com/r/emacs/comments/a4zipp/fitnessorg_an_emacs_foodweightworkout_tracker/
 ** TODO Install additional System Packages
 *** TODO [[https://youtu.be/Zv1P6-kUn0c][WirePlumber]]
+*** TODO Pavucontrol
+*** TODO [[https://www.youtube.com/watch?v=TDBGsbwMo40][qpwgraph]]
 *** TODO [[https://www.youtube.com/watch?v=yufC22262I4&list=WL&index=6&t=552s&pp=gAQBiAQB][LocalSend]]
 *** TODO [[https://www.youtube.com/watch?v=-RW546svPOc&list=WL&index=170&t=629s&pp=gAQBiAQB][CURL]] utils
 *** TODO GH and Gitlab equivalent
-* Media Center Config Stuff
+* Media Center Configuration
 ** TODO Find a way to control tv ir via usb
 ** TODO Build simplified Config
 *** TODO Use Xmonad instead of EXWM
