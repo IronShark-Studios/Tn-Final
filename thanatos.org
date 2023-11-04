@@ -1795,31 +1795,13 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
      (setq mode-line-format nil))
 
-    ("obsidian" (exwm-input-release-keyboard)
+    ("OpenSCAD" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
-    ("krita" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("Blender" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("Gimp" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("discord" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
     ("Bitwarden" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("XIVLauncher.Core" (exwm-input-release-keyboard)
      (setq mode-line-format nil))))
 #+end_src
 ******* custom functions
@@ -2475,9 +2457,6 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (use-package scad-mode)
-
-(use-package scad-dbus
-  :after scad-mode)
 #+end_src
 ****** misc.
 

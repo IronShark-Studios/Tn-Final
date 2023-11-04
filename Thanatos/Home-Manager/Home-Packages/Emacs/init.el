@@ -92,31 +92,13 @@
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
      (setq mode-line-format nil))
 
-    ("obsidian" (exwm-input-release-keyboard)
+    ("OpenSCAD" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
-    ("krita" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("Blender" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("Gimp" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("discord" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
     ("Bitwarden" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("ffxiv_dx11.exe" (exwm-input-release-keyboard)
-     (setq mode-line-format nil))
-
-    ("XIVLauncher.Core" (exwm-input-release-keyboard)
      (setq mode-line-format nil))))
 
 (defun Tn/dmenu-launch ()
@@ -698,9 +680,6 @@ it can be passed in POS."
   :hook (org-mode . Tn/org-mode-visual-fill))
 
 (use-package scad-mode)
-
-(use-package scad-dbus
-  :after scad-mode)
 
 (use-package centered-cursor-mode)
 
