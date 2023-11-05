@@ -2541,6 +2541,9 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (use-package scad-mode)
+
+(use-package scad-preview
+  :after scad-mode)
 #+end_src
 ****** misc.
 

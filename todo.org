@@ -1216,6 +1216,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ** TODO Configure Magit
 - https://github.com/dandavison/magit-delta
 *** TODO Further limit magit filter to only show main buffer with helm-boring buffers
+** TODO Configure Visidata
+- https://www.visidata.org/docs/customize/
+*** TODO Create emacs (M-x visidata) function to open visidata directly
+*** TODO Add Vi movement Keys
+*** TODO Create Basic theme
 ** TODO Configure interaction with non-emacs programs
 *** TODO Use Google Calendar notifications for appointment reminders
 *** TODO exorcism (programming tutorial)
