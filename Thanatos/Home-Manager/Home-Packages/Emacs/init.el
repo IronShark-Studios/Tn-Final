@@ -291,9 +291,12 @@
 (global-aggressive-indent-mode 1)
 
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package smartparens
+  init
+  (add-hook 'prog-mode-hook #'smartparens-mode)
   :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
@@ -666,7 +669,7 @@ it can be passed in POS."
 :hook
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
-(after-save . org-babel-tangle)
+(before-save . org-babel-tangle)
 (before-save . Tn/org-set-last-modified)
 
 :config

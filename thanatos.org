@@ -661,6 +661,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
+      bindkey '^H' backward-kill-word
       bindkey -a 'm' vi-backward-char
       bindkey -v
       neofetch
@@ -1567,7 +1568,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** OpenSCAD
+**** openscad.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/openscad.nix
 :END:
@@ -1604,6 +1605,28 @@ Window controls will be all wrong without it
            showScaleProportional=true
         '';
       };
+    };
+}
+#+end_src
+
+**** visidata.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/visidata.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home = {
+    packages = with pkgs; [
+      visidata
+    ];
+
+    # file."visidataConfig" = {
+    #   target = ".config/visidata/config.py";
+    #   text = ''
+    #     '';
+    #   };
     };
 }
 #+end_src
@@ -2038,9 +2061,12 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (global-aggressive-indent-mode 1)
 
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package smartparens
+  init
+  (add-hook 'prog-mode-hook #'smartparens-mode)
   :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
@@ -2497,7 +2523,7 @@ it can be passed in POS."
 :hook
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
-(after-save . org-babel-tangle)
+(before-save . org-babel-tangle)
 (before-save . Tn/org-set-last-modified)
 
 :config
