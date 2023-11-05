@@ -96,6 +96,9 @@
     ("OpenSCAD" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
+    ("SCAD/Preview" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 

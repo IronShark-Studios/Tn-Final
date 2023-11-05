@@ -1842,6 +1842,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
     ("OpenSCAD" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
+    ("SCAD/Preview" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
