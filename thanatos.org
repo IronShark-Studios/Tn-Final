@@ -2065,7 +2065,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package smartparens
-  init
+  :init
   (add-hook 'prog-mode-hook #'smartparens-mode)
   :config
   (setq sp-show-pair-from-inside nil)
@@ -2084,7 +2084,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   :mode "\\.nix\\'")
 #+end_src
 
-****** helm (temp)
+****** helm
 
 #+begin_src emacs-lisp
 (use-package helm)

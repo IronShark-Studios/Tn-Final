@@ -295,7 +295,7 @@
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package smartparens
-  init
+  :init
   (add-hook 'prog-mode-hook #'smartparens-mode)
   :config
   (setq sp-show-pair-from-inside nil)
@@ -669,7 +669,6 @@ it can be passed in POS."
 :hook
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
-(before-save . org-babel-tangle)
 (before-save . Tn/org-set-last-modified)
 
 :config
