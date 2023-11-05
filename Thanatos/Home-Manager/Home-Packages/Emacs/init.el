@@ -684,9 +684,6 @@ it can be passed in POS."
 
 (use-package scad-mode)
 
-(use-package scad-preview
-  :after scad-mode)
-
 (use-package centered-cursor-mode)
 
 (use-package dmenu)
