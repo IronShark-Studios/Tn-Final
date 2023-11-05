@@ -9,6 +9,7 @@
     ./Home-Packages/openscad.nix
     ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
+    ./Home-Packages/visidata.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/policies.nix
     ./Home-Packages/Firefox/userChrome.nix
