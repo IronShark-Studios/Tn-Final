@@ -1798,6 +1798,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                 shell-mode-hook
                 eww-mode-hook
                 text-mode-hook
+                scad-preview-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
