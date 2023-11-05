@@ -61,6 +61,7 @@
                 shell-mode-hook
                 eww-mode-hook
                 text-mode-hook
+                scad-preview-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -682,6 +683,9 @@ it can be passed in POS."
 (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (use-package scad-mode)
+
+(use-package scad-preview
+  :after scad-mode)
 
 (use-package centered-cursor-mode)
 
