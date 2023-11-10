@@ -100,6 +100,9 @@
     ("SCAD/Preview" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
+    ("discord" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
     ("Alacritty" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 

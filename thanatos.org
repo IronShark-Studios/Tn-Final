@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-10 Fri 06:46]
+#+LAST_MODIFIED: [2023-11-10 Fri 06:52]
 
 * System
 
@@ -1846,6 +1846,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
      (setq mode-line-format nil))
 
     ("SCAD/Preview" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("discord" (exwm-input-release-keyboard)
      (setq mode-line-format nil))
 
     ("Alacritty" (exwm-input-release-keyboard)
