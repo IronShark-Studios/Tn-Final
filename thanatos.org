@@ -1,6 +1,7 @@
-#+TITLE: System Tangle File
+#+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
+#+LAST_MODIFIED: [2023-11-10 Fri 06:46]
 
 * System
 
@@ -488,6 +489,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
+    ./Home-Packages/communication.nix
   ];
 
   programs.home-manager.enable = true;
@@ -1795,6 +1797,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 (dolist (mode '(pdf-view-mode-hook
                 term-mode-hook
+                org-mode-hook
                 shell-mode-hook
                 eww-mode-hook
                 text-mode-hook
@@ -2294,7 +2297,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (which-key-mode)
   (setq which-key-idle-delay 1))
 #+end_src
-****** org
+****** org mode
 ******* org bullets
 
 #+begin_src emacs-lisp
@@ -2386,7 +2389,6 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (display-line-numbers-mode 0)
   (setq evil-auto-indent nil
         org-src-preserve-indentation nil
         org-edit-src-content-indentation 0))
@@ -2396,6 +2398,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 #+begin_src emacs-lisp
 (defun Tn/org-font-setup ()
 
+;; This is magic conde that changes the font of non-heading bullet point lists.
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
@@ -2611,6 +2614,23 @@ it can be passed in POS."
       XDG_PICTURES_DIR="$HOME/Media"
       XDG_VIDEOS_DIR="$HOME/Media"
     '';
+  };
+}
+#+end_src
+
+**** communication.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/communication.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home = {
+    packages = with pkgs; [
+    slack
+    discord
+    ];
   };
 }
 #+end_src

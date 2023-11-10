@@ -25,6 +25,7 @@
     ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
+    ./Home-Packages/communication.nix
   ];
 
   programs.home-manager.enable = true;

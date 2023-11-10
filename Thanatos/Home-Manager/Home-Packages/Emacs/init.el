@@ -58,6 +58,7 @@
 
 (dolist (mode '(pdf-view-mode-hook
                 term-mode-hook
+                org-mode-hook
                 shell-mode-hook
                 eww-mode-hook
                 text-mode-hook
@@ -549,13 +550,13 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (display-line-numbers-mode 0)
   (setq evil-auto-indent nil
         org-src-preserve-indentation nil
         org-edit-src-content-indentation 0))
 
 (defun Tn/org-font-setup ()
 
+;; This is magic conde that changes the font of non-heading bullet point lists.
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))

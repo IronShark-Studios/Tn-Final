@@ -28,6 +28,7 @@ Get basic functions of Org-Roam working.
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode)
 #+end_src
+**** TODO make the daily journal page default buffer
 *** TODO Create a custom function to edit sudo files with tramp.
 - Try to create a shell command =seo= to do the same or second function to reopen current file as root
 - [[https://emacs.stackexchange.com/questions/52/edit-file-with-super-user-rights]]
@@ -57,11 +58,6 @@ Get basic functions of Org-Roam working.
 *** TODO Move org tangle hook to before save
 *** TODO create function to split window Vertically and Balance all windows in single button
 *** TODO Create function to close current buffer and hide window, and balance remaining window.
-*** TODO Prevent invisible eddits
-#+begin_src emacs-lisp
-(setq org-catch-invisible-edits 'error)
-#+end_src
-
 *** TODO Append empty line to file
 #+begin_src emacs-lisp
 (setq require-final-newline t)
@@ -1530,6 +1526,7 @@ file for the active year when a task is marked done
 *** TODO Review exwm prefix keys for unused, and additional needed
 *** TODO follow up on input simulation keys for exwm
 *** TODO create function to split window Vertically and Balance all windows in single button
+*** TODO create a function that adds to (C-c C-o) in scadmode so openscad opens in a new window to the right of current buffer (may not be needed with auto tilling)
 ** TODO Fitness and Nutrition Tracking with Emacs
 - https://gist.github.com/alphapapa/982467abc1bf29f57c5cd2c408a77bd5
 - https://gist.github.com/iocanel/0b8bcdb3d69fb7731069cb872f836507
