@@ -75,6 +75,12 @@ Get basic functions of Org-Roam working.
 **** TODO [[https://github.com/nverno/llvm-mode][LLVM IR Mode]]
 **** TODO [[https://melpa.org/#/paredit][paredit]]
 **** TODO [[https://melpa.org/#/company][company]]
+***** TODO added backend for org-roam =company-capf= and enable completions
+
+#+begin_src emacs-lisp
+(setq org-roam-completion-everywhere t)
+#+end_src
+
 ** TODO Configure Org Core
 - [[https://hugocisneros.com/org-config/][Example Config]]
 - https://www.youtube.com/watch?v=qz9tSMsMDII&list=WL&index=406&pp=gAQBiAQB

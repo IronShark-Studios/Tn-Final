@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-13 Mon 10:11]
+#+LAST_MODIFIED: [2023-11-13 Mon 16:06]
 
 * System
 
@@ -628,6 +628,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     enable = true;
 
     profileExtra = ''
+      xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
       polybar thanatos &
       nm-applet &
       pnmixer &
@@ -1379,6 +1380,26 @@ Window controls will be all wrong without it
   };
 }
 #+end_src
+***** Roam Protocol
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file."org-protocol.desktop" = {
+    target = ".local/share/applications/org-protocol.desktop";
+    text = ''
+        [Desktop Entry]
+        Name=Org-Protocol
+        Exec=emacsclient %u
+        Icon=emacs-icon
+        Type=Application
+        Terminal=false
+        MimeType=x-scheme-handler/org-protocol
+      '';
+  };
+}
+#+end_src
+
 **** git.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/git.nix
@@ -2553,16 +2574,38 @@ it can be passed in POS."
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename "~/Archive/Grimoire/"))
+
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ("C-c n j" . org-roam-dailies-capture-today))
+
   :config
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
+#+end_src
+******** roam-node widow
+- Roam node window navigation is controlled by magit bindings
+
+#+begin_src emacs-lisp
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
+#+end_src
+
+******** capture templates
+
+#+begin_src emacs-lisp
+;; (("d" "default" plain "%?"
+;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+;;                      "#+title: ${title}\n")
+;;   :unnarrowed t))
 #+end_src
 
 ****** openscad
