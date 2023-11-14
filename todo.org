@@ -47,6 +47,7 @@ Get basic functions of Org-Roam working.
 - if compatable with hledger
 **** TODO hledger
 - https://www.youtube.com/watch?v=cjoCNRpLanY&list=WL&index=472&pp=gAQBiAQB
+**** TODO deft
 *** TODO Change evil ~s~ and ~r~ so they jump to the character not before it
 *** TODO Follow Up on ~abbrev mode~
 *** TODO Follow up on using attachments with org files
@@ -134,6 +135,7 @@ Get basic functions of Org-Roam working.
 - https://texdoc.org/serve/latex2e.pdf/0
 - https://www.youtube.com/watch?v=xBctAt2TVew
 - https://www.youtube.com/watch?v=331YxgOJUGw&list=WL&index=280&pp=gAQBiAQB
+***** TODO mathpix.el
 **** TODO GNU calc and plot integration
 **** TODO Latex inline code Support
 **** TODO Export org docs to pdf
@@ -145,7 +147,10 @@ Get basic functions of Org-Roam working.
 - https://www.youtube.com/watch?v=w7i4amO_zaE&list=WL&index=63&t=215s&pp=gAQBiAQB
 **** TODO FIgure Out what DAP mode is]
     - https://github.com/emacs-lsp/dap-mode
-**** TODO Including Magit Workflow
+**** TODO Including git Workflow
+***** TODO Magit
+***** TODO Git time machine
+- https://codeberg.org/pidu/git-timemachine
 *** TODO Create Task Management Workflow
 - [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][Checklists in Org-Mode]]
 - [[https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Task Management with Org Roam]]
@@ -902,18 +907,18 @@ Late deadlines first, then scheduled, then non-late deadlines"
 - https://discourse.nixos.org/t/how-to-install-org-roam-declaratively-doom-emacs/24459/9
 *** TODO Org Roam Bibtex
 - https://github.com/org-roam/org-roam-bibtex
-- Extends Org-Roam to support citations. Works along with ~helm-bibtex~
+- Extends Org-Roam to support citations. Works along with ~helm-bibtex~ and ~org-ref~
+**** TODO Integrate Org-Bibtex with Org-Roam
 **** TODO Install ~helm-bibtex~
+**** TODO Istall ~org-ref~
 *** TODO Org Roam UI
 - https://github.com/org-roam/org-roam-ui
 ***** General Notes
 - A graphical front end to display connections between existing nodes
 - Opens in your default web browser
-
 *** TODO Org Bibtex
 - https://www.youtube.com/watch?v=2t925KRBbFc&list=WL&index=264&t=89s&pp=gAQBiAQB
 - [[https://www.jonathanleroux.org/bibtex-mode.html#0300][Installing Bibtex]]
-**** TODO Integrate Org-Bibtex with Org-Roam
 ** TODO Configure Supporting Org stuff
 *** TODO Bibtex
 *** TODO LaTex
@@ -1409,6 +1414,7 @@ file for the active year when a task is marked done
 *** [[https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab][Nix + Bazel]]
 *** [[https://sachachua.com/dotemacs/index.html][Sasha Chuas Config]]
 *** [[https://config.daviwil.com/emacs][David Wilson Config]]
+*** Brodie Robertson (youtube) Config
 *** [[https://github.com/Phundrak/dotfiles][Phundrak Config]]
 *** [[https://github.com/tlater/dotfiles][TLater Config]]
 *** [[https://karthinks.com/][Karthinks Blog]]
@@ -1423,6 +1429,7 @@ file for the active year when a task is marked done
 *** [[https://www.audible.com/pd/The-Extended-Mind-Audiobook/B0B1QWHMTZ][The Extended Mind]]
 * Long Term
 ** TODO Finalize =README.org=
+** TODO Fix Firefox -> Roam-protocol error
 ** TODO Write new blog article on config refactor
 ** TODO Figure out if Vortex can be used for streaming
 ** TODO Look into Modifying core system
