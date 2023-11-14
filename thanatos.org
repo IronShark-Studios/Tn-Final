@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-14 Tue 17:56]
+#+LAST_MODIFIED: [2023-11-14 Tue 18:34]
 
 * System
 
@@ -2103,10 +2103,14 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package smartparens
   :init
   (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'org-mode-hook #'smartparens-mode)
+
   :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
-  :diminish smartparens-mode)
+
+  :diminish
+  smartparens-mode)
 
 (add-hook 'before-save-hook #'whitespace-cleanup)
 #+end_src
@@ -2595,12 +2599,10 @@ it can be passed in POS."
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c n c" . org-roam-capture))
 
   :config
   (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
-        org-roam-dailies-directory (file-truename "~/Archive/Feronomicon/")
         org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 
   (org-roam-db-autosync-mode)
@@ -2662,8 +2664,22 @@ it can be passed in POS."
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+******* org-journal
 
-******* bibtex
+#+begin_src emacs-lisp
+(use-package org-journal
+  :init
+  (setq org-journal-prefix-key "C-c n j ")
+
+  :config
+  (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+        org-journal-find-file '(find-file)
+        org-journal-start-on-weekday "sunday"
+        )
+  )
+#+end_src
+
+******* org-bibtex
 ******** bibtex-core
 
 #+begin_src emacs-lisp
@@ -2715,7 +2731,7 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (use-package pdf-tools)
 #+end_src
-
+****** agenda
 ****** openscad
 
 #+begin_src emacs-lisp
