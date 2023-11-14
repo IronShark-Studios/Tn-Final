@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-14 Tue 10:56]
+#+LAST_MODIFIED: [2023-11-14 Tue 11:07]
 
 * System
 
@@ -2647,6 +2647,20 @@ it can be passed in POS."
   :after org-roam
   :config
   (require 'org-ref))
+#+end_src
+
+******** roam-ui
+
+#+begin_src emacs-lisp
+(use-package org-roam-ui
+    :hook
+    (after-init . org-roam-ui-mode)
+
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 #+end_src
 
 ******* bibtex
