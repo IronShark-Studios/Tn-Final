@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-14 Tue 11:07]
+#+LAST_MODIFIED: [2023-11-14 Tue 17:56]
 
 * System
 
@@ -2599,12 +2599,12 @@ it can be passed in POS."
          ("C-c n j" . org-roam-dailies-capture-today))
 
   :config
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
+        org-roam-dailies-directory (file-truename "~/Archive/Feronomicon/")
+        org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
-
-  (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
-        org-roam-dailies-directory (file-truename "~/Archive/Feronomicon/"))
 
 #+end_src
 ******** roam-node widow

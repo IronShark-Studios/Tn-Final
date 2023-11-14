@@ -87,9 +87,8 @@ Get basic functions of Org-Roam working.
 - https://www.youtube.com/watch?v=qz9tSMsMDII&list=WL&index=406&pp=gAQBiAQB
 - https://www.youtube.com/watch?v=oJTwQvgfgMM&list=WL&index=420&t=1503s&pp=gAQBiAQB
 - https://www.youtube.com/watch?v=SzA2YODtgK4&list=WL&index=474&t=2848s&pp=gAQBiAQB
-*** TODO Test Additional Packages
-**** TODO [[https://melpa.org/#/helm-org][Helm-Org]]
-*** TODO add empty line and point start position to org code block templates
+*** DONE Test Additional Packages
+*** DONE add empty line and point start position to org code block templates
 *** TODO Create Note taking workflow
 - [[https://jonhanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
 - [[https://karinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
@@ -903,25 +902,25 @@ Late deadlines first, then scheduled, then non-late deadlines"
 #+end_src
 **** NEXT Update namespaces
 *** TODO Enable ~C-c C-s~ to schedule time in addition to date
-** TODO Configure Org-Roam
+** DONE Configure Org-Roam
 - https://discourse.nixos.org/t/how-to-install-org-roam-declaratively-doom-emacs/24459/9
-*** TODO Org Roam Bibtex
+*** DONE Org Roam Bibtex
 - https://github.com/org-roam/org-roam-bibtex
 - Extends Org-Roam to support citations. Works along with ~helm-bibtex~ and ~org-ref~
-**** TODO Integrate Org-Bibtex with Org-Roam
-**** TODO Install ~helm-bibtex~
-**** TODO Istall ~org-ref~
-*** TODO Org Roam UI
+**** DONE Integrate Org-Bibtex with Org-Roam
+**** DONE Install ~helm-bibtex~
+**** DONE Istall ~org-ref~
+*** DONE Org Roam UI
 - https://github.com/org-roam/org-roam-ui
-***** General Notes
+***** NEXT General Notes
 - A graphical front end to display connections between existing nodes
 - Opens in your default web browser
-*** TODO Org Bibtex
+*** DONE Org Bibtex
 - https://www.youtube.com/watch?v=2t925KRBbFc&list=WL&index=264&t=89s&pp=gAQBiAQB
 - [[https://www.jonathanleroux.org/bibtex-mode.html#0300][Installing Bibtex]]
 ** TODO Configure Supporting Org stuff
-*** TODO Bibtex
-*** TODO LaTex
+*** DONE Bibtex
+*** TODO LaTeX
 *** TODO Graphviz
 *** TODO hugo
 - [[https://willschenk.com/howto/2019/using_org_mode_in_hugo/][Using Hugo with Org Mode]]
@@ -1219,6 +1218,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 **** NEXT update target sub heading
 *** TODO Org Flash Cards
 - https://www.reddit.com/r/emacs/comments/i0n100/is_there_a_way_to_transform_orgroam_files_to_anki/
+- org fc
 *** TODO [[https://github.com/nobiot/org-transclusion#original-idea-by-john-kitchin][Org Transclusion]]
 ** TODO Configure Magit
 - https://github.com/dandavison/magit-delta
