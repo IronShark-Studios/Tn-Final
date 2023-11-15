@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-14 Tue 18:34]
+#+LAST_MODIFIED: [2023-11-14 Tue 19:01]
 
 * System
 
@@ -2130,8 +2130,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 #+begin_src emacs-lisp
 (use-package helm)
-(setq helm-mode-fuzzy-match t)
 (helm-mode 1)
+
+(setq helm-mode-fuzzy-match t)
 
 (setq _helm-exciting-buffer-regexp-list
       (quote
@@ -2146,9 +2147,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                   )))
 
 (global-set-key (kbd "M-x") 'helm-M-x)
-
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-
 (define-key helm-find-files-map (kbd "<SPC>") 'helm-find-files-up-one-level)
 
 (use-package helm-projectile)
@@ -2157,11 +2156,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ******* helm-bibtex
 
 #+begin_src emacs-lisp
-(use-package helm-bibtex)
-
-(setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
-      bibtex-completion-pdf-symbol "⌘"
-      bibtex-completion-notes-symbol "✎")
+(use-package helm-bibtex
+  :config
+  (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
+        bibtex-completion-pdf-symbol "⌘"
+        bibtex-completion-notes-symbol "✎"))
 #+end_src
 
 ****** evil
@@ -2673,10 +2672,8 @@ it can be passed in POS."
 
   :config
   (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
-        org-journal-find-file '(find-file)
-        org-journal-start-on-weekday "sunday"
-        )
-  )
+        org-journal-find-file 'find-file
+        org-journal-start-on-weekday "sunday"))
 #+end_src
 
 ******* org-bibtex
@@ -2722,9 +2719,6 @@ it can be passed in POS."
         bibtex-completion-pdf-open-function
         (lambda (fpath)
           (call-process "open" nil 0 nil fpath)))
-
-(require 'org-ref)
-(require 'org-ref-helm)
 #+end_src
 ******** pdf-tools
 

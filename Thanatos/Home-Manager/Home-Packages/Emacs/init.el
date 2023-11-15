@@ -29,9 +29,9 @@
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-(setq calendar-latitude 42.33
-      calendar-longitude -83.04
-      calendar-location-name "Detroit,MI"
+(setq calendar-latitude 39.96
+      calendar-longitude -82.99
+      calendar-location-name "Columbus,OH"
       user-login-name "xin"
       user-mail-address "xin@ironshark.org")
 
@@ -44,6 +44,7 @@
 (global-auto-revert-mode 1)
 (global-visual-line-mode t)
 (global-display-line-numbers-mode t)
+(winner-mode +1)
 
 (setq visible-bell t
       column-number-mode t
@@ -87,6 +88,9 @@
 (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
 (global-set-key (kbd "C-M-u") 'universal-argument)
+
+(define-key winner-mode-map (kbd "<M-left>") #'winner-undo)
+(define-key winner-mode-map (kbd "<M-right>") #'winner-redo)
 
 (defun Tn/exwm-update-title ()
   (pcase exwm-class-name
@@ -305,10 +309,14 @@
 (use-package smartparens
   :init
   (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'org-mode-hook #'smartparens-mode)
+
   :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
-  :diminish smartparens-mode)
+
+  :diminish
+  smartparens-mode)
 
 (add-hook 'before-save-hook #'whitespace-cleanup)
 
@@ -318,8 +326,9 @@
   :mode "\\.nix\\'")
 
 (use-package helm)
-(setq helm-mode-fuzzy-match t)
 (helm-mode 1)
+
+(setq helm-mode-fuzzy-match t)
 
 (setq _helm-exciting-buffer-regexp-list
       (quote
@@ -334,12 +343,16 @@
                   )))
 
 (global-set-key (kbd "M-x") 'helm-M-x)
-
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-
 (define-key helm-find-files-map (kbd "<SPC>") 'helm-find-files-up-one-level)
 
 (use-package helm-projectile)
+
+(use-package helm-bibtex
+  :config
+  (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
+        bibtex-completion-pdf-symbol "⌘"
+        bibtex-completion-notes-symbol "✎"))
 
 (use-package evil
   :init
@@ -525,6 +538,9 @@
 (use-package ox-hugo
   :after ox)
 
+(require 'ox-bibtex)
+(require 'oc-bibtex)
+
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
 (require 'org-agenda)
@@ -690,18 +706,16 @@ it can be passed in POS."
 (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (use-package org-roam
-  :custom
-  (org-roam-directory (file-truename "~/Archive/Grimoire/"))
-
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c n c" . org-roam-capture))
 
   :config
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
+        org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
 
@@ -716,6 +730,75 @@ it can be passed in POS."
 ;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 ;;                      "#+title: ${title}\n")
 ;;   :unnarrowed t))
+
+;; (setq org-roam-dailies-capture-templates
+;;       '(("d" "default" entry
+;;          "* %?"
+;;          :target (file+head "%<%Y-%m-%d>.org"
+;;                             "#+title: %<%Y-%m-%d>\n"))))
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref))
+
+(use-package org-roam-ui
+    :hook
+    (after-init . org-roam-ui-mode)
+
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+(use-package org-journal
+  :init
+  (setq org-journal-prefix-key "C-c n j ")
+
+  :config
+  (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+        org-journal-find-file 'find-file
+        org-journal-start-on-weekday "sunday"))
+
+(require 'bibtex)
+
+(setq bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5
+      bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-default)))
+
+(define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+
+(use-package org-ref)
+
+(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/reference-index.bib")
+      bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
+      bibtex-completion-notes-path '("~/Archive/Grimoire")
+      bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+      bibtex-completion-browser-function 'browser-url-firefox
+      bibtex-completion-pdf-field "File"
+      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+      bibtex-completion-additional-search-fields '(keywords)
+      bibtex-completion-display-formats
+        '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+          (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+          (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+          (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+          (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+        bibtex-completion-pdf-open-function
+        (lambda (fpath)
+          (call-process "open" nil 0 nil fpath)))
+
+(use-package pdf-tools)
 
 (use-package scad-mode)
 
