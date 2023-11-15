@@ -538,12 +538,6 @@
 (use-package ox-hugo
   :after ox)
 
-(use-package ox-bibtex
-  :after ox)
-
-(use-package oc-bibtex
-  :after ox)
-
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
 (require 'org-agenda)
@@ -746,9 +740,6 @@ it can be passed in POS."
   (require 'org-ref))
 
 (use-package org-roam-ui
-    :hook
-    (after-init . org-roam-ui-mode)
-
     :config
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t

@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-14 Tue 19:18]
+#+LAST_MODIFIED: [2023-11-14 Tue 20:00]
 
 * System
 
@@ -2393,12 +2393,6 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package ox-hugo
   :after ox)
 
-(use-package ox-bibtex
-  :after ox)
-
-(use-package oc-bibtex
-  :after ox)
-
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 #+end_src
 ******* agenda
@@ -2657,9 +2651,6 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (use-package org-roam-ui
-    :hook
-    (after-init . org-roam-ui-mode)
-
     :config
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t
