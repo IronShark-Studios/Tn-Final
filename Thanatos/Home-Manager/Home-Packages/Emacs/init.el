@@ -362,6 +362,7 @@
        evil-want-C-i-jump nil
        evil-respect-visual-line-mode t
        evil-undo-system 'undo-tree)
+
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -372,6 +373,7 @@
   (evil-ex-define-cmd "Q" 'kill-buffer-and-window)) ; Evil normal mode ':Q' kills buffer and window
 
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
+(add-hook 'evil-before-normal-state-hook 'save-buffer)
 
 (use-package evil-snipe
   :after evil
@@ -747,13 +749,14 @@ it can be passed in POS."
           org-roam-ui-open-on-start t))
 
 (use-package org-journal
-  :init
-  (setq org-journal-prefix-key "C-c n j ")
+  :bind
+  (("C-c n n" . org-journal-new-entry)
+   ("C-c n s" . org-journal-new-date-entry))
 
   :config
   (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
-        org-journal-find-file 'find-file
-        org-journal-start-on-weekday "sunday"))
+        org-journal-find-file #'find-file
+        org-journal-start-on-weekday 0))
 
 (require 'bibtex)
 

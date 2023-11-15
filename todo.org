@@ -1,17 +1,17 @@
 * Current Focus :
-Get basic functions of Org-Roam working.
+Configure Org Journal
 * Tn-Final Remainder
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
 **** TODO (M-x shell) to call Alacritty
 **** TODO revert buffer ~(C-x x g)~ with out confirmation prompt
-**** TODO Buffer Mangement
-***** TODO Emacs-Winner mode for faster layout management
-***** TODO Emacs-Perspectives for layout management
-***** TODO Consider Dynamic Tiling package
+*** TODO Buffer Mangement
+**** DONE Emacs-Winner mode for faster layout management
+**** TODO Emacs-Perspectives for layout management
+**** TODO Consider Dynamic Tiling package
 - https://www.youtube.com/watch?v=gbdE7oZEdtA&list=WL&index=351&pp=gAQBiAQB
 - https://www.youtube.com/watch?v=_qXZNfRcNnw&list=WL&index=354&pp=gAQBiAQB
-***** TODO Research xmonad style video fullscreening
+**** DONE Research xmonad style video fullscreening
 *** TODO Follow up about Helm settings
 - https://tuhdo.github.io/helm-intro.html
 - [[https://github.com/thierryvolpiatto/emacs-config/blob/main/init-helm.el][Example Helm Config]]
@@ -272,10 +272,6 @@ Get basic functions of Org-Roam working.
 ******* TODO If not, create tag to exclude non current daily node todos from agenda
 - I think I already have something done for this wich uses tags to mark roam node so be included. So I should only need to set something up to remove it form non active node.
 ***** TODO Confirm what ~org-indirect-buffer-display~ does.
-*** TODO Change Starting Day of Org agenda Weekly View
-#+begin_src emacs-lisp
-(setq org-agenda-start-on-weekday nil)
-#+end_src
 *** TODO Clean up empty Clock Drawers
 #+begin_src emacs-lisp
 ;; Remove empty LOGBOOK drawers on clock out
@@ -286,20 +282,6 @@ Get basic functions of Org-Roam working.
     (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
 (add-hook 'org-clock-out-hook 'Tn/remove-empty-drawer-on-clock-out 'append)
-#+end_src
-*** TODO Emacs Diary
-- Use the diary file to track recurring events that are permanent and fixed.
-  - Holidays
-  - Birthdays
-  - Paydays
-  - ect
-*** TODO Org-Super Agenda
-**** TODO Follow up on this once I have more experience with agenda
-- https://github.com/alphapapa/org-super-agenda
-*** TODO Use emacs dairy long term recurring tasks?
-*** TODO Limit default agenda display to today
-#+begin_src emacs-lisp
-(setq org-agenda-span 'day)
 #+end_src
 *** TODO Org capture settings
 #+begin_src emacs-lisp
@@ -514,6 +496,10 @@ Get basic functions of Org-Roam working.
 #+end_src
 **** NEXT Update this to match custom templates
 **** NEXT update function namespaces
+*** TODO Change Starting Day of Org agenda Weekly View
+#+begin_src emacs-lisp
+(setq org-agenda-start-on-weekday nil)
+#+end_src
 *** TODO add this line to config so agenda week view starts on current day, and shows the upcoming week
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
@@ -712,12 +698,6 @@ A prefix arg forces clock in of the default task."
       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 #+end_src
 
-
-
-
-
-
-
 *** TODO Configure agenda / diary integration
 #+begin_src emacs-lisp
 (setq org-agenda-include-diary nil)
@@ -902,6 +882,24 @@ Late deadlines first, then scheduled, then non-late deadlines"
 #+end_src
 **** NEXT Update namespaces
 *** TODO Enable ~C-c C-s~ to schedule time in addition to date
+*** TODO Emacs Diary
+- Use the diary file to track recurring events that are permanent and fixed.
+  - Holidays
+  - Birthdays
+  - Paydays
+  - ect
+*** TODO Org-Super Agenda
+**** TODO Follow up on this once I have more experience with agenda
+- https://github.com/alphapapa/org-super-agenda
+*** TODO Use emacs dairy long term recurring tasks?
+*** TODO Limit default agenda display to today
+#+begin_src emacs-lisp
+(setq org-agenda-span 'day)
+#+end_src
+*** TODO Integrate agenda with google calendar
+** TODO Configure Magit
+- https://github.com/dandavison/magit-delta
+*** TODO Further limit magit filter to only show main buffer with helm-boring buffers
 ** DONE Configure Org-Roam
 - https://discourse.nixos.org/t/how-to-install-org-roam-declaratively-doom-emacs/24459/9
 *** DONE Org Roam Bibtex
@@ -912,7 +910,6 @@ Late deadlines first, then scheduled, then non-late deadlines"
 **** DONE Istall ~org-ref~
 *** DONE Org Roam UI
 - https://github.com/org-roam/org-roam-ui
-***** NEXT General Notes
 - A graphical front end to display connections between existing nodes
 - Opens in your default web browser
 *** DONE Org Bibtex
@@ -1220,9 +1217,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 - https://www.reddit.com/r/emacs/comments/i0n100/is_there_a_way_to_transform_orgroam_files_to_anki/
 - org fc
 *** TODO [[https://github.com/nobiot/org-transclusion#original-idea-by-john-kitchin][Org Transclusion]]
-** TODO Configure Magit
-- https://github.com/dandavison/magit-delta
-*** TODO Further limit magit filter to only show main buffer with helm-boring buffers
 ** TODO Configure Visidata
 - https://www.visidata.org/docs/customize/
 *** TODO Create emacs (M-x visidata) function to open visidata directly
@@ -1551,6 +1545,9 @@ file for the active year when a task is marked done
 *** TODO [[https://www.youtube.com/watch?v=yufC22262I4&list=WL&index=6&t=552s&pp=gAQBiAQB][LocalSend]]
 *** TODO [[https://www.youtube.com/watch?v=-RW546svPOc&list=WL&index=170&t=629s&pp=gAQBiAQB][CURL]] utils
 *** TODO GH and Gitlab equivalent
+** TODO combine Org-Roam, and Org-Journal
+*** TODO Capture windows for quick journaling
+*** TODO journal files tracked by roam database
 * Media Center Configuration
 ** TODO Find a way to control tv ir via usb
 ** TODO Build simplified Config
