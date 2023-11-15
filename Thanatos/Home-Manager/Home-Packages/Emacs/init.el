@@ -538,8 +538,11 @@
 (use-package ox-hugo
   :after ox)
 
-(require 'ox-bibtex)
-(require 'oc-bibtex)
+(use-package ox-bibtex
+  :after ox)
+
+(use-package oc-bibtex
+  :after ox)
 
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
