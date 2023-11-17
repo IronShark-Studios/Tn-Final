@@ -4,16 +4,16 @@
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
       networkmanagerapplet
-      pavucontrol
-      pnmixer
       sddm-chili-theme
       pavucontrol
       xorg.xev
       gparted
       xdotool
+      pnmixer
+      udiskie
+      xcolor
       slock
       xclip
-      xcolor
       xsel
       xdo
     ];
@@ -41,6 +41,7 @@
   services = {
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
+
     pipewire = {
       enable = true;
       pulse.enable = true;
@@ -69,16 +70,10 @@
           theme = "chili";
           };
       };
-
-      desktopManager.xfce = {
-        enable = true;
-        enableScreensaver = false;
-      };
     };
 
-    unclutter = {
+    unclutter-xfixes = {
       enable = true;
-      keystroke = false;
       threshold = 10;
       timeout = 1;
     };

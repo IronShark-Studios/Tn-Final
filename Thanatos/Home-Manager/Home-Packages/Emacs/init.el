@@ -89,8 +89,8 @@
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
-(define-key winner-mode-map (kbd "<M-left>") #'winner-undo)
-(define-key winner-mode-map (kbd "<M-right>") #'winner-redo)
+(define-key winner-mode-map (kbd "<C-s-left>") #'winner-undo)
+(define-key winner-mode-map (kbd "<C-s-right>") #'winner-redo)
 
 (defun Tn/exwm-update-title ()
   (pcase exwm-class-name
@@ -373,7 +373,6 @@
   (evil-ex-define-cmd "Q" 'kill-buffer-and-window)) ; Evil normal mode ':Q' kills buffer and window
 
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
-(add-hook 'evil-before-normal-state-hook 'save-buffer)
 
 (use-package evil-snipe
   :after evil
@@ -542,21 +541,6 @@
 
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
-(require 'org-agenda)
-
-(setq org-agenda-files (append
-                        (directory-files-recursively "~/Projects/" "\\todo.org$")
-                        ))
-
-(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
-(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
-(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
-(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
-(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
-(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
-
 (require 'org-tempo)
 (add-to-list 'org-structure-template-alist
              '("el" . "src emacs-lisp\n"))
@@ -650,12 +634,13 @@ it can be passed in POS."
 
 (setq org-capture-templates
   '(("j" "Journal Entry"
-         entry (file+datetree "~/Grimoire/temp-journal.org")
+         (org-journal-open-current-journal-file)
          "* %<%H:%M> %?"
          :empty-lines 1)
-    ("f" "Food Log"
-         entry (file+datetree "~/Grimoire/temp-food-log.org")
-         "* %<%H:%M> %?"
+    ("f" "Journal TODO"
+         (org-journal-open-current-journal-file)
+         entry (file (org-journal-open-current-journal-file))
+         "* %<%H:%M> \n ** TODO %?"
          :empty-lines 1)))
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
@@ -704,6 +689,9 @@ it can be passed in POS."
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
+(global-set-key (kbd "C-c C-l") 'org-store-link)
+(global-set-key (kbd "C-c l") 'org-insert-link)
+
 (use-package org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
@@ -751,12 +739,17 @@ it can be passed in POS."
 (use-package org-journal
   :bind
   (("C-c n n" . org-journal-new-entry)
-   ("C-c n s" . org-journal-new-date-entry))
+   ("C-c n s" . org-journal-new-date-entry)))
 
-  :config
-  (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
-        org-journal-find-file #'find-file
-        org-journal-start-on-weekday 0))
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+      org-enable-org-journal-support t
+      org-journal-find-file #'find-file
+      org-journal-date-format "%Y-%m-%d (%A)"
+      org-journal-date-prefix "#+TITLE: "
+      org-journal-file-format "%Y%m%d"
+      org-journal-time-format "%H:%M"
+      org-journal-time-prefix "* "
+      org-journal-start-on-weekday 0)
 
 (require 'bibtex)
 
@@ -796,6 +789,21 @@ it can be passed in POS."
           (call-process "open" nil 0 nil fpath)))
 
 (use-package pdf-tools)
+
+(require 'org-agenda)
+
+(setq org-agenda-files (append
+                        (directory-files-recursively "~/Projects/" "\\todo.org$")
+                        ))
+
+(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
+(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
+(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
 
 (use-package scad-mode)
 
