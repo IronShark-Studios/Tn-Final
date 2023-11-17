@@ -1,6 +1,13 @@
 * Current Focus :
 Configure Org Journal
 * Tn-Final Remainder
+** TODO General fixes
+*** TODO Change winner keybinding to use super
+*** TODO Disable xfce
+**** TODO find replacement usb stick mounter program
+**** TODO Check if xdg file is still used
+*** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
+*** TODO fix exwm simulation keys.
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
 **** TODO (M-x shell) to call Alacritty
