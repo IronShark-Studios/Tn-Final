@@ -70,6 +70,11 @@
           theme = "chili";
           };
       };
+
+      desktopManager.xfce = {
+        enable = true;
+        enableScreensaver = false;
+      };
     };
 
     unclutter-xfixes = {
