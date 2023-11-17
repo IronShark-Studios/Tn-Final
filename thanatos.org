@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-17 Fri 10:13]
+#+LAST_MODIFIED: [2023-11-17 Fri 10:32]
 
 * System
 
@@ -271,6 +271,8 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
   services = {
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
+    udiskie.enable = true;
+
     pipewire = {
       enable = true;
       pulse.enable = true;
@@ -299,14 +301,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
           theme = "chili";
           };
       };
-
-      # desktopManager.xfce = {
-      #   enable = true;
-      #   enableScreensaver = false;
-      # };
     };
 
-    unclutter = {
+    unclutter-xfixes = {
       enable = true;
       keystroke = false;
       threshold = 10;
@@ -1853,8 +1850,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
-(define-key winner-mode-map (kbd "<M-left>") #'winner-undo)
-(define-key winner-mode-map (kbd "<M-right>") #'winner-redo)
+(define-key winner-mode-map (kbd "<C-s-left>") #'winner-undo)
+(define-key winner-mode-map (kbd "<C-s-right>") #'winner-redo)
 #+end_src
 
 ****** exwm
