@@ -4,7 +4,6 @@ Configure Org Journal
 ** TODO General fixes
 *** TODO Disable xfce
 **** TODO find replacement usb stick mounter program
-**** TODO Check if xdg file is still used
 *** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
