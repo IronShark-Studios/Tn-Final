@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-17 Fri 17:16]
+#+LAST_MODIFIED: [2023-11-17 Fri 17:25]
 
 * System
 
@@ -466,6 +466,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/project-link.nix
     ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/Alacritty/alacritty.nix
     ./Home-Packages/Alacritty/alacrittyConfig.nix
@@ -535,9 +536,12 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-**** Out of Store Symlinke
+**** Out of Store Symlink
 
 ***** Projects Directory
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/project-link.nix
+:END:
 
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {

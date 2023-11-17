@@ -2,6 +2,7 @@
   imports = [
     ./Home-Packages/home-manager.nix
     ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/project-link.nix
     ./Home-Packages/XDG/user-dirs.nix
     ./Home-Packages/Alacritty/alacritty.nix
     ./Home-Packages/Alacritty/alacrittyConfig.nix
