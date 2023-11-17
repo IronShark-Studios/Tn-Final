@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-17 Fri 15:44]
+#+LAST_MODIFIED: [2023-11-17 Fri 17:16]
 
 * System
 
@@ -535,6 +535,18 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
+**** Out of Store Symlinke
+
+***** Projects Directory
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  home.file.Projects = {
+    source = config.lib.file.mkOutOfStoreSymlink "Archive/Projects-Active";
+    target = "Projects";
+  };
+}
+#+end_src
 **** Alacritty
 ***** alacritty.nix
 :PROPERTIES:
@@ -2656,11 +2668,12 @@ it can be passed in POS."
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
-      org-journal-date-format "%Y-%m-%d (%A)"
-      org-journal-date-prefix "#+TITLE: "
+      org-journal-file-header "#+STARTUP: showeverything\n\n"
       org-journal-file-format "%Y%m%d"
-      org-journal-time-format "%H:%M"
+      org-journal-date-prefix "#+TITLE: "
+      org-journal-date-format "%A  %Y-%m-%d"
       org-journal-time-prefix "* "
+      org-journal-time-format "%H:%M"
       org-journal-start-on-weekday 0)
 #+end_src
 
@@ -2720,9 +2733,8 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (require 'org-agenda)
 
-(setq org-agenda-files (append
-                        (directory-files-recursively "~/Projects/" "\\todo.org$")
-                        ))
+(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+      org-agenda-start-on-weekday 0)
 
 (define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
