@@ -744,11 +744,12 @@ it can be passed in POS."
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
-      org-journal-date-format "%Y-%m-%d (%A)"
-      org-journal-date-prefix "#+TITLE: "
+      org-journal-file-header "#+STARTUP: showeverything\n\n"
       org-journal-file-format "%Y%m%d"
-      org-journal-time-format "%H:%M"
+      org-journal-date-prefix "#+TITLE: "
+      org-journal-date-format "%A  %Y-%m-%d"
       org-journal-time-prefix "* "
+      org-journal-time-format "%H:%M"
       org-journal-start-on-weekday 0)
 
 (require 'bibtex)
@@ -792,9 +793,8 @@ it can be passed in POS."
 
 (require 'org-agenda)
 
-(setq org-agenda-files (append
-                        (directory-files-recursively "~/Projects/" "\\todo.org$")
-                        ))
+(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+      org-agenda-start-on-weekday 0)
 
 (define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
