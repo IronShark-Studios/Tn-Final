@@ -646,7 +646,7 @@ it can be passed in POS."
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a)" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a)" "DONE(d@/!)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 
 (setq org-todo-keyword-faces

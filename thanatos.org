@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-19 Sun 16:11]
+#+LAST_MODIFIED: [2023-11-19 Sun 16:14]
 
 * System
 
@@ -2524,7 +2524,7 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a)" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a)" "DONE(d@/!)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 
 (setq org-todo-keyword-faces
