@@ -646,17 +646,19 @@ it can be passed in POS."
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "INPROGRESS(i)" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a)" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "cyan" :weight bold)
+      (quote (("TODO" :foreground "dark blue" :weight bold)
               ("NEXT" :foreground "SeaGreen1" :weight bold)
-              ("INPROGRESS" :foreground "jade" :weight bold)
+              ("ACTIVE" :foreground "cyan" :weight bold)
               ("DONE" :foreground "dim gray" :weight bold)
-              ("WAITING" :foreground "deep pink" :weight bold)
-              ("HOLD" :foreground "blue violet" :weight bold)
-              ("CANCELLED" :foreground "dark red" :weight bold))))
+              ("WAITING" :foreground "blue violet" :weight bold)
+              ("HOLD" :foreground "dark red" :weight bold)
+              ("CANCELLED" :foreground "dim gray" :weight bold))))
+
+(setq org-fontify-done-headline t)
 
 (setq org-ellipsis " ▾"
       org-hide-emphasis-markers t
