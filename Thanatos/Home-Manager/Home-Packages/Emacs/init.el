@@ -829,8 +829,7 @@ it can be passed in POS."
 (require 'org-agenda)
 
 (setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
-      org-agenda-start-on-weekday 0
-      org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
+      org-agenda-start-on-weekday 0)
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
