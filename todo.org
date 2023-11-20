@@ -1,7 +1,7 @@
 * Current Focus :
 Configure Org Journal
 * Tn-Final Remainder
-*** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
+** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
 **** TODO (M-x shell) to call Alacritty
