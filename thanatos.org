@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-20 Mon 16:14]
+#+LAST_MODIFIED: [2023-11-20 Mon 16:22]
 
 * System
 
@@ -2590,10 +2590,8 @@ it can be passed in POS."
       org-export-with-todo-keywords nil
       org-reverse-note-order t
       org-odd-levels-only t
-      org-directory "~/Archive/Feronomicon/ORG/")
-
-
-      (setq org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/" (Tn/current-year)))
+      org-directory "~/Archive/Feronomicon/ORG/"
+      org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/" (Tn/current-year)))
 #+end_src
 ******* org-core
 #+begin_src emacs-lisp
