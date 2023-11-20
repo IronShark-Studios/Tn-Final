@@ -542,6 +542,7 @@
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
 (require 'org-tempo)
+
 (add-to-list 'org-structure-template-alist
              '("el" . "src emacs-lisp\n"))
 (add-to-list 'org-structure-template-alist
@@ -664,21 +665,21 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
-(setq org-tag-alist
-      '((:startgroup . ART)
-        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
-        (:endgroup . ART)
-        (:startgroup . TECHNOLOGY)
-        ("PROGRAMMING" . ?p) ("CAD" . ?x)
-        (:endgroup . TECHNOLOGY)
-        (:startgroup . ACADEMIC)
-        ("MATHS" . ?M)
-        (:endgroup . ACADEMIC)
-        (:startgroup . FITNESS)
-        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
-        (:endgroup . FITNESS)
-        ("@Toby" . ?T)
-        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
+;; (setq org-tag-alist
+;;       '((:startgroup . ART)
+;;         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+;;         (:endgroup . ART)
+;;         (:startgroup . TECHNOLOGY)
+;;         ("PROGRAMMING" . ?p) ("CAD" . ?x)
+;;         (:endgroup . TECHNOLOGY)
+;;         (:startgroup . ACADEMIC)
+;;         ("MATHS" . ?M)
+;;         (:endgroup . ACADEMIC)
+;;         (:startgroup . FITNESS)
+;;         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+;;         (:endgroup . FITNESS)
+;;         ("@Toby" . ?T)
+;;         ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
 
 (setq org-ellipsis " ▾"
       org-hide-emphasis-markers t

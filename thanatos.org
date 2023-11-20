@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-20 Mon 16:22]
+#+LAST_MODIFIED: [2023-11-20 Mon 16:29]
 
 * System
 
@@ -2402,6 +2402,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 #+begin_src emacs-lisp
 (require 'org-tempo)
+
 (add-to-list 'org-structure-template-alist
              '("el" . "src emacs-lisp\n"))
 (add-to-list 'org-structure-template-alist
@@ -2545,21 +2546,21 @@ it can be passed in POS."
 ******** heading tags
 
 #+begin_src emacs-lisp
-(setq org-tag-alist
-      '((:startgroup . ART)
-        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
-        (:endgroup . ART)
-        (:startgroup . TECHNOLOGY)
-        ("PROGRAMMING" . ?p) ("CAD" . ?x)
-        (:endgroup . TECHNOLOGY)
-        (:startgroup . ACADEMIC)
-        ("MATHS" . ?M)
-        (:endgroup . ACADEMIC)
-        (:startgroup . FITNESS)
-        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
-        (:endgroup . FITNESS)
-        ("@Toby" . ?T)
-        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
+;; (setq org-tag-alist
+;;       '((:startgroup . ART)
+;;         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+;;         (:endgroup . ART)
+;;         (:startgroup . TECHNOLOGY)
+;;         ("PROGRAMMING" . ?p) ("CAD" . ?x)
+;;         (:endgroup . TECHNOLOGY)
+;;         (:startgroup . ACADEMIC)
+;;         ("MATHS" . ?M)
+;;         (:endgroup . ACADEMIC)
+;;         (:startgroup . FITNESS)
+;;         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+;;         (:endgroup . FITNESS)
+;;         ("@Toby" . ?T)
+;;         ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
 #+end_src
 
 ******* variables
