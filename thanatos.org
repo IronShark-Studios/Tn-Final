@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-20 Mon 16:06]
+#+LAST_MODIFIED: [2023-11-20 Mon 16:14]
 
 * System
 
@@ -2553,7 +2553,7 @@ it can be passed in POS."
         ("PROGRAMMING" . ?p) ("CAD" . ?x)
         (:endgroup . TECHNOLOGY)
         (:startgroup . ACADEMIC)
-        ("MATHS" . ?m)
+        ("MATHS" . ?M)
         (:endgroup . ACADEMIC)
         (:startgroup . FITNESS)
         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)

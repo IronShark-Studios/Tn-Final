@@ -672,7 +672,7 @@ it can be passed in POS."
         ("PROGRAMMING" . ?p) ("CAD" . ?x)
         (:endgroup . TECHNOLOGY)
         (:startgroup . ACADEMIC)
-        ("MATHS" . ?m)
+        ("MATHS" . ?M)
         (:endgroup . ACADEMIC)
         (:startgroup . FITNESS)
         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
