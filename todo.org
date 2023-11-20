@@ -1,4 +1,4 @@
-* Current Focus :
+* Current Focus
 Configure Org Journal
 * Tn-Final Remainder
 ** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
@@ -1358,22 +1358,22 @@ hardware.nvidia.prime = {
 };
 #+end_src
 ** Blogs
-*** [[http://doc.norang.ca/org-mode.html][Organizing your life in plain text]]
-**** TODO Follow up with organizing your life in plain text 10.2, 16.3, 16.6
-**** Projects
+*** TODO [[http://doc.norang.ca/org-mode.html][Organizing your life in plain text]]
+**** NEXT Follow up with organizing your life in plain text 10.2, 16.3, 16.6
+**** TODO Projects
 - A project is any todo heading with todo subheading
 - Projects can be created at any sub heading level
 - A project without a sub-heading marked as ~next~ will be added to a stuck projects list
-**** Tags
+**** TODO Tags
 - tags are used to filter todo's based on type
 - Use tags to separate recurring and non recurring task in agenda view
 - ~#+FILETAGS:~ Can be added at the top of a file to apply one or more tags to the entire file
 - Tags can be grouped together so only one can be applied to a heading at a time.
 - Tags can be added using the ~C-c C-q~ Hotkey
-**** Interrupts
+**** TODO Interrupts
 - Created in a completed state, Grouped as either digital (phone/text/email/ect) or in person.
 - Tracked as part of an org capture template.
-**** Capturing
+**** TODO Capturing
 - Minimal number of capture templates, all pointing to a single ~"inbox"~ org file. Part of dialy journal
   - Inbox file cleaned out daily
 - Separate things to be captured into groups
@@ -1384,16 +1384,16 @@ hardware.nvidia.prime = {
   - New Habit (recurring Task)
   - New Note
   - Interruptions (short unexpected tasks, in the middle of a larger one(?))
-**** Refilling
+**** TODO Refilling
 - Have a permanent section of the daily journal with this heading ~#+FILETAGS: REFILE~ where all org captures are stored until copied into their proper place.
 - Ultimately this should be a part of the ROAM dailies template.
-**** Clocking
+**** TODO Clocking
 - Create a default task that that will automatically be clocked into when not doing something else.
 - When moving a clocked todo to done status. Org will automatically start clocking with the parent todo if there is one. Otherwise it returns to the default clock target.
-**** Storing Todos
+**** TODO Storing Todos
 - Possibly create a series of files to store non project specific todos with file inheritance
   - Example Tag for file heading ~#+FILETAGS: PERSONAL~
-**** Archives
+**** TODO Archives
 - General tasks can be refilled into a ~Archive.org~
 - Each ~project.org~ file should have a ~* Archived Tasks~ Sub-heading
 - Tasks should be archived after being marked completed for more than 30 days.
@@ -1401,21 +1401,22 @@ hardware.nvidia.prime = {
 - When creating a project the first task should describe the overall project and act as the final task to be closed.
 file for the active year when a task is marked done
 
-**** Heading Workflow
+**** TODO Heading Workflow
 - http://doc.norang.ca/normal_task_states.png
-*** [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Taking notes with org-mode and org-roam]]
-*** [[https://ianthehenry.com/posts/how-to-learn-nix/][Ian Henry]]
-*** [[https://www.haskellforall.com/2017/01/typed-nix-programming-using-dhall.html][Typed Nix Programming Using Dhall]]
-*** [[https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab][Nix + Bazel]]
-*** [[https://sachachua.com/dotemacs/index.html][Sasha Chuas Config]]
-*** [[https://config.daviwil.com/emacs][David Wilson Config]]
-*** Brodie Robertson (youtube) Config
-*** [[https://github.com/Phundrak/dotfiles][Phundrak Config]]
-*** [[https://github.com/tlater/dotfiles][TLater Config]]
-*** [[https://karthinks.com/][Karthinks Blog]]
-*** [[https://karl-voit.at/2020/06/14/Zettelkasten-concerns/][Zettlekasten Concerns]]
-*** [[https://ebzzry.com/en/emacs-pairs/#introduction][Smart Parens and Indentation]]
-*** [[https://www.youtube.com/watch?v=WgV6M1LyfNY&list=WL&index=22&t=639s&pp=gAQBiAQB][The Unreasonable effectiveness of Plain Text]]
+*** TODO [[https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/][Taking notes with org-mode and org-roam]]
+*** TODO [[https://ianthehenry.com/posts/how-to-learn-nix/][Ian Henry]]
+*** TODO [[https://www.haskellforall.com/2017/01/typed-nix-programming-using-dhall.html][Typed Nix Programming Using Dhall]]
+*** TODO [[https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab][Nix + Bazel]]
+*** TODO [[https://sachachua.com/dotemacs/index.html][Sasha Chuas Config]]
+*** TODO [[https://config.daviwil.com/emacs][David Wilson Config]]
+*** TODO Brodie Robertson (youtube) Config
+*** TODO [[https://github.com/Phundrak/dotfiles][Phundrak Config]]
+*** TODO [[https://github.com/tlater/dotfiles][TLater Config]]
+*** TODO [[https://karthinks.com/][Karthinks Blog]]
+*** TODO [[https://karl-voit.at/2020/06/14/Zettelkasten-concerns/][Zettlekasten Concerns]]
+*** TODO [[https://ebzzry.com/en/emacs-pairs/#introduction][Smart Parens and Indentation]]
+*** TODO [[https://www.youtube.com/watch?v=WgV6M1LyfNY&list=WL&index=22&t=639s&pp=gAQBiAQB][The Unreasonable effectiveness of Plain Text]]
+*** TODO [[eww:https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Integrating Org-Roam with Org-Agenda]]
 ** Books
 *** [[https://gettingthingsdone.com/][Getting Things Done]]
 *** [[https://www.amazon.com/Building-Second-Brain-Organize-Potential/dp/1982167386][Building a second brain]]
@@ -1425,6 +1426,7 @@ file for the active year when a task is marked done
 * Long Term
 ** TODO Finalize =README.org=
 ** TODO Fix Firefox -> Roam-protocol error
+** TODO Configure =org-tag-alist= to use hydras. For more efficient tags
 ** TODO Write new blog article on config refactor
 ** TODO Figure out if Vortex can be used for streaming
 ** TODO Look into Modifying core system
