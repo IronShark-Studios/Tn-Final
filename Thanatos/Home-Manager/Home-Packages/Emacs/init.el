@@ -705,10 +705,10 @@ it can be passed in POS."
       org-export-with-todo-keywords nil
       org-reverse-note-order t
       org-odd-levels-only t
-      org-directory "~/Archive/Feronomicon/ORG/"
-      org-archive-location (format
-                            "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
-                            (Tn/current-year)))
+      org-directory "~/Archive/Feronomicon/ORG/")
+
+
+      (setq org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/" (Tn/current-year)))
 
 (use-package org
 :hook
