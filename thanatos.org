@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-20 Mon 15:57]
+#+LAST_MODIFIED: [2023-11-20 Mon 16:06]
 
 * System
 
@@ -2415,10 +2415,10 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1))
+  (visual-line-mode 1)
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-(add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
+(add-hook 'org-log-buffer-setup-hook 'evil-insert-state))
 #+end_src
 ******** font configuration
 

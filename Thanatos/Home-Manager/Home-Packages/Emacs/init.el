@@ -551,10 +551,10 @@
   (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1))
+  (visual-line-mode 1)
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-(add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
+(add-hook 'org-log-buffer-setup-hook 'evil-insert-state))
 
 (defun Tn/org-font-setup ()
 ;; This is magic code that changes the font of non-heading bullet point lists.
