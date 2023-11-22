@@ -2543,6 +2543,7 @@ it can be passed in POS."
       org-hide-emphasis-markers t
       org-src-fontify-natively t
       org-fontify-quote-and-verse-blocks t
+      org-fontify-done-headline t
       org-src-tab-acts-natively t
       org-edit-src-content-indentation 2
       org-hide-block-startup nil
