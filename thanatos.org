@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 17:17]
+#+LAST_MODIFIED: [2023-11-22 Wed 17:33]
 
 * System
 
@@ -2421,21 +2421,21 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 #+begin_src emacs-lisp
 (defun Tn/org-font-setup ()
-
-;; This is magic conde that changes the font of non-heading bullet point lists.
+;; This is magic code that changes the font of non-heading bullet point lists.
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-(dolist (face '((org-level-1 . 1.1)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.1)
-                (org-level-4 . 1.1)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "FiraGO" :weight 'regular :height (cdr face)))
+(setq heading-color "Azure3")
+(dolist (face '((org-level-1 . heading-color)
+                (org-level-2 . heading-color)
+                (org-level-3 . heading-color)
+                (org-level-4 . heading-color)
+                (org-level-5 . heading-color)
+                (org-level-6 . heading-color)
+                (org-level-7 . heading-color)
+                (org-level-8 . heading-color)))
+  (set-face-attribute (car face) nil :font "Iosevka" :weight 'regular :height (cdr face)))
 
 (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
