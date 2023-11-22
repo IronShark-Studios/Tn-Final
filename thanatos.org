@@ -2434,14 +2434,18 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                 (org-level-6 . "Azure3")
                 (org-level-7 . "Azure3")
                 (org-level-8 . "Azure3")))
-  (set-face-attribute (car face) nil :font "Iosevka" :weight 'regular :height 1.3 :foreground (cdr face)))
+  (set-face-attribute (car face) nil :font "Iosevka"
+                      :weight 'regular :height 1.3
+                      :foreground (cdr face)))
 
 (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-code nil     :foreground "SpringGreen3"
+                    :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
+                    :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
