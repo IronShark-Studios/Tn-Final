@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 17:03]
+#+LAST_MODIFIED: [2023-11-22 Wed 17:17]
 
 * System
 
@@ -2415,10 +2415,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1)
-  (setq evil-auto-indent nil
-        org-src-preserve-indentation nil
-        org-edit-src-content-indentation 0))
+  (visual-line-mode 1))
 #+end_src
 ******** font configuration
 
@@ -2552,7 +2549,10 @@ it can be passed in POS."
       org-startup-with-inline-images t
       org-cycle-separator-lines 2
       org-confirm-babel-evaluate nil
-      org-capture-bookmark nil)
+      org-capture-bookmark nil
+      evil-auto-indent nil
+      org-src-preserve-indentation nil
+      org-edit-src-content-indentation 0)
 #+end_src
 ******* org-core
 #+begin_src emacs-lisp
