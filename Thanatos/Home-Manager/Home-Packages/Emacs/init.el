@@ -552,10 +552,10 @@
   (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1)
+  (visual-line-mode 1))
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-(add-hook 'org-log-buffer-setup-hook 'evil-insert-state))
+(add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
 
 (defun Tn/org-font-setup ()
 ;; This is magic code that changes the font of non-heading bullet point lists.
@@ -654,9 +654,8 @@ it can be passed in POS."
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "ACTIVE(a@/!)" "|" "DONE(d@/!)")
-              (sequence "WAITING(w@/!)" "INACTIVE(i@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
-
-(setq org-todo-keyword-faces
+              (sequence "WAITING(w@/!)" "INACTIVE(i@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+      org-todo-keyword-faces
       (quote (("TODO" :foreground "deep sky blue" :weight bold)
               ("NEXT" :foreground "medium spring green" :weight bold)
               ("ACTIVE" :foreground "cyan" :weight bold)
@@ -665,21 +664,21 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
-;; (setq org-tag-alist
-;;       '((:startgroup . ART)
-;;         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
-;;         (:endgroup . ART)
-;;         (:startgroup . TECHNOLOGY)
-;;         ("PROGRAMMING" . ?p) ("CAD" . ?x)
-;;         (:endgroup . TECHNOLOGY)
-;;         (:startgroup . ACADEMIC)
-;;         ("MATHS" . ?M)
-;;         (:endgroup . ACADEMIC)
-;;         (:startgroup . FITNESS)
-;;         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
-;;         (:endgroup . FITNESS)
-;;         ("@Toby" . ?T)
-;;         ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
+(setq org-tag-alist
+      '((:startgroup . ART)
+        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+        (:endgroup . ART)
+        (:startgroup . TECHNOLOGY)
+        ("PROGRAMMING" . ?p) ("CAD" . ?x)
+        (:endgroup . TECHNOLOGY)
+        (:startgroup . ACADEMIC)
+        ("MATHS" . ?M)
+        (:endgroup . ACADEMIC)
+        (:startgroup . FITNESS)
+        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+        (:endgroup . FITNESS)
+        ("@Toby" . ?T)
+        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
 
 (setq org-ellipsis " ▾"
       org-hide-emphasis-markers t
@@ -706,8 +705,8 @@ it can be passed in POS."
       org-export-with-todo-keywords nil
       org-reverse-note-order t
       org-odd-levels-only t
-      org-directory "~/Archive/Feronomicon/ORG/")
-      ;org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
+      org-directory "~/Archive/Feronomicon/ORG/"
+      org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/")
 
 (use-package org
 :hook
