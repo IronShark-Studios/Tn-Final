@@ -671,3 +671,146 @@ it can be passed in POS."
       org-cycle-separator-lines 2
       org-confirm-babel-evaluate nil
       org-capture-bookmark nil)
+
+(use-package org
+:hook
+(org-mode . Tn/org-mode-setup)
+(org-mode . Tn/org-font-setup)
+(before-save . Tn/org-set-last-modified)
+
+:config
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (lisp . t)
+   (latex . t)
+   (scheme . t)))
+
+(push '("conf-unix" . conf-unix) org-src-lang-modes))
+
+(global-set-key (kbd "C-c C-l") 'org-store-link)
+(global-set-key (kbd "C-c l") 'org-insert-link)
+
+(use-package org-roam
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture))
+
+  :config
+  (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
+        org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
+  (org-roam-db-autosync-mode)
+  (require 'org-roam-protocol))
+
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
+
+;; (("d" "default" plain "%?"
+;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+;;                      "#+title: ${title}\n")
+;;   :unnarrowed t))
+
+;; (setq org-roam-dailies-capture-templates
+;;       '(("d" "default" entry
+;;          "* %?"
+;;          :target (file+head "%<%Y-%m-%d>.org"
+;;                             "#+title: %<%Y-%m-%d>\n"))))
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref))
+
+(use-package org-roam-ui
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+(use-package org-journal
+  :bind
+  (("C-c n n" . org-journal-new-entry)
+   ("C-c n s" . org-journal-new-date-entry)))
+
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+      org-enable-org-journal-support t
+      org-journal-find-file #'find-file
+      org-journal-file-header "#+STARTUP: showeverything\n\n"
+      org-journal-file-format "%Y%m%d"
+      org-journal-date-prefix "#+TITLE: "
+      org-journal-date-format "%A  %Y-%m-%d"
+      org-journal-time-prefix "* "
+      org-journal-time-format "%H:%M"
+      org-journal-start-on-weekday 0)
+
+(require 'bibtex)
+
+(setq bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5
+      bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-default)))
+
+(define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+
+(use-package org-ref)
+
+(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/reference-index.bib")
+      bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
+      bibtex-completion-notes-path '("~/Archive/Grimoire")
+      bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+      bibtex-completion-browser-function 'browser-url-firefox
+      bibtex-completion-pdf-field "File"
+      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+      bibtex-completion-additional-search-fields '(keywords)
+      bibtex-completion-display-formats
+        '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+          (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+          (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+          (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+          (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+        bibtex-completion-pdf-open-function
+        (lambda (fpath)
+          (call-process "open" nil 0 nil fpath)))
+
+(use-package pdf-tools)
+
+(require 'org-agenda)
+
+(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+      org-agenda-start-on-weekday 0)
+
+(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
+(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
+(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
+
+(use-package scad-mode)
+
+(use-package centered-cursor-mode)
+
+(use-package dmenu)
+
+(use-package ag)
+
+(use-package rg)
+(global-set-key (kbd "C-s") #'rg-menu)
