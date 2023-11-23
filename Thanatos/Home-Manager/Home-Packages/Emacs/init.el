@@ -505,7 +505,6 @@
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 (use-package org-appear)
-(add-hook 'org-mode-hook 'org-appear-mode)
 
 (setq org-appear-trigger 'manual
       org-appear-autoemphasis t
@@ -517,6 +516,8 @@
       org-appear-autokeywords t
       org-hidden-keywords t
       org-appear-inside-latex t)
+
+(add-hook 'org-mode-hook 'org-appear-mode)
 
 (add-hook 'org-mode-hook (lambda ()
                            (add-hook 'evil-insert-state-entry-hook
@@ -575,8 +576,8 @@
                       :foreground (cdr face)))
 
 (set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
-(set-face-attribute 'org-tag nil    :foreground nil :height 0.9 :inherit 'fixed-pitch)
-(set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-tag nil     :height 0.9 :inherit 'fixed-pitch)
+(set-face-attribute 'org-block nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil     :foreground "SpringGreen3"
@@ -686,7 +687,6 @@ it can be passed in POS."
       org-fontify-quote-and-verse-blocks t
       org-fontify-done-headline t
       org-src-tab-acts-natively t
-      org-edit-src-content-indentation 2
       org-hide-block-startup nil
       org-src-preserve-indentation nil
       org-startup-folded t
@@ -696,9 +696,18 @@ it can be passed in POS."
       org-capture-bookmark nil
       evil-auto-indent nil
       org-src-preserve-indentation nil
-      org-enforce-todo-dependencies t
       org-export-with-todo-keywords nil
-      org-edit-src-content-indentation 0)
+      org-edit-src-content-indentation 0
+      org-return-follows-link t
+      org-enforce-todo-dependencies t
+      org-enforce-todo-checkbox-dependencies t
+      org-reverse-note-order t
+      org-odd-levels-only t
+      org-fold-catch-invisible-edits 'show-and-error
+      org-directory "~/Archive/Feronomicon/ORG/"
+      org-archive-location (format
+                            "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
+                            (Tn/current-year)))
 
 (use-package org
 :hook

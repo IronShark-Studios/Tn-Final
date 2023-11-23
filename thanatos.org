@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 19:22]
+#+LAST_MODIFIED: [2023-11-22 Wed 20:26]
 
 * System
 
@@ -2355,29 +2355,30 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ******* org appear
 
 #+begin_src emacs-lisp
-(use-package org-appear)
-(add-hook 'org-mode-hook 'org-appear-mode)
+  (use-package org-appear)
 
-(setq org-appear-trigger 'manual
-      org-appear-autoemphasis t
-      org-appear-autolinks t
-      org-link-descriptive t
-      org-pretty-entities t
-      org-appear-autoentities t
-      org-appear-autosubmarkers t
-      org-appear-autokeywords t
-      org-hidden-keywords t
-      org-appear-inside-latex t)
+  (setq org-appear-trigger 'manual
+        org-appear-autoemphasis t
+        org-appear-autolinks t
+        org-link-descriptive t
+        org-pretty-entities t
+        org-appear-autoentities t
+        org-appear-autosubmarkers t
+        org-appear-autokeywords t
+        org-hidden-keywords t
+        org-appear-inside-latex t)
 
-(add-hook 'org-mode-hook (lambda ()
-                           (add-hook 'evil-insert-state-entry-hook
-                                     #'org-appear-manual-start
-                                     nil
-                                     t)
-                           (add-hook 'evil-insert-state-exit-hook
-                                     #'org-appear-manual-stop
-                                     nil
-                                     t)))
+  (add-hook 'org-mode-hook 'org-appear-mode)
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (add-hook 'evil-insert-state-entry-hook
+                                       #'org-appear-manual-start
+                                       nil
+                                       t)
+                             (add-hook 'evil-insert-state-exit-hook
+                                       #'org-appear-manual-stop
+                                       nil
+                                       t)))
 #+end_src
 ******* visual fill collumn
 
@@ -2423,39 +2424,39 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ******** font configuration
 
 #+begin_src emacs-lisp
-(defun Tn/org-font-setup ()
-;; This is magic code that changes the font of non-heading bullet point lists.
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (defun Tn/org-font-setup ()
+  ;; This is magic code that changes the font of non-heading bullet point lists.
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-(dolist (face '((org-level-1 . "Azure3")
-                (org-level-2 . "Azure3")
-                (org-level-3 . "Azure3")
-                (org-level-4 . "Azure3")
-                (org-level-5 . "Azure3")
-                (org-level-6 . "Azure3")
-                (org-level-7 . "Azure3")
-                (org-level-8 . "Azure3")))
-  (set-face-attribute (car face) nil :font "Iosevka"
-                      :weight 'regular :height 1.3
-                      :foreground (cdr face)))
+  (dolist (face '((org-level-1 . "Azure3")
+                  (org-level-2 . "Azure3")
+                  (org-level-3 . "Azure3")
+                  (org-level-4 . "Azure3")
+                  (org-level-5 . "Azure3")
+                  (org-level-6 . "Azure3")
+                  (org-level-7 . "Azure3")
+                  (org-level-8 . "Azure3")))
+    (set-face-attribute (car face) nil :font "Iosevka"
+                        :weight 'regular :height 1.3
+                        :foreground (cdr face)))
 
-(set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
-(set-face-attribute 'org-tag nil    :foreground nil :height 0.9 :inherit 'fixed-pitch)
-(set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil     :foreground "SpringGreen3"
-                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
-                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-(set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-(set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+  (set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
+  (set-face-attribute 'org-tag nil     :height 0.9 :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil    :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil     :foreground "SpringGreen3"
+                      :weight 'semi-bold :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
+                      :weight 'semi-bold :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 #+end_src
 ******** file time stamps
@@ -2566,35 +2567,33 @@ it can be passed in POS."
 ******* variables
 
 #+begin_src emacs-lisp
-(setq org-ellipsis " ▾"
-      org-hide-emphasis-markers t
-      org-src-fontify-natively t
-      org-fontify-quote-and-verse-blocks t
-      org-fontify-done-headline t
-      org-src-tab-acts-natively t
-      org-hide-block-startup nil
-      org-src-preserve-indentation nil
-      org-startup-folded t
-      org-startup-with-inline-images t
-      org-cycle-separator-lines 2
-      org-confirm-babel-evaluate nil
-      org-capture-bookmark nil
-      evil-auto-indent nil
-      org-src-preserve-indentation nil
-      org-enforce-todo-dependencies t
-      org-export-with-todo-keywords nil
-      org-edit-src-content-indentation 0
-      org-return-follows-link t
-      org-blank-before-new-entry t
-      org-enforce-todo-dependencies t
-      org-enforce-todo-checkbox-dependencies t
-      org-reverse-note-order t
-      org-odd-levels-only t
-      org-catch-invisible-edits "error"
-      org-directory "~/Archive/Feronomicon/ORG/"
-      org-archive-location (format
-                            "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
-                            (Tn/current-year)))
+  (setq org-ellipsis " ▾"
+        org-hide-emphasis-markers t
+        org-src-fontify-natively t
+        org-fontify-quote-and-verse-blocks t
+        org-fontify-done-headline t
+        org-src-tab-acts-natively t
+        org-hide-block-startup nil
+        org-src-preserve-indentation nil
+        org-startup-folded t
+        org-startup-with-inline-images t
+        org-cycle-separator-lines 2
+        org-confirm-babel-evaluate nil
+        org-capture-bookmark nil
+        evil-auto-indent nil
+        org-src-preserve-indentation nil
+        org-export-with-todo-keywords nil
+        org-edit-src-content-indentation 0
+        org-return-follows-link t
+        org-enforce-todo-dependencies t
+        org-enforce-todo-checkbox-dependencies t
+        org-reverse-note-order t
+        org-odd-levels-only t
+        org-fold-catch-invisible-edits 'show-and-error
+        org-directory "~/Archive/Feronomicon/ORG/"
+        org-archive-location (format
+                              "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
+                              (Tn/current-year)))
 #+end_src
 ******* org-core
 #+begin_src emacs-lisp
