@@ -637,6 +637,9 @@ it can be passed in POS."
   (when (derived-mode-p 'org-mode)
     (Tn/org-set-time-file-property "LAST_MODIFIED")))
 
+(defun Tn/current-year () (interactive)
+  (shell-command-to-string "echo -n $(date +%Y)"))
+
 (setq org-capture-templates
   '(("j" "Journal Entry"
          (org-journal-open-current-journal-file)
@@ -660,6 +663,22 @@ it can be passed in POS."
               ("WAITING" :foreground "blue violet" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
+
+(setq org-tag-alist
+      '((:startgroup . ART)
+        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+        (:endgroup . ART)
+        (:startgroup . TECHNOLOGY)
+        ("PROGRAMMING" . ?p) ("CAD" . ?x)
+        (:endgroup . TECHNOLOGY)
+        (:startgroup . ACADEMIC)
+        ("MATHS" . ?m)
+        (:endgroup . ACADEMIC)
+        (:startgroup . FITNESS)
+        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+        (:endgroup . FITNESS)
+        ("@Toby" . ?T)
+        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
 
 (setq org-ellipsis " ▾"
       org-hide-emphasis-markers t
