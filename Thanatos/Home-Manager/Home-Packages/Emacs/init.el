@@ -551,34 +551,39 @@
   (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1)
-  (setq evil-auto-indent nil
-        org-src-preserve-indentation nil
-        org-edit-src-content-indentation 0))
+  (visual-line-mode 1))
+
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+(add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
 
 (defun Tn/org-font-setup ()
-
-;; This is magic conde that changes the font of non-heading bullet point lists.
+;; This is magic code that changes the font of non-heading bullet point lists.
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-(dolist (face '((org-level-1 . 1.1)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.1)
-                (org-level-4 . 1.1)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "FiraGO" :weight 'regular :height (cdr face)))
+(dolist (face '((org-level-1 . "Azure3")
+                (org-level-2 . "Azure3")
+                (org-level-3 . "Azure3")
+                (org-level-4 . "Azure3")
+                (org-level-5 . "Azure3")
+                (org-level-6 . "Azure3")
+                (org-level-7 . "Azure3")
+                (org-level-8 . "Azure3")))
+  (set-face-attribute (car face) nil :font "Iosevka"
+                      :weight 'regular :height 1.3
+                      :foreground (cdr face)))
 
+(set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
+(set-face-attribute 'org-tag nil    :foreground nil :height 0.9 :inherit 'fixed-pitch)
 (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-code nil     :foreground "SpringGreen3"
+                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
+                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
@@ -643,15 +648,13 @@ it can be passed in POS."
          "* %<%H:%M> \n ** TODO %?"
          :empty-lines 1)))
 
-(add-hook 'org-capture-mode-hook 'evil-insert-state)
-
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "ACTIVE(a@/!)" "DONE(d@/!)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+      (quote ((sequence "TODO(t)" "NEXT(n)" "ACTIVE(a@/!)" "|" "DONE(d@/!)")
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "INACTIVE(i@/!)" "|" "CANCELLED(c@/!)"))))
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "dark blue" :weight bold)
-              ("NEXT" :foreground "SeaGreen1" :weight bold)
+      (quote (("TODO" :foreground "deep sky blue" :weight bold)
+              ("NEXT" :foreground "medium spring green" :weight bold)
               ("ACTIVE" :foreground "cyan" :weight bold)
               ("DONE" :foreground "dim gray" :weight bold)
               ("WAITING" :foreground "blue violet" :weight bold)
@@ -671,7 +674,12 @@ it can be passed in POS."
       org-startup-with-inline-images t
       org-cycle-separator-lines 2
       org-confirm-babel-evaluate nil
-      org-capture-bookmark nil)
+      org-capture-bookmark nil
+      evil-auto-indent nil
+      org-src-preserve-indentation nil
+      org-enforce-todo-dependencies t
+      org-export-with-todo-keywords nil
+      org-edit-src-content-indentation 0)
 
 (use-package org
 :hook
