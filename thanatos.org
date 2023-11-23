@@ -2507,6 +2507,9 @@ it can be passed in POS."
   "Update the LAST_MODIFIED file property in the preamble."
   (when (derived-mode-p 'org-mode)
     (Tn/org-set-time-file-property "LAST_MODIFIED")))
+
+(defun Tn/current-year () (interactive)
+  (shell-command-to-string "echo -n $(date +%Y)"))
 #+end_src
 ******** capture templates
 
