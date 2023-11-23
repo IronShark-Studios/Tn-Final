@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 18:59]
+#+LAST_MODIFIED: [2023-11-22 Wed 19:08]
 
 * System
 
@@ -2542,6 +2542,27 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 #+end_src
+
+******** tag alist
+
+#+begin_src emacs-lisp
+(setq org-tag-alist
+      '((:startgroup . ART)
+        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+        (:endgroup . ART)
+        (:startgroup . TECHNOLOGY)
+        ("PROGRAMMING" . ?p) ("CAD" . ?x)
+        (:endgroup . TECHNOLOGY)
+        (:startgroup . ACADEMIC)
+        ("MATHS" . ?m)
+        (:endgroup . ACADEMIC)
+        (:startgroup . FITNESS)
+        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+        (:endgroup . FITNESS)
+        ("@Toby" . ?T)
+        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
+#+end_src
+
 ******* variables
 
 #+begin_src emacs-lisp
