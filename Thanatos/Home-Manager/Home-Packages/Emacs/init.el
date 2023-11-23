@@ -505,7 +505,6 @@
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 (use-package org-appear)
-(add-hook 'org-mode-hook 'org-appear-mode)
 
 (setq org-appear-trigger 'manual
       org-appear-autoemphasis t
@@ -517,6 +516,8 @@
       org-appear-autokeywords t
       org-hidden-keywords t
       org-appear-inside-latex t)
+
+(add-hook 'org-mode-hook 'org-appear-mode)
 
 (add-hook 'org-mode-hook (lambda ()
                            (add-hook 'evil-insert-state-entry-hook
@@ -542,7 +543,6 @@
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 
 (require 'org-tempo)
-
 (add-to-list 'org-structure-template-alist
              '("el" . "src emacs-lisp\n"))
 (add-to-list 'org-structure-template-alist
@@ -576,15 +576,15 @@
                       :foreground (cdr face)))
 
 (set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
-(set-face-attribute 'org-tag nil    :foreground nil :height 0.9 :inherit 'fixed-pitch)
-(set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-tag nil     :height 0.9 :inherit 'fixed-pitch)
+(set-face-attribute 'org-block nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
 (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-code nil     :foreground "SpringGreen3"
-                   :weight 'semi-bold :inherit '(shadow fixed-pitch))
+                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
-                   :weight 'semi-bold :inherit '(shadow fixed-pitch))
+                    :weight 'semi-bold :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
@@ -654,8 +654,9 @@ it can be passed in POS."
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "ACTIVE(a@/!)" "|" "DONE(d@/!)")
-              (sequence "WAITING(w@/!)" "INACTIVE(i@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
-      org-todo-keyword-faces
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "INACTIVE(i@/!)" "|" "CANCELLED(c@/!)"))))
+
+(setq org-todo-keyword-faces
       (quote (("TODO" :foreground "deep sky blue" :weight bold)
               ("NEXT" :foreground "medium spring green" :weight bold)
               ("ACTIVE" :foreground "cyan" :weight bold)
@@ -672,7 +673,7 @@ it can be passed in POS."
         ("PROGRAMMING" . ?p) ("CAD" . ?x)
         (:endgroup . TECHNOLOGY)
         (:startgroup . ACADEMIC)
-        ("MATHS" . ?M)
+        ("MATHS" . ?m)
         (:endgroup . ACADEMIC)
         (:startgroup . FITNESS)
         ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
@@ -684,29 +685,29 @@ it can be passed in POS."
       org-hide-emphasis-markers t
       org-src-fontify-natively t
       org-fontify-quote-and-verse-blocks t
+      org-fontify-done-headline t
       org-src-tab-acts-natively t
-      org-edit-src-content-indentation 2
       org-hide-block-startup nil
       org-src-preserve-indentation nil
       org-startup-folded t
       org-startup-with-inline-images t
       org-cycle-separator-lines 2
       org-confirm-babel-evaluate nil
-      org-catch-invisible-edits "error"
       org-capture-bookmark nil
-      org-return-follows-link t
-      org-blank-before-new-entry t
       evil-auto-indent nil
       org-src-preserve-indentation nil
+      org-export-with-todo-keywords nil
       org-edit-src-content-indentation 0
-      org-fontify-done-headline t
+      org-return-follows-link t
       org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
-      org-export-with-todo-keywords nil
       org-reverse-note-order t
       org-odd-levels-only t
+      org-fold-catch-invisible-edits 'show-and-error
       org-directory "~/Archive/Feronomicon/ORG/"
-      org-archive-location (format "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/")
+      org-archive-location (format
+                            "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
+                            (Tn/current-year)))
 
 (use-package org
 :hook
@@ -824,16 +825,18 @@ it can be passed in POS."
         (lambda (fpath)
           (call-process "open" nil 0 nil fpath)))
 
+(use-package pdf-tools)
+
 (require 'org-agenda)
 
-(setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
+(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
 
-(define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
-(define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
 (define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
-(define-key org-agenda-mode-map (kbd "j") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
 (define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
 (define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
@@ -841,8 +844,6 @@ it can be passed in POS."
 (use-package scad-mode)
 
 (use-package centered-cursor-mode)
-
-(use-package pdf-tools)
 
 (use-package dmenu)
 
