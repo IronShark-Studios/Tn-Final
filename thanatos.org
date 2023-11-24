@@ -2762,7 +2762,7 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (require 'org-agenda)
 
-(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+(setq org-agenda-files (append (directory-files-recursively "~/Archive" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
