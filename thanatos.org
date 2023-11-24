@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 20:26]
+#+LAST_MODIFIED: [2023-11-24 Fri 12:35]
 
 * System
 
@@ -2775,6 +2775,7 @@ it can be passed in POS."
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
 #+end_src
 
+******* super-agenda
 ****** openscad
 
 #+begin_src emacs-lisp
