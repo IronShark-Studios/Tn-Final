@@ -416,7 +416,7 @@ Configure Org Journal
 - https://emacs.stackexchange.com/questions/42281/org-mode-is-it-possible-to-display-online-images
 - https://github.com/abo-abo/org-download
 - https://org-roam.discourse.group/t/is-there-a-solution-for-images-organization-in-org-roam/925
-** TODO Configure Org-Agenda
+** NEXT Configure Org-Agenda
 - https://redgreenrepeat.com/2021/04/09/org-mode-agenda-getting-started-scheduled-items-and-todos/
 *** TODO Agenda Displays
 #+begin_src emacs-lisp
@@ -500,15 +500,16 @@ Configure Org Journal
                        (org-tags-match-list-sublevels nil))))
                nil))))
 #+end_src
-**** NEXT Update this to match custom templates
-**** NEXT update function namespaces
+**** TODO Update this to match custom templates
+**** TODO update function namespaces
 *** DONE Change Starting Day of Org agenda Weekly View
 - State "DONE"       from "TODO"       [2023-11-24 Fri 08:59] \\
   changed nil to 0, so week starts on suday
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
 #+end_src
-*** TODO add this line to config so agenda week view starts on current day, and shows the upcoming week
+*** DONE add this line to config so agenda week view starts on current day, and shows the upcoming week
+- State "DONE"       from "TODO"       [2023-11-24 Fri 13:46]
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
 #+end_src
@@ -712,8 +713,8 @@ A prefix arg forces clock in of the default task."
 (setq org-agenda-diary-file "~/git/org/diary.org")
 (setq org-agenda-insert-diary-extract-time t)
 #+end_src
-**** NEXT Decide how to use diary.
-**** NEXT update path
+**** TODO Decide how to use diary.
+**** TODO update path
 *** TODO Agenda Sorting
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks

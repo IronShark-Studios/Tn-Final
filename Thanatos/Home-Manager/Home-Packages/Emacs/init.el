@@ -247,6 +247,12 @@
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
 
+([?\s-t] . Tn/org-agenda-day)
+([?\s-w] . Tn/org-agenda-week)
+
+([?\s-i] . Tn/org-clock-in)
+([?\s-o] . Tn/org-clock-out)
+
 ([?\s-\C-1] . Tn/single-collumn-template)
 ([?\s-\C-2] . Tn/double-collumn-template)
 ([?\s-\C-3] . Tn/triple-collumn-template)
@@ -701,7 +707,6 @@ it can be passed in POS."
       org-return-follows-link t
       org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
-      org-reverse-note-order t
       org-odd-levels-only t
       org-fold-catch-invisible-edits 'show-and-error
       org-directory "~/Archive/Feronomicon/ORG/"
@@ -807,7 +812,7 @@ it can be passed in POS."
 
 (use-package org-ref)
 
-(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/reference-index.bib")
+(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/Org-Files/reference-index.bib")
       bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
       bibtex-completion-notes-path '("~/Archive/Grimoire")
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
@@ -829,17 +834,55 @@ it can be passed in POS."
 
 (require 'org-agenda)
 
-(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
-      org-agenda-start-on-weekday 0)
+(defun Tn/org-agenda-day ()
+   (interactive)
+   (let ((org-agenda-span 'day))
+        (org-agenda nil "a")))
 
-(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
-(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
+(defun Tn/org-agenda-week ()
+   (interactive)
+   (let ((org-agenda-span 'week))
+        (org-agenda nil "a")))
+
+(setq org-agenda-files (append (directory-files-recursively "~/Archive" "\\todo.org$"))
+      org-agenda-start-on-weekday 0
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-window-setup 'only-window
+      org-agenda-block-separator #x2501
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t
+      org-agenda-time-grid '((weekly today require-timed)
+                             (0000 0100 0200 0300 0400 0500 0600 0700 800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
+                             "---" "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
+
+(define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
 (define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "j") 'org-agenda-goto-date)
 (define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
 (define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
+
+(use-package org-super-agenda)
+
+(org-super-agenda-mode 1)
+
+(setq-default org-icalendar-include-todo t)
+
+(setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
+      org-icalendar-combined-name "OrgMode"
+      org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
+      org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
+      org-icalendar-timezone "America/Detroit"
+      org-icalendar-store-UID t
+      org-icalendar-alarm-time 30
+      calendar-date-style 'iso
+      calendar-mark-holidays-flag t
+      calendar-week-start-day 0
+      calendar-mark-diary-entries-flag t)
 
 (use-package scad-mode)
 

@@ -1,11 +1,9 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-24 Fri 12:35]
+#+LAST_MODIFIED: [2023-11-24 Fri 16:17]
 
-* System
-
-** NixOS
+* NixOS
 This section contains all root level or otherwise system wide configuration settings.
 
 *** configuration.nix
@@ -455,7 +453,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-** Home-Manager
+* Home-Manager
 
 *** xin-home.nix
 :PROPERTIES:
@@ -2036,6 +2034,12 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
 
+([?\s-t] . Tn/org-agenda-day)
+([?\s-w] . Tn/org-agenda-week)
+
+([?\s-i] . Tn/org-clock-in)
+([?\s-o] . Tn/org-clock-out)
+
 ([?\s-\C-1] . Tn/single-collumn-template)
 ([?\s-\C-2] . Tn/double-collumn-template)
 ([?\s-\C-3] . Tn/triple-collumn-template)
@@ -2732,7 +2736,7 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (use-package org-ref)
 
-(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/reference-index.bib")
+(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/Org-Files/reference-index.bib")
       bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
       bibtex-completion-notes-path '("~/Archive/Grimoire")
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
@@ -2762,8 +2766,28 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (require 'org-agenda)
 
+(defun Tn/org-agenda-day ()
+   (interactive)
+   (let ((org-agenda-span 'day))
+        (org-agenda nil "a")))
+
+(defun Tn/org-agenda-week ()
+   (interactive)
+   (let ((org-agenda-span 'week))
+        (org-agenda nil "a")))
+
 (setq org-agenda-files (append (directory-files-recursively "~/Archive" "\\todo.org$"))
-      org-agenda-start-on-weekday 0)
+      org-agenda-start-on-weekday 0
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-window-setup 'only-window
+      org-agenda-block-separator #x2501
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t
+      org-agenda-time-grid '((weekly today require-timed)
+                             (0000 0100 0200 0300 0400 0500 0600 0700 800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
+                             "---" "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
@@ -2776,6 +2800,31 @@ it can be passed in POS."
 #+end_src
 
 ******* super-agenda
+
+#+begin_src emacs-lisp
+(use-package org-super-agenda)
+
+(org-super-agenda-mode 1)
+#+end_src
+
+******* icalendar
+
+#+begin_src emacs-lisp
+(setq-default org-icalendar-include-todo t)
+
+(setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
+      org-icalendar-combined-name "OrgMode"
+      org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
+      org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
+      org-icalendar-timezone "America/Detroit"
+      org-icalendar-store-UID t
+      org-icalendar-alarm-time 30
+      calendar-date-style 'iso
+      calendar-mark-holidays-flag t
+      calendar-week-start-day 0
+      calendar-mark-diary-entries-flag t)
+#+end_src
+
 ****** openscad
 
 #+begin_src emacs-lisp
