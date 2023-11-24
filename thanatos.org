@@ -2587,7 +2587,6 @@ it can be passed in POS."
         org-return-follows-link t
         org-enforce-todo-dependencies t
         org-enforce-todo-checkbox-dependencies t
-        org-reverse-note-order t
         org-odd-levels-only t
         org-fold-catch-invisible-edits 'show-and-error
         org-directory "~/Archive/Feronomicon/ORG/"
