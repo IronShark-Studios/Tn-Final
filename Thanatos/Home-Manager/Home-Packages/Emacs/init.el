@@ -844,7 +844,7 @@ it can be passed in POS."
    (let ((org-agenda-span 'week))
         (org-agenda nil "a")))
 
-(setq org-agenda-files (append (directory-files-recursively "~/Archive" "\\todo.org$"))
+(setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
       org-agenda-start-on-weekday 0
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
@@ -855,7 +855,7 @@ it can be passed in POS."
       org-agenda-start-with-log-mode t
       org-agenda-time-grid '((weekly today require-timed)
                              (0000 0100 0200 0300 0400 0500 0600 0700 800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
-                             "---" "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
+                             ("---" "┈┈┈┈┈┈┈┈┈┈┈┈┈")))
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
