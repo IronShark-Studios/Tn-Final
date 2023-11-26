@@ -1,11 +1,9 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-22 Wed 20:26]
+#+LAST_MODIFIED: [2023-11-26 Sun 18:25]
 
-* System
-
-** NixOS
+* NixOS
 This section contains all root level or otherwise system wide configuration settings.
 
 *** configuration.nix
@@ -48,46 +46,11 @@ This section contains all root level or otherwise system wide configuration sett
 #+end_src
 
 *** hardware-configuration.nix
-:PROPERTIES:
-:header-args: :tangle ./Thanatos/NixOS/hardware-configuration.nix
-:END:
-This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into this location as part of any fresh install. At some point I would like to be able to standardize it.
-
-#+begin_src nix
-{ config, lib, pkgs, modulesPath, ... }: {
-
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2e4e98d9-7163-4275-8066-9f2bca5ecc63";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2A2B-1368";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/410045fc-1868-40b1-bae1-3121ef069c42"; }
-    ];
-
-  networking.useDHCP = lib.mkDefault true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault      config.hardware.enableRedistributableFirmware;
-}
-#+end_src
+This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into =~/.../Technonomicon/Thanatos/NixOS/hardware-configuration.nix= as part of any fresh install. At some point I would like to be able to standardize it.
 
 *** Sub-Modules
 
-**** users.nix
+***** users.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/users.nix
 :END:
@@ -131,7 +94,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** utf.nix
+***** utf.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/utf.nix
 :END:
@@ -157,7 +120,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** nixpkgs.nix
+***** nixpkgs.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/nixpkgs.nix
 :END:
@@ -195,7 +158,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** pkgs.nix
+***** pkgs.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/pkgs.nix
 :END:
@@ -222,7 +185,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** xserver.nix
+***** xserver.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/xserver.nix
 :END:
@@ -333,7 +296,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 }
 #+end_src
 
-**** network.nix
+***** network.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Sub-Modules/network.nix
 :END:
@@ -364,7 +327,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
 
 *** Tools
 
-**** Secrets
+***** Secrets
 
 ***** Root
 :PROPERTIES:
@@ -383,7 +346,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3KxhYGOs/w6d4nQeFJIz/s9XnCjIJ0
 #+end_src
 
-**** Scripts
+***** Scripts
 
 ***** rebuild.nix
 :PROPERTIES:
@@ -455,7 +418,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-** Home-Manager
+* Home-Manager
 
 *** xin-home.nix
 :PROPERTIES:
@@ -522,7 +485,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
 *** Home-Packages
 
-**** home-manager.nix
+***** home-manager.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/home-manager.nix
 :END:
@@ -536,8 +499,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-**** Alacritty
-***** alacritty.nix
+***** Alacritty
+******* alacritty.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Alacritty/alacritty.nix
 :END:
@@ -563,7 +526,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   ];
 }
 #+end_src
-***** alacrittyConfig.nix
+******* alacrittyConfig.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Alacritty/alacrittyConfig.nix
 :END:
@@ -617,7 +580,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-**** bash.nix
+***** bash.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/bash.nix
 :END:
@@ -639,8 +602,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-**** Zsh
-***** zsh.nix
+***** Zsh
+******* zsh.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/zsh.nix
 :END:
@@ -676,7 +639,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-***** theme.nix
+******* theme.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/theme.nix
 :END:
@@ -718,7 +681,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-***** alaises.nix
+******* alaises.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/alaises.nix
 :END:
@@ -742,7 +705,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-***** oh-my-zsh.nix
+******* oh-my-zsh.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Zsh/oh-my-zsh.nix
 :END:
@@ -772,7 +735,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-**** starship.nix
+******* starship.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/starship.nix
 :END:
@@ -789,7 +752,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-**** lf.nix
+******* lf.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/lf.nix
 :END:
@@ -809,8 +772,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-**** Firefox
-***** firefox.nix
+***** Firefox
+******* firefox.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/firefox.nix
 :END:
@@ -844,7 +807,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-***** policies.nix
+******* policies.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/policies.nix
 :END:
@@ -916,7 +879,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-***** userChrome.nix
+******* userChrome.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/userChrome.nix
 :END:
@@ -1341,7 +1304,7 @@ Window controls will be all wrong without it
 '';
 }
 #+end_src
-***** tridactyl.nix
+******* tridactyl.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/tridactyl.nix
 :END:
@@ -1364,7 +1327,7 @@ Window controls will be all wrong without it
   };
 }
 #+end_src
-***** extensions.nix
+******* extensions.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/extensions.nix
 :END:
@@ -1382,7 +1345,7 @@ Window controls will be all wrong without it
   };
 }
 #+end_src
-***** Roam Protocol
+******* Roam Protocol
 
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
@@ -1402,7 +1365,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** git.nix
+***** git.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/git.nix
 :END:
@@ -1445,7 +1408,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** polybar.nix
+***** polybar.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/polybar.nix
 :END:
@@ -1574,7 +1537,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** vim.nix
+***** vim.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/vim.nix
 :END:
@@ -1594,7 +1557,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** openscad.nix
+***** openscad.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/openscad.nix
 :END:
@@ -1635,7 +1598,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** visidata.nix
+***** visidata.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/visidata.nix
 :END:
@@ -1657,9 +1620,9 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-**** Emacs
+***** Emacs
 
-***** emacs.nix
+******* emacs.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/emacs.nix
 :END:
@@ -1703,7 +1666,7 @@ Window controls will be all wrong without it
 }
 #+end_src
 
-***** bookmarks
+******* bookmarks
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/bookmarks
 :END:
@@ -1734,14 +1697,14 @@ Window controls will be all wrong without it
 )
 #+end_src
 
-***** init.el
+******* init.el
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Emacs/init.el
 :END:
 
 Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split into multiple files. Instead I am splitting it into pseudo files, each focused around a specific idea.
 
-****** early
+********* early
 
 #+begin_src emacs-lisp
 (server-start)
@@ -1751,7 +1714,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (setq warning-minimum-level ":error")
 #+end_src
 
-****** package-management
+********* package-management
 
 #+begin_src emacs-lisp
 (setq package-enable-at-startup nil
@@ -1759,7 +1722,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
       vc-follow-symlinks t)
 #+end_src
 
-****** core fonts
+********* core fonts
 
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
@@ -1784,7 +1747,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 #+end_src
 
-****** personal-info
+********* personal-info
 
 #+begin_src emacs-lisp
 (setq calendar-latitude 39.96
@@ -1794,7 +1757,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
       user-mail-address "xin@ironshark.org")
 #+end_src
 
-****** gui
+********* gui
 
 #+begin_src emacs-lisp
 (menu-bar-mode -1)
@@ -1837,7 +1800,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   :init (load-theme 'doom-city-lights t))
 #+end_src
 
-****** global-keybindings
+********* global-keybindings
 
 #+begin_src emacs-lisp
 (defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
@@ -1859,8 +1822,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (define-key winner-mode-map (kbd "<C-s-right>") #'winner-redo)
 #+end_src
 
-****** exwm
-******* modelines
+********* exwm
+*********** modelines
 
 #+begin_src emacs-lisp
 (defun Tn/exwm-update-title ()
@@ -1884,7 +1847,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
     ("Bitwarden" (exwm-input-release-keyboard)
      (setq mode-line-format nil))))
 #+end_src
-******* custom functions
+*********** custom functions
 
 #+begin_src emacs-lisp
 (defun Tn/dmenu-launch ()
@@ -1932,7 +1895,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (shell-command "sudo light -U 5"))
 
 #+end_src
-******* packages
+*********** packages
 
 #+begin_src emacs-lisp
 (use-package burly)
@@ -1944,7 +1907,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 (exwm-enable)
 #+end_src
-******* system tray and workspaces
+*********** system tray and workspaces
 
 #+begin_src emacs-lisp
 (require 'exwm-systemtray)
@@ -1962,7 +1925,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 
 #+end_src
-******* prefix and simulation keys
+*********** prefix and simulation keys
 
 #+begin_src emacs-lisp
 (setq exwm-input-prefix-keys
@@ -1993,7 +1956,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
           ([?\C-d] . [delete])
           ([?\C-k] . [S-end delete]))))
 #+end_src
-******* global keybinds
+*********** global keybinds
 
 #+begin_src emacs-lisp
 (setq exwm-input-global-keys
@@ -2063,7 +2026,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ))) ;; last paren closes exwm block
 #+end_src
 
-****** emojis, icons, and ligatures
+********* emojis, icons, and ligatures
 
 #+begin_src emacs-lisp
 (use-package emojify)
@@ -2093,7 +2056,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (global-ligature-mode t))
 #+end_src
 
-****** indenting, and delimiters
+********* indenting, and delimiters
 #+begin_src emacs-lisp
 (use-package aggressive-indent)
 (global-aggressive-indent-mode 1)
@@ -2117,7 +2080,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (add-hook 'before-save-hook #'whitespace-cleanup)
 #+end_src
 
-****** major modes
+********* major modes
 
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
@@ -2126,9 +2089,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   :mode "\\.nix\\'")
 #+end_src
 
-****** helm
+********* helm
 
-******* helm-core
+*********** helm-core
 
 #+begin_src emacs-lisp
 (use-package helm)
@@ -2155,7 +2118,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package helm-projectile)
 #+end_src
 
-******* helm-bibtex
+*********** helm-bibtex
 
 #+begin_src emacs-lisp
 (use-package helm-bibtex
@@ -2165,9 +2128,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
         bibtex-completion-notes-symbol "✎"))
 #+end_src
 
-****** evil
+********* evil
 
-******* core
+*********** core
 
 #+begin_src emacs-lisp
 (use-package evil
@@ -2191,7 +2154,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
 #+end_src
 
-******* snipe
+*********** snipe
 
 #+begin_src emacs-lisp
 (use-package evil-snipe
@@ -2201,7 +2164,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (evil-snipe-override-mode +1))
 #+end_src
 
-******* easy motion
+*********** easy motion
 
 #+begin_src emacs-lisp
 (evil-define-key 'visual evil-snipe-local-mode-map "z" 'evil-snipe-s)
@@ -2230,7 +2193,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (define-key evilem-map "s" #'evil-snipe-S))
 #+end_src
 
-******* colemak collection
+*********** colemak collection
 
 #+begin_src emacs-lisp
 (use-package evil-collection
@@ -2263,7 +2226,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (global-evil-colemak-basics-mode))
 #+end_src
 
-****** ibuffer
+********* ibuffer
 
 #+begin_src emacs-lisp
 (setq ibuffer-formats
@@ -2299,7 +2262,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (remove-hook 'kill-buffer-query-functions 'process-kill-buffer-query-function)
 #+end_src
 
-****** flyspell, and undo-tree
+********* flyspell, and undo-tree
 
 #+begin_src emacs-lisp
 (dolist (hook '(text-mode-hook))
@@ -2315,7 +2278,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
       backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
 #+end_src
 
-****** magit, and projectile
+********* magit, and projectile
 
 #+begin_src emacs-lisp
 (use-package magit)
@@ -2328,7 +2291,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
 #+end_src
 
-****** which-key, and helpful
+********* which-key, and helpful
 
 #+begin_src emacs-lisp
 (use-package helpful
@@ -2343,8 +2306,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (which-key-mode)
   (setq which-key-idle-delay 1))
 #+end_src
-****** org mode
-******* org bullets
+********* org mode
+*********** org bullets
 
 #+begin_src emacs-lisp
 (use-package org-bullets
@@ -2352,7 +2315,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 #+end_src
-******* org appear
+*********** org appear
 
 #+begin_src emacs-lisp
   (use-package org-appear)
@@ -2380,7 +2343,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
                                        nil
                                        t)))
 #+end_src
-******* visual fill collumn
+*********** visual fill collumn
 
 #+begin_src emacs-lisp
 (defun Tn/org-mode-visual-fill ()
@@ -2391,7 +2354,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package visual-fill-column
   :hook (org-mode . Tn/org-mode-visual-fill))
 #+end_src
-******* export
+*********** export
 
 #+begin_src emacs-lisp
 (use-package ox-hugo
@@ -2399,7 +2362,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 (setq org-export-backends '(ascii html icalendar latex md odt freemind))
 #+end_src
-******* tempo
+*********** tempo
 
 #+begin_src emacs-lisp
 (require 'org-tempo)
@@ -2408,8 +2371,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (add-to-list 'org-structure-template-alist
              '("en" . "src nix\n"))
 #+end_src
-******* custom functions
-******** general setup
+*********** custom functions
+************* general setup
 
 #+begin_src emacs-lisp
 (defun Tn/org-mode-setup ()
@@ -2421,7 +2384,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 (add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
 #+end_src
-******** font configuration
+************* font configuration
 
 #+begin_src emacs-lisp
   (defun Tn/org-font-setup ()
@@ -2459,7 +2422,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 #+end_src
-******** file time stamps
+************* file time stamps
 
 #+begin_src emacs-lisp
 (defun Tn/org-find-time-file-property (property &optional anywhere)
@@ -2512,7 +2475,7 @@ it can be passed in POS."
 (defun Tn/current-year () (interactive)
   (shell-command-to-string "echo -n $(date +%Y)"))
 #+end_src
-******** capture templates
+************* capture templates
 
 #+begin_src emacs-lisp
 (setq org-capture-templates
@@ -2527,7 +2490,7 @@ it can be passed in POS."
          :empty-lines 1)))
 #+end_src
 
-******** todo states
+************* todo states
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords
@@ -2544,7 +2507,7 @@ it can be passed in POS."
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 #+end_src
 
-******** tag alist
+************* tag alist
 
 #+begin_src emacs-lisp
 (setq org-tag-alist
@@ -2564,7 +2527,7 @@ it can be passed in POS."
         ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
 #+end_src
 
-******* variables
+*********** variables
 
 #+begin_src emacs-lisp
   (setq org-ellipsis " ▾"
@@ -2587,7 +2550,6 @@ it can be passed in POS."
         org-return-follows-link t
         org-enforce-todo-dependencies t
         org-enforce-todo-checkbox-dependencies t
-        org-reverse-note-order t
         org-odd-levels-only t
         org-fold-catch-invisible-edits 'show-and-error
         org-directory "~/Archive/Feronomicon/ORG/"
@@ -2595,7 +2557,7 @@ it can be passed in POS."
                               "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
                               (Tn/current-year)))
 #+end_src
-******* org-core
+*********** org-core
 #+begin_src emacs-lisp
 (use-package org
 :hook
@@ -2616,8 +2578,8 @@ it can be passed in POS."
 (global-set-key (kbd "C-c C-l") 'org-store-link)
 (global-set-key (kbd "C-c l") 'org-insert-link)
 #+end_src
-******* org-roam
-******** roam-core
+*********** org-roam
+************* roam-core
 
 #+begin_src emacs-lisp
 (use-package org-roam
@@ -2635,7 +2597,7 @@ it can be passed in POS."
   (require 'org-roam-protocol))
 
 #+end_src
-******** roam-node widow
+************* roam-node widow
 - Roam node window navigation is controlled by magit bindings
 
 #+begin_src emacs-lisp
@@ -2647,9 +2609,9 @@ it can be passed in POS."
                (window-height . fit-window-to-buffer)))
 #+end_src
 
-******** capture templates
+************* capture templates
 
-********* default
+************* default
 
 #+begin_src emacs-lisp
 ;; (("d" "default" plain "%?"
@@ -2658,7 +2620,7 @@ it can be passed in POS."
 ;;   :unnarrowed t))
 #+end_src
 
-********* daily
+************* daily
 
 #+begin_src emacs-lisp
 ;; (setq org-roam-dailies-capture-templates
@@ -2668,7 +2630,7 @@ it can be passed in POS."
 ;;                             "#+title: %<%Y-%m-%d>\n"))))
 #+end_src
 
-******** roam-bibtex
+************* roam-bibtex
 
 #+begin_src emacs-lisp
 (use-package org-roam-bibtex
@@ -2677,7 +2639,7 @@ it can be passed in POS."
   (require 'org-ref))
 #+end_src
 
-******** roam-ui
+************* roam-ui
 
 #+begin_src emacs-lisp
 (use-package org-roam-ui
@@ -2687,7 +2649,7 @@ it can be passed in POS."
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
-******* org-journal
+*********** org-journal
 
 #+begin_src emacs-lisp
 (use-package org-journal
@@ -2707,8 +2669,8 @@ it can be passed in POS."
       org-journal-start-on-weekday 0)
 #+end_src
 
-******* org-bibtex
-******** bibtex-core
+*********** org-bibtex
+************* bibtex-core
 
 #+begin_src emacs-lisp
 (require 'bibtex)
@@ -2728,7 +2690,7 @@ it can be passed in POS."
 
 (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 #+end_src
-******** org-ref
+************* org-ref
 
 #+begin_src emacs-lisp
 (use-package org-ref)
@@ -2751,19 +2713,19 @@ it can be passed in POS."
         (lambda (fpath)
           (call-process "open" nil 0 nil fpath)))
 #+end_src
-******** pdf-tools
+************* pdf-tools
 
 #+begin_src emacs-lisp
 (use-package pdf-tools)
 #+end_src
-****** agenda
+********* agenda
 
-******* agenda-core
+*********** agenda-core
 
 #+begin_src emacs-lisp
 (require 'org-agenda)
 
-(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+(setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
@@ -2776,12 +2738,13 @@ it can be passed in POS."
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
 #+end_src
 
-****** openscad
+*********** super-agenda
+********* openscad
 
 #+begin_src emacs-lisp
 (use-package scad-mode)
 #+end_src
-****** misc.
+********* misc.
 
 #+begin_src emacs-lisp
 (use-package centered-cursor-mode)
@@ -2794,7 +2757,7 @@ it can be passed in POS."
 (global-set-key (kbd "C-s") #'rg-menu)
 #+end_src
 
-**** flameshot.nix
+***** flameshot.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/flameshot.nix
 :END:
@@ -2810,7 +2773,7 @@ it can be passed in POS."
 }
 #+end_src
 
-**** blueman.nix
+***** blueman.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/blueman.nix
 :END:
@@ -2824,9 +2787,9 @@ it can be passed in POS."
 }
 #+end_src
 
-**** XDG
+***** XDG
 
-***** user-dirs.dirs
+******* user-dirs.dirs
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/XDG/user-dirs.nix
 :END:
@@ -2851,7 +2814,7 @@ it can be passed in POS."
 }
 #+end_src
 
-**** communication.nix
+***** communication.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/communication.nix
 :END:

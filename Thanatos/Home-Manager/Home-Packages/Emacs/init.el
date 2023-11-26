@@ -701,7 +701,6 @@ it can be passed in POS."
       org-return-follows-link t
       org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
-      org-reverse-note-order t
       org-odd-levels-only t
       org-fold-catch-invisible-edits 'show-and-error
       org-directory "~/Archive/Feronomicon/ORG/"
@@ -829,14 +828,14 @@ it can be passed in POS."
 
 (require 'org-agenda)
 
-(setq org-agenda-files (append (directory-files-recursively "~/Projects/" "\\todo.org$"))
+(setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
 
-(define-key org-agenda-mode-map (kbd "j") 'evil-next-line)
-(define-key org-agenda-mode-map (kbd "k") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
 (define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
-(define-key org-agenda-mode-map (kbd "n") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "j") 'org-agenda-goto-date)
 (define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
 (define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
