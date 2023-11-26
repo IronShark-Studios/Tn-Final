@@ -247,6 +247,12 @@
 ([?\s->] . Tn/brightness-up)
 ([?\s-<] . Tn/brightness-down)
 
+([?\s-t] . Tn/org-agenda-day)
+([?\s-w] . Tn/org-agenda-week)
+
+([?\s-i] . Tn/org-clock-in)
+([?\s-o] . Tn/org-clock-out)
+
 ([?\s-\C-1] . Tn/single-collumn-template)
 ([?\s-\C-2] . Tn/double-collumn-template)
 ([?\s-\C-3] . Tn/triple-collumn-template)
@@ -806,7 +812,7 @@ it can be passed in POS."
 
 (use-package org-ref)
 
-(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/reference-index.bib")
+(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/Org-Files/reference-index.bib")
       bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
       bibtex-completion-notes-path '("~/Archive/Grimoire")
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
@@ -827,6 +833,16 @@ it can be passed in POS."
 (use-package pdf-tools)
 
 (require 'org-agenda)
+
+(defun Tn/org-agenda-day ()
+   (interactive)
+   (let ((org-agenda-span 'day))
+        (org-agenda nil "a")))
+
+(defun Tn/org-agenda-week ()
+   (interactive)
+   (let ((org-agenda-span 'week))
+        (org-agenda nil "a")))
 
 (setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
