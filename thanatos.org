@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-26 Sun 20:25]
+#+LAST_MODIFIED: [2023-11-26 Sun 20:31]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2780,7 +2780,7 @@ it can be passed in POS."
 (setq-default org-icalendar-include-todo t)
 
 (setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
-      org-icalendar-combined-name "OrgMode"
+      org-icalendar-combined-name "OrgCal"
       org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
       org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
       org-icalendar-timezone "America/Detroit"

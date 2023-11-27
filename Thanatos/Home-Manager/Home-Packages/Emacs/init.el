@@ -875,7 +875,7 @@ it can be passed in POS."
 (setq-default org-icalendar-include-todo t)
 
 (setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
-      org-icalendar-combined-name "OrgMode"
+      org-icalendar-combined-name "OrgCal"
       org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
       org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
       org-icalendar-timezone "America/Detroit"
