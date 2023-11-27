@@ -853,9 +853,11 @@ it can be passed in POS."
       org-agenda-block-separator #x2501
       org-agenda-compact-blocks t
       org-agenda-start-with-log-mode t
-      org-agenda-time-grid '((weekly today require-timed)
-                             (0000 0100 0200 0300 0400 0500 0600 0700 800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
-                             ("---" "┈┈┈┈┈┈┈┈┈┈┈┈┈")))
+      org-agenda-start-with-clockreport-mode t
+      org-agenda-time-leading-zero t
+      org-agenda-time-grid '((daily today require-timed)
+ (100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 0)
+ " ----- " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
@@ -873,7 +875,7 @@ it can be passed in POS."
 (setq-default org-icalendar-include-todo t)
 
 (setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
-      org-icalendar-combined-name "OrgMode"
+      org-icalendar-combined-name "OrgCal"
       org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
       org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
       org-icalendar-timezone "America/Detroit"
