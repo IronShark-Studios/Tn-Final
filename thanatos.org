@@ -2743,6 +2743,9 @@ it can be passed in POS."
 
 (setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
       org-agenda-start-on-weekday 0)
+      org-agenda-time-grid '((daily today require-timed)
+ (100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 0)
+ " ----- " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
