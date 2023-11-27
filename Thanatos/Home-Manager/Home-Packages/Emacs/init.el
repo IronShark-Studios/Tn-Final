@@ -845,7 +845,19 @@ it can be passed in POS."
         (org-agenda nil "a")))
 
 (setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
-      org-agenda-start-on-weekday 0)
+      org-agenda-start-on-weekday 0
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-window-setup 'only-window
+      org-agenda-block-separator #x2501
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t
+      org-agenda-start-with-clockreport-mode t
+      org-agenda-time-leading-zero t
+      org-agenda-time-grid '((daily today require-timed)
+ (100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 0)
+ " ----- " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
 (define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
 (define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
@@ -855,6 +867,24 @@ it can be passed in POS."
 (define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
 (define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
 (define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
+
+(use-package org-super-agenda)
+
+(org-super-agenda-mode 1)
+
+(setq-default org-icalendar-include-todo t)
+
+(setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
+      org-icalendar-combined-name "OrgMode"
+      org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
+      org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
+      org-icalendar-timezone "America/Detroit"
+      org-icalendar-store-UID t
+      org-icalendar-alarm-time 30
+      calendar-date-style 'iso
+      calendar-mark-holidays-flag t
+      calendar-week-start-day 0
+      calendar-mark-diary-entries-flag t)
 
 (use-package scad-mode)
 
