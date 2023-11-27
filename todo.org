@@ -2,6 +2,9 @@
 Configure Org Journal
 * Tn-Final Remainder
 ** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
+** TODO Create set up script
+*** TODO Home Directory Set up
+*** TODO Git SSH Key
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
 **** TODO (M-x shell) to call Alacritty
@@ -28,16 +31,19 @@ Configure Org Journal
 **** TODO [[https://melpa.org/#/helm-company][Helm-Company]]
 **** TODO [[https://melpa.org/#/flyspell-correct-helm][Fly-Spell Helm]]
 *** TODO FlyMake
-*** TODO Configure default starting message
+*** DONE Configure default starting message
+- State "DONE"       from "TODO"       [2023-11-27 Mon 01:46]
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode)
 #+end_src
-**** TODO make the daily journal page default buffer
 *** TODO Create a custom function to edit sudo files with tramp.
 - Try to create a shell command =seo= to do the same or second function to reopen current file as root
 - [[https://emacs.stackexchange.com/questions/52/edit-file-with-super-user-rights]]
-*** TODO Use ~(C-c C-z)~ to add bullet notes to a heading
-**** TODO add evil-insert-hook to capture hook
+*** DONE Use ~(C-c C-z)~ to add bullet notes to a heading
+- State "DONE"       from "TODO"       [2023-11-27 Mon 01:47]
+**** CANCELLED add evil-insert-hook to capture hook
+- State "CANCELLED"  from "TODO"       [2023-11-27 Mon 01:47] \\
+  already done for another task
 *** DONE use refile-copy to timestamp and archive all completed tasks in a single chronological
 - State "DONE"       from "TODO"       [2023-11-24 Fri 08:47] \\
   Done with normal org-archive functionality
@@ -66,10 +72,14 @@ Configure Org Journal
 #+end_src
 **** TODO Figure out how to configure default directory for org attachments
 - allows moving tasks without breaking links
-*** TODO Move org tangle hook to before save
+*** CANCELLED Move org tangle hook to before save
+- State "CANCELLED"  from "TODO"       [2023-11-27 Mon 01:49] \\
+  auto tangleling turned out to be a bad idea
 *** TODO create function to split window Vertically and Balance all windows in single button
 *** TODO Create function to close current buffer and hide window, and balance remaining window.
-*** TODO Append empty line to file
+*** CANCELLED Append empty line to file
+- State "CANCELLED"  from "TODO"       [2023-11-27 Mon 01:51] \\
+  not needed
 #+begin_src emacs-lisp
 (setq require-final-newline t)
 #+end_src
@@ -81,6 +91,7 @@ Configure Org Journal
 - https://www.youtube.com/watch?v=JWD1Fpdd4Pc&list=WL&index=473&t=1353s&pp=gAQBiAQB
 **** TODO Easymotion
 **** TODO [[https://github.com/otavioschwanck/harpoon.el][Harpoon]]
+*** TODO Install Evil Harpoon
 *** TODO Test addition packages
 **** TODO [[https://github.com/bbatsov/crux][crux]]
 **** TODO [[https://github.com/nverno/llvm-mode][LLVM IR Mode]]
@@ -99,73 +110,8 @@ Configure Org Journal
 - https://www.youtube.com/watch?v=SzA2YODtgK4&list=WL&index=474&t=2848s&pp=gAQBiAQB
 *** DONE Test Additional Packages
 *** DONE add empty line and point start position to org code block templates
-*** TODO Create Note taking workflow
-- [[https://jonhanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
-- [[https://karinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
-- [[https://casl.dev/post/lecture-notes-1/][Latex + Vim Notes]]
-- https://www.youtube.com/watch?v=4-YqqGGIkHg&list=WL&index=87&pp=gAQBiAQB (and other videos on channel)
-- https://www.youtube.com/watch?v=wB89lJs5A3s&list=WL&index=244&pp=gAQBiAQB
-- https://www.youtube.com/watch?v=njibNuFQwjw&list=WL&index=245&t=605s&pp=gAQBiAQB
-- https://www.youtube.com/watch?v=5Q9435eIOVI&list=WL&index=265&t=296s&pp=gAQBiAQB
-- https://www.youtube.com/watch?v=bTbiC6SamT4&list=WL&index=279&pp=gAQBiAQB
-- https://www.youtube.com/watch?v=Bpmkeh4D98s&list=WL&index=470&t=1646s&pp=gAQBiAQB
-**** TODO Single large notes file
-- Integrate witRoam. By either the main file being indexed, or the top level headlines being Indexed.
-**** TODO Insight based / zettles
-*** TODO Create Knowledge Management Workflow
-- https://zk.zeel.page/examples
-- https://www.mtalnodes.com/taking-raw-notes-is-useless
-- https://whhoncom/posts/para-org-mode/
-- https://www.bldingasecondbrain.com/
-- [[https://wwweddit.com/r/emacs/comments/10hm92r/emacs_and_knowledge_management_for_scientists/][Knowledge management for scientists]]
-- [[https://jetokuan.github.io/org-roam-guide/][Taking notes with org roam]]
-- [[https://tony-zorman.com/posts/my-phd-workflow.html][PhD Workflow]]
-- [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][How to take smart notes with Org Mode]]
-- [[https://rgoswami.me/posts/org-note-workflow/][Org Mode Note Workflow]]
-**** TODO Capture Information from Web
-- https://githucom/abo-abo/orca
-- https://github.com/ArchiveBox/ArchiveBox
-- https://www.youtube.com/watch?v=eaZUZCzaIgw
-**** TODO PDF Viewer
-- [[https://gitb.com/vedang/pdf-tools]]
-- https://rgoswi.me/posts/org-note-workflow/#org-noter
-- https://alber.am/2020-04-11-pdf-tools-as-default-pdf-viewer.html
-**** TODO Integte wikipedia links using EWW and Org
-**** TODO Ebook Library Manager
-***** TODO Find out if home-manager can configure Calibre DRM settings
-
-*** TODO Create Math Workflow
-**** TODO Doing Math with Org-mode
-***** TODO Tables
-***** TODO Elisp / Haskell (?) Code blocks
-- https://wiki.haskell.org/Haskell_and_mathematics
-***** TODO LaTeX Engine
-- https://www.latex-project.org/help/documentation/
-- https://texdoc.org/serve/latex2e.pdf/0
-- https://www.youtube.com/watch?v=xBctAt2TVew
-- https://www.youtube.com/watch?v=331YxgOJUGw&list=WL&index=280&pp=gAQBiAQB
-***** TODO mathpix.el
-**** TODO GNU calc and plot integration
-**** TODO Latex inline code Support
-**** TODO Export org docs to pdf
-*** TODO Create Programming Workflow
-**** TODO Figure Out what TreeSitter is
-**** TODO Figure Out What LSP is
-- https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
-- https://taingram.org/blog/emacs-lsp-ide.html
-- https://www.youtube.com/watch?v=w7i4amO_zaE&list=WL&index=63&t=215s&pp=gAQBiAQB
-**** TODO FIgure Out what DAP mode is]
-    - https://github.com/emacs-lsp/dap-mode
-**** TODO Including git Workflow
-***** TODO Magit
-***** TODO Git time machine
-- https://codeberg.org/pidu/git-timemachine
-*** TODO Create Task Management Workflow
-- [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][Checklists in Org-Mode]]
-- [[https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Task Management with Org Roam]]
-- [[https://writequit.org/denver-emacs/presentations/2017-04-11-time-clocking-with-org.html][Clocking Time With Org-Mode]]
-- [[https://melpa.org/#/org-pomodoro][Work Cycling with Org Pomodoro]]
-*** TODO Change Org Todo heading and colors
+*** DONE Change Org Todo heading and colors
+- State "DONE"       from "TODO"       [2023-11-27 Mon 01:53]
 #+begin_src emacs-lisp
  (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -181,8 +127,8 @@ Configure Org Journal
               ("MEETING" :foreground "gainboro" :weight bold)
               ("PHONE" :foreground "gainboro" :weight bold))))
 #+end_src
-**** TODO add evil-insert hook to state based captures
 *** TODO Auto add tags based on todo state
+
 #+begin_src emacs-lisp
 (setq org-todo-state-tags-triggers
       (quote (("CANCELLED" ("CANCELLED" . t))
@@ -192,27 +138,6 @@ Configure Org Journal
               ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
-#+end_src
-*** TODO Toggle through all todo headings
-#+begin_src emacs-lisp
-(setq org-use-fast-todo-selection t)
-(setq org-treat-S-cursor-todo-selection-as-state-change nil)
-#+end_src
-*** TODO Prevent Projects from being marked done while incomplete
-#+begin_src emacs-lisp
-(setq org-enforce-todo-dependencies 1)
-#+end_src
-**** TODO Over ride this behavior on a specific heading with
-#+begin_src emacs-lisp
-  :PROPERTIES:
-  :NOBLOCKING: t
-  :END:
-#+end_src
-**** TODO Enforces Dependencies to be completed in order
-#+begin_src emacs-lisp
-  :PROPERTIES:
-  :ORDERED: t
-  :END:
 #+end_src
 *** TODO Create Tag Groups and hotkeys
 #+begin_src emacs-lisp
@@ -235,8 +160,30 @@ Configure Org Journal
                             ("CANCELLED" . ?c)
                             ("FLAGGED" . ??))))
 #+end_src
-**** NEXT Sort through and create tags that are useful to me.
+**** TODO Sort through and create tags that are useful to me.
 - Tags could include, people, places, activities, ect. They are used for Context.
+*** DONE Toggle through all todo headings
+- State "DONE"       from "TODO"       [2023-11-27 Mon 01:57]
+#+begin_src emacs-lisp
+(setq org-treat-S-cursor-todo-selection-as-state-change nil)
+#+end_src
+*** DONE Prevent Projects from being marked done while incomplete
+- State "DONE"       from "TODO"       [2023-11-27 Mon 01:58]
+#+begin_src emacs-lisp
+(setq org-enforce-todo-dependencies 1)
+#+end_src
+**** This behavior can be overridden on a specific heading with
+#+begin_src emacs-lisp
+  :PROPERTIES:
+  :NOBLOCKING: t
+  :END:
+#+end_src
+**** Enforces Dependencies to be completed in order
+#+begin_src emacs-lisp
+  :PROPERTIES:
+  :ORDERED: t
+  :END:
+#+end_src
 *** CANCELLED Hide Blank Lines between folded headings
 - State "CANCELLED"  from "TODO"       [2023-11-24 Fri 08:42] \\
   Separator lines not needed, and blank before new entry has issues
@@ -245,7 +192,6 @@ Configure Org Journal
 (setq org-blank-before-new-entry (quote ((heading)
                                          (plain-list-item . auto))))
 #+end_src
-*** TODO [[https://emacs.stackexchange.com/questions/13820/inline-verbatim-and-code-with-quotes-in-org-mode][Consider adding to inline highlight block REGX]]
 *** TODO Refilling
 #+begin_src emacs-lisp
 ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
@@ -313,18 +259,10 @@ Configure Org Journal
               ("h" "Habit" entry (file "~/git/org/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 #+end_src
-**** NEXT Decide if org-file is needed
-**** NEXT sort through capture templates to customize for my use
-**** NEXT Integrate current eating capture templates with this
-***** NEXT Possibly create a better template including tables for macros
-*** TODO configure org-checklist to reset sub-tasks when parents are marked done
-*** TODO Exporting
-#+begin_src emacs-lisp
-(setq org-alphabetical-lists t)
-
-;; Explicitly load required exporters
-(require 'ox-latex)
-#+end_src
+**** TODO Decide if org-file is needed
+**** TODO sort through capture templates to customize for my use
+**** TODO Integrate current eating capture templates with this
+***** TODO Possibly create a better template including tables for macros
 *** TODO Enable Modules
 #+begin_src emacs-lisp
 ; Enable habit tracking (and a bunch of other modules)
@@ -394,7 +332,9 @@ Configure Org Journal
 ***** TODO PlantUML
 ***** TODO ~bluez~
 *** TODO Add ledger language to org babel
-*** TODO Configure Org Protocol with firefox
+*** DONE Configure Org Protocol with firefox
+- State "DONE"       from "TODO"       [2023-11-27 Mon 02:02] \\
+  configured but not working correctly yet
 #+begin_src emacs-lisp
 (require 'org-protocol)
 
@@ -408,7 +348,9 @@ Configure Org Journal
 #+end_src
 **** TODO Orgzly to access todos from phone
 **** TODO Find a way to take voice notes and transcribe them into plain text
-*** TODO Show notes in the order they are taken
+*** CANCELLED Show notes in the order they are taken
+- State "CANCELLED"  from "TODO"       [2023-11-27 Mon 02:04] \\
+  doesn't seem to work
 #+begin_src emacs-lisp
 (setq org-reverse-note-order nil)
 #+end_src
@@ -500,15 +442,15 @@ Configure Org Journal
                        (org-tags-match-list-sublevels nil))))
                nil))))
 #+end_src
-**** NEXT Update this to match custom templates
-**** NEXT update function namespaces
+***** TODO Update this to match custom templates
+***** TODO update function namespaces
 *** DONE Change Starting Day of Org agenda Weekly View
 - State "DONE"       from "TODO"       [2023-11-24 Fri 08:59] \\
   changed nil to 0, so week starts on suday
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
 #+end_src
-*** TODO add this line to config so agenda week view starts on current day, and shows the upcoming week
+day, and shows the upcoming week
 #+begin_src emacs-lisp
 (setq org-agenda-start-on-weekday nil)
 #+end_src
@@ -526,7 +468,7 @@ Configure Org Journal
 
 (setq org-agenda-auto-exclude-function 'bh/org-auto-exclude-function)
 #+end_src
-**** NEXT Replace ~farm~ with one or more custom tags to be selectively excluded from org agenda
+***** TODO Replace ~farm~ with one or more custom tags to be selectively excluded from org agenda
 *** TODO Org Clocking
 #+begin_src emacs-lisp
 ;; Resume clocking task when emacs is restarted
@@ -557,6 +499,7 @@ Configure Org Journal
 
 (setq bh/keep-clock-running nil)
 
+;; Change this to Active
 (defun bh/clock-in-to-next (kw)
   "Switch a task from TODO to NEXT when clocking in.
 Skips capture tasks, projects, and subprojects.
@@ -649,7 +592,7 @@ as the default task."
 
 (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
 #+end_src
-**** NEXT Fix Namespaces
+**** TODO Fix Namespaces
 #+begin_src emacs-lisp
 (require 'org-id)
 (defun bh/clock-in-task-by-id (id)
@@ -675,9 +618,9 @@ A prefix arg forces clock in of the default task."
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
 #+end_src
-***** NEXT Find out if clock in id is usefull
-***** NEXT Fix Namespaces
-***** NEXT Create ~(s-t)~ time tracking hydra?
+***** TODO Find out if clock in id is usefull
+***** TODO Fix Namespaces
+***** TODO Create ~(s-t)~ time tracking hydra?
 *** TODO Log Time in discrete minute intervals
 #+begin_src emacs-lisp
 (setq org-time-stamp-rounding-minutes (quote (1 1)))
@@ -690,7 +633,7 @@ A prefix arg forces clock in of the default task."
               :max-gap 0
               :gap-ok-around ("4:00"))))
 #+end_src
-**** NEXT Confirm what the 4:00 setting does
+**** TODO Confirm what the 4:00 setting does
 *** TODO Configure Org Clock monthly Report
 #+begin_src emacs-lisp
 ;; Agenda clock report parameters
@@ -699,7 +642,7 @@ A prefix arg forces clock in of the default task."
 ;; Agenda log mode items to display (closed and state changes by default)
 (setq org-agenda-log-mode-items (quote (closed state)))
 #+end_src
-**** NEXT Incorporate this into a GTD style /monthly review/
+**** TODO Incorporate this into a GTD style /monthly review/
 *** TODO Log time in hours only
 #+begin_src emacs-lisp
 (setq org-time-clocksum-format
@@ -712,8 +655,8 @@ A prefix arg forces clock in of the default task."
 (setq org-agenda-diary-file "~/git/org/diary.org")
 (setq org-agenda-insert-diary-extract-time t)
 #+end_src
-**** NEXT Decide how to use diary.
-**** NEXT update path
+**** TODO Decide how to use diary.
+**** TODO update path
 *** TODO Agenda Sorting
 #+begin_src emacs-lisp
 ;; Show all future entries for repeating tasks
@@ -833,7 +776,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 (defun bh/is-scheduled-late (date-str)
   (string-match "Sched\.\\(.*\\)x:" date-str))
 #+end_src
-**** NEXT test each to see if any are useful
+**** TODO test each to see if any are useful
 *** TODO enable opening multiple agendas together
 #+begin_src emacs-lisp
 ;; Use sticky agenda's so they persist
@@ -888,7 +831,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 (add-hook 'org-after-todo-state-change-hook 'bh/mark-next-parent-tasks-todo 'append)
 (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
 #+end_src
-**** NEXT Update namespaces
+**** TODO Update namespaces
 *** TODO Enable ~C-c C-s~ to schedule time in addition to date
 *** TODO Emacs Diary
 - Use the diary file to track recurring events that are permanent and fixed.
@@ -900,10 +843,6 @@ Late deadlines first, then scheduled, then non-late deadlines"
 **** TODO Follow up on this once I have more experience with agenda
 - https://github.com/alphapapa/org-super-agenda
 *** TODO Use emacs dairy long term recurring tasks?
-*** TODO Limit default agenda display to today
-#+begin_src emacs-lisp
-(setq org-agenda-span 'day)
-#+end_src
 *** TODO Integrate agenda with google calendar
 ** TODO Configure Magit
 - https://github.com/dandavison/magit-delta
@@ -927,6 +866,11 @@ Late deadlines first, then scheduled, then non-late deadlines"
 *** DONE Bibtex
 *** TODO LaTeX
 *** TODO Graphviz
+*** TODO Visidata
+- https://www.visidata.org/docs/customize/
+*** TODO Create emacs (M-x visidata) function to open visidata directly
+*** TODO Add Vi movement Keys
+*** TODO Create Basic theme
 *** TODO hugo
 - [[https://willschenk.com/howto/2019/using_org_mode_in_hugo/][Using Hugo with Org Mode]]
 *** TODO Configure Org Mode Stuck Projects
@@ -1189,8 +1133,8 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         nil
       next-headline)))
 #+end_src
-**** NEXT Fix NameSpaces
-**** NEXT Confirm what each function does.
+**** TODO Fix NameSpaces
+**** TODO Confirm what each function does.
 *** TODO Archiving
 #+begin_src emacs-lisp
 (setq org-archive-mark-done nil)
@@ -1219,17 +1163,12 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
             (or subtree-end (point-max)))
         next-headline))))
 #+end_src
-**** NEXT Confirm use case
-**** NEXT update target sub heading
+**** TODO Confirm use case
+**** TODO update target sub heading
 *** TODO Org Flash Cards
 - https://www.reddit.com/r/emacs/comments/i0n100/is_there_a_way_to_transform_orgroam_files_to_anki/
 - org fc
 *** TODO [[https://github.com/nobiot/org-transclusion#original-idea-by-john-kitchin][Org Transclusion]]
-** TODO Configure Visidata
-- https://www.visidata.org/docs/customize/
-*** TODO Create emacs (M-x visidata) function to open visidata directly
-*** TODO Add Vi movement Keys
-*** TODO Create Basic theme
 ** TODO Configure interaction with non-emacs programs
 *** TODO Use Google Calendar notifications for appointment reminders
 *** TODO exorcism (programming tutorial)
@@ -1348,10 +1287,84 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 - https://bmcgee.ie/posts/2022/11/getting-nixos-to-keep-a-secret/
 - https://github.com/Mic92/sops-nix
 ** TODO Fix unclutter cursor hiding
+** TODO Find a way to do multi cursor insert
 ** TODO clean and rebuild polybar
 *** TODO have only current workspace number show on bar
 *** TODO remove un-needed code
 *** TODO change name
+** TODO Create Journaling Workflow
+*** NEXT Basic Journaling and time keeping with Org-Journal
+DEADLINE: <2023-11-28 Tue 20:00> SCHEDULED: <2023-11-27 Tue 08:00>
+***** TODO Org capture templates for journaling
+******* TODO Auto enter evil insert mode
+***** TODO How to repeatedly schedual non-permanent recurring task
+- Eg. CaC Classes, Wild Goose, Art Walks, Ect.
+** TODO Create Note taking workflow
+ [[https://jonhanabennett.github.io/blog/2019/05/29/writing-academic-papers-with-org-mode/][Writing Academic Papers in Org Mode]]
+ [[https://karinks.com/software/latex-input-for-impatient-scholars/][Latex for Impatient Scolars]]
+ [[https://casl.dev/post/lecture-notes-1/][Latex + Vim Notes]]
+ https://www.youtube.com/watch?v=4-YqqGGIkHg&list=WL&index=87&pp=gAQBiAQB (and other videos on channel)
+ https://www.youtube.com/watch?v=wB89lJs5A3s&list=WL&index=244&pp=gAQBiAQB
+ https://www.youtube.com/watch?v=njibNuFQwjw&list=WL&index=245&t=605s&pp=gAQBiAQB
+ https://www.youtube.com/watch?v=5Q9435eIOVI&list=WL&index=265&t=296s&pp=gAQBiAQB
+ https://www.youtube.com/watch?v=bTbiC6SamT4&list=WL&index=279&pp=gAQBiAQB
+ https://www.youtube.com/watch?v=Bpmkeh4D98s&list=WL&index=470&t=1646s&pp=gAQBiAQB
+*** TODO Single large notes file
+ Integrate witRoam. By either the main file being indexed, or the top level headlines being Indexed.
+*** TODO Insight based / zettles
+** TODO Create Knowledge Management Workflow
+ https://zk.zeel.page/examples
+ https://www.mtalnodes.com/taking-raw-notes-is-useless
+ https://whhoncom/posts/para-org-mode/
+ https://www.bldingasecondbrain.com/
+ [[https://wwweddit.com/r/emacs/comments/10hm92r/emacs_and_knowledge_management_for_scientists/][Knowledge management for scientists]]
+ [[https://jetokuan.github.io/org-roam-guide/][Taking notes with org roam]]
+ [[https://tony-zorman.com/posts/my-phd-workflow.html][PhD Workflow]]
+ [[https://blog.jethro.dev/posts/how_to_take_smart_notes_org/][How to take smart notes with Org Mode]]
+ [[https://rgoswami.me/posts/org-note-workflow/][Org Mode Note Workflow]]
+*** TODO Capture Information from Web
+ https://githucom/abo-abo/orca
+ https://github.com/ArchiveBox/ArchiveBox
+ https://www.youtube.com/watch?v=eaZUZCzaIgw
+*** TODO PDF Viewer
+ [[https://gitb.com/vedang/pdf-tools]]
+ https://rgoswi.me/posts/org-note-workflow/#org-noter
+ https://alber.am/2020-04-11-pdf-tools-as-default-pdf-viewer.html
+*** TODO Integte wikipedia links using EWW and Org
+*** TODO Ebook Library Manager
+**** TODO Find out if home-manager can configure Calibre DRM settings
+
+** TODO Create Math Workflow
+*** TODO Doing Math with Org-mode
+**** TODO Tables
+**** TODO Elisp / Haskell (?) Code blocks
+ https://wiki.haskell.org/Haskell_and_mathematics
+**** TODO LaTeX Engine
+ https://www.latex-project.org/help/documentation/
+ https://texdoc.org/serve/latex2e.pdf/0
+ https://www.youtube.com/watch?v=xBctAt2TVew
+ https://www.youtube.com/watch?v=331YxgOJUGw&list=WL&index=280&pp=gAQBiAQB
+**** TODO mathpix.el
+*** TODO GNU calc and plot integration
+*** TODO Latex inline code Support
+*** TODO Export org docs to pdf
+** TODO Create Programming Workflow
+*** TODO Figure Out what TreeSitter is
+*** TODO Figure Out What LSP is
+ https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+ https://taingram.org/blog/emacs-lsp-ide.html
+ https://www.youtube.com/watch?v=w7i4amO_zaE&list=WL&index=63&t=215s&pp=gAQBiAQB
+*** TODO FIgure Out what DAP mode is]
+   - https://github.com/emacs-lsp/dap-mode
+*** TODO Including git Workflow
+**** TODO Magit
+**** TODO Git time machine
+ https://codeberg.org/pidu/git-timemachine
+** TODO Create Task Management Workflow
+- [[https://redgreenrepeat.com/2019/10/04/checklists-in-org-mode/][Checklists in Org-Mode]]
+- [[https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html][Task Management with Org Roam]]
+- [[https://writequit.org/denver-emacs/presentations/2017-04-11-time-clocking-with-org.html][Clocking Time With Org-Mode]]
+- [[https://melpa.org/#/org-pomodoro][Work Cycling with Org Pomodoro]]
 * Reading List
 ** Saved for later : using nvidia Graphics Drivers
 Enables the use of a Nvidia Graphics card. Exports all graphics processing to the GPU.
@@ -1366,7 +1379,7 @@ hardware.nvidia.prime = {
 #+end_src
 ** Blogs
 *** TODO [[http://doc.norang.ca/org-mode.html][Organizing your life in plain text]]
-**** NEXT Follow up with organizing your life in plain text 10.2, 16.3, 16.6
+**** TODO Follow up with organizing your life in plain text 10.2, 16.3, 16.6
 **** TODO Projects
 - A project is any todo heading with todo subheading
 - Projects can be created at any sub heading level

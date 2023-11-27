@@ -49,6 +49,7 @@
 (setq visible-bell t
       column-number-mode t
       ring-bell-function 'ignore
+      initial-major-mode 'org-mode
       visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
 (setq-default fill-column 80
@@ -584,8 +585,8 @@
 (set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
 (set-face-attribute 'org-tag nil     :height 0.9 :inherit 'fixed-pitch)
 (set-face-attribute 'org-block nil    :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil    :foreground "dark cyan" :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil  :foreground "dark cyan" :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil     :foreground "SpringGreen3"
                     :weight 'semi-bold :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
@@ -696,6 +697,7 @@ it can be passed in POS."
       org-hide-block-startup nil
       org-src-preserve-indentation nil
       org-startup-folded t
+      org-treat-S-cursor-todo-selection-as-state-change nil
       org-startup-with-inline-images t
       org-cycle-separator-lines 2
       org-confirm-babel-evaluate nil
