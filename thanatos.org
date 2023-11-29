@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-29 Wed 16:25]
+#+LAST_MODIFIED: [2023-11-29 Wed 16:33]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -783,7 +783,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
   programs.firefox = {
     enable = true;
-    profiles.Xin = {
+    profiles.xin = {
       isDefault = true;
       extraConfig = ''
                     user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
@@ -888,7 +888,7 @@ This file is generated using [[https://mrotherguy.github.io/firefox-csshacks][Mr
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.firefox.profiles.Xin.userChrome = ''
+  programs.firefox.profiles.xin.userChrome = ''
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;

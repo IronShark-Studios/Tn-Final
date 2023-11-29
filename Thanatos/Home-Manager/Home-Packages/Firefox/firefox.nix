@@ -2,7 +2,7 @@
 
   programs.firefox = {
     enable = true;
-    profiles.Xin = {
+    profiles.xin = {
       isDefault = true;
       extraConfig = ''
                     user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);

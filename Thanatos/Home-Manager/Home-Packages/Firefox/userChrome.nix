@@ -1,6 +1,6 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.firefox.profiles.Xin.userChrome = ''
+  programs.firefox.profiles.xin.userChrome = ''
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;
