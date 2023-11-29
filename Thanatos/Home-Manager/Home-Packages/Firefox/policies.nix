@@ -1,6 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
-  programs.firefox.package = pkgs.firefox-devedition.override {
+  # programs.firefox.package = pkgs.firefox-devedition.override {
+  programs.firefox.package = pkgs.firefox.override {
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;

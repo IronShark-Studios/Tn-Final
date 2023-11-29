@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-29 Wed 16:33]
+#+LAST_MODIFIED: [2023-11-29 Wed 17:33]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -14,7 +14,7 @@ This section contains all root level or otherwise system wide configuration sett
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   imports = [
     ./hardware-configuration.nix
@@ -461,7 +461,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   home = {
     username = "xin";
     homeDirectory = "/home/xin";
-    stateVersion = "23.05";
+    stateVersion = "23.11";
   };
 
   nixpkgs = {
@@ -815,7 +815,8 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 #+begin_src nix
 { config, lib, pkgs, modulesPath, ... }: {
 
-  programs.firefox.package = pkgs.firefox-devedition.override {
+  # programs.firefox.package = pkgs.firefox-devedition.override {
+  programs.firefox.package = pkgs.firefox.override {
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;
