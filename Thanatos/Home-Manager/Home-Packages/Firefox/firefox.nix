@@ -2,7 +2,7 @@
 
   programs.firefox = {
     enable = true;
-    profiles.xin = {
+    profiles.Xin = {
       isDefault = true;
       extraConfig = ''
                     user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
@@ -17,7 +17,7 @@
                     user_pref("browser.link.open_newwindow", 3);
                     user_pref("font.name.monospace.x-western", Iosevka Nerd Font Mono);
                     user_pref("font.name.sans-serif.x-western", IosevkaTerm Nerd Font Propo);
-                    user_pref("font.name.serif.x-western",	Iosevka Nerd Font);
+                    user_pref("font.name.serif.x-western", Iosevka Nerd Font);
                     user_pref("font.size.monospace.x-western", 18);
                     user_pref("font.size.variable.x-western", 18);
                 '';

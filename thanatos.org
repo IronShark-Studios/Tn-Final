@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-11-29 Wed 15:07]
+#+LAST_MODIFIED: [2023-11-29 Wed 16:25]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -783,7 +783,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
   programs.firefox = {
     enable = true;
-    profiles.xin = {
+    profiles.Xin = {
       isDefault = true;
       extraConfig = ''
                     user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
@@ -798,7 +798,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
                     user_pref("browser.link.open_newwindow", 3);
                     user_pref("font.name.monospace.x-western", Iosevka Nerd Font Mono);
                     user_pref("font.name.sans-serif.x-western", IosevkaTerm Nerd Font Propo);
-                    user_pref("font.name.serif.x-western",	Iosevka Nerd Font);
+                    user_pref("font.name.serif.x-western", Iosevka Nerd Font);
                     user_pref("font.size.monospace.x-western", 18);
                     user_pref("font.size.variable.x-western", 18);
                 '';
@@ -888,7 +888,7 @@ This file is generated using [[https://mrotherguy.github.io/firefox-csshacks][Mr
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  programs.firefox.profiles.xin.userChrome = ''
+  programs.firefox.profiles.Xin.userChrome = ''
 /* DISABLE BOTTOM LEFT MESSAGES */
 #statuspanel[type="overLink"] {
   display: none !important;
@@ -1350,18 +1350,18 @@ Window controls will be all wrong without it
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  home.file."org-protocol.desktop" = {
-    target = ".local/share/applications/org-protocol.desktop";
-    text = ''
-        [Desktop Entry]
-        Name=Org-Protocol
-        Exec=emacsclient %u
-        Icon=emacs-icon
-        Type=Application
-        Terminal=false
-        MimeType=x-scheme-handler/org-protocol
-      '';
-  };
+  # home.file."org-protocol.desktop" = {
+  #   target = ".local/share/applications/org-protocol.desktop";
+  #   text = ''
+  #       [Desktop Entry]
+  #       Name=Org-Protocol
+  #       Exec=emacsclient %u
+  #       Icon=emacs-icon
+  #       Type=Application
+  #       Terminal=false
+  #       MimeType=x-scheme-handler/org-protocol
+  #     '';
+  # };
 }
 #+end_src
 
