@@ -1,7 +1,10 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
-  # programs.firefox.package = pkgs.firefox-devedition.override {
-  programs.firefox.package = pkgs.firefox.override {
+  programs.firefox.package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+  # programs.firefox.package = pkgs.wrapFirefox pkgs.firefox-devedition-unwrapped.override {
+    # cfg = {
+    #   enableTridactylNative = true;
+    # };
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;
