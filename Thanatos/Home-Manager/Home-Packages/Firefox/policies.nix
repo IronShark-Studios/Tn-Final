@@ -1,6 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
-  programs.firefox.package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+  programs.firefox.package = pkgs.firefox.override {
   # programs.firefox.package = pkgs.wrapFirefox pkgs.firefox-devedition-unwrapped.override {
     # cfg = {
     #   enableTridactylNative = true;
