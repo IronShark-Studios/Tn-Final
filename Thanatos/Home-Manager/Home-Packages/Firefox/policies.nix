@@ -1,6 +1,9 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
   programs.firefox.package = pkgs.firefox.override {
+       cfg = {
+          enableTridactylNative = true;
+        };
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;

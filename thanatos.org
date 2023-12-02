@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-02 Sat 10:36]
+#+LAST_MODIFIED: [2023-12-02 Sat 10:45]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -816,6 +816,9 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 { config, lib, pkgs, modulesPath, ... }: {
 
   programs.firefox.package = pkgs.firefox.override {
+       cfg = {
+          enableTridactylNative = true;
+        };
     extraPolicies = {
       AppAutoUpdate = true;
       PromptForDownloadLocation = false;
