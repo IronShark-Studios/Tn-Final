@@ -1,6 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }: {
 
-  programs.firefox.package = pkgs.firefox.override {
+  programs.firefox.package = pkgs.firefox-esr.override {
        cfg = {
           enableTridactylNative = true;
         };
