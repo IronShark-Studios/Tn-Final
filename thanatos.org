@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-02 Sat 12:45]
+#+LAST_MODIFIED: [2023-12-12 Tue 15:41]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -14,7 +14,7 @@ This section contains all root level or otherwise system wide configuration sett
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "23.05";
 
   imports = [
     ./hardware-configuration.nix
@@ -439,7 +439,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     ./Home-Packages/starship.nix
     ./Home-Packages/visidata.nix
     ./Home-Packages/Firefox/firefox.nix
-    ./Home-Packages/Firefox/policies.nix
+    ./Home-Packages/Firefox/userPolicies.nix
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/Firefox/extensions.nix
@@ -461,7 +461,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   home = {
     username = "xin";
     homeDirectory = "/home/xin";
-    stateVersion = "23.11";
+    stateVersion = "23.05";
   };
 
   nixpkgs = {
@@ -783,102 +783,62 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
   programs.firefox = {
     enable = true;
-    profiles.xin = {
-      isDefault = true;
-      extraConfig = ''
-                    user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-                    user_pref("full-screen-api.ignore-widgets", true);
-                    user_pref("media.ffmpeg.vaapi.enabled", true);
-                    user_pref("media.rdd-vpx.enabled", true);
-                    user_pref("general.smoothScroll", true);
-                    user_pref("extensions.formautofill.addresses.enabled", false);
-                    user_pref("extensions.formautofill.creditCards.enabled", false);
-                    user_pref("browser.tabs.closeWindowWithLastTab", false);
-                    user_pref("layers.acceleration.force-enabled", true);
-                    user_pref("browser.link.open_newwindow", 3);
-                    user_pref("font.name.monospace.x-western", Iosevka Nerd Font Mono);
-                    user_pref("font.name.sans-serif.x-western", IosevkaTerm Nerd Font Propo);
-                    user_pref("font.name.serif.x-western", Iosevka Nerd Font);
-                    user_pref("font.size.monospace.x-western", 18);
-                    user_pref("font.size.variable.x-western", 18);
-                '';
+    package = pkgs.firefox.override {
+      nativeMessagingHosts = with pkgs; [
+        tridactyl-native
+      ];
     };
   };
 }
 #+end_src
 
-******* policies.nix
+******* userPolicies.nix
 :PROPERTIES:
-:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/policies.nix
+:header-args: :tangle ./Thanatos/Home-Manager/Home-Packages/Firefox/userPolicies.nix
 :END:
 
 #+begin_src nix
 { config, lib, pkgs, modulesPath, ... }: {
 
-  programs.firefox.package = pkgs.firefox.override {
-       cfg = {
-          enableTridactylNative = true;
-        };
-    extraPolicies = {
-      AppAutoUpdate = true;
-      PromptForDownloadLocation = false;
-      DisableFirefoxStudies = true;
-      DisableFormHistory = true;
-      DisablePocket = true;
-      DisableTelemetry = true;
-      DisableFirefoxAccounts = false;
-      NoDefaultBookmarks = true;
-      DisableMasterPasswordCreation = true;
-      OfferToSaveLogins = false;
-      OfferToSaveLoginsDefault = false;
-      PasswordManagerEnabled = false;
-      EnableTrackingProtection.Value = true;
-      Homepage.URL = "https://en.wikipedia.org/wiki/Special:Random";
-      StartPage = "homepage";
-      SearchSuggestEnable = false;
-      ShowHomeButton = false;
-      NewTabPage = false;
-      Cookies = {
-        Default = true;
-        AcceptThirdParty = "always";
-        ExpireAtSessionEnd = false;
-        RejectTracker = true;
-      };
-      SanitizeOnShutdown = {
-        Cache = true;
-        Cookies = false;
-        Downloads = true;
-        FormData = true;
-        History = true;
-        Sessions = false;
-        SiteSettings = false;
-        OfflineApps = true;
-        Locked = true;
-      };
-      FirefoxHome = {
-        Search = false;
-        Pocket = false;
-        SponsoredPocket = false;
-        Snippets = false;
-        TopSites = false;
-        SponsoredTopSites = false;
-        Highlights = false;
-      };
-      FirefoxSuggests = {
-        WebSuggestions = false;
-        SponsoredSuggestions = false;
-        ImproveSuggest = false;
-      };
-      UserMessaging = {
-        ExtensionRecommendations = false;
-        SkipOnboarding = true;
-        WhatsNew = false;
-        FeatureRecomendations = false;
-        UrlbarInterventions = false;
-        MoreFromMozilla = false;
+  programs.firefox.profiles.xin = {
+      isDefault = true;
+      settings = {
+        "app.update.auto" = true;
+        "app.shield.optoutstudies.enabled" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.startup.homepage" = "https://en.wikipedia.org/wiki/Special:Random";
+        "browser.link.open_newwindow" = "3";
+        "full-screen-api.ignore-widgets" = true;
+        "media.rdd-vpx.enabled" = true;
+        "general.smoothScroll" = true;
+        "browser.tabs.closeWindowWithLastTab" = false;
+        "layers.acceleration.force-enabled" = true;
+        "dom.forms.autocomplete.formautofill" = false;
+        "browser.formfill.enable" = false;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+        "browser.formfill.expire_days" = "1";
+        "font.name.monospace.x-western" = "Iosevka Nerd Font Mono";
+        "font.name.sans-serif.x-western" = "IosevkaTerm Nerd Font Propo";
+        "font.name.serif.x-western" = "Iosevka Nerd Font";
+        "font.size.monospace.x-western" = "18";
+        "font.size.variable.x-western" = "18";
+        "extensions.pocket.enabled" = false;
+        "browser.urlbar.suggest.pocket" = false;
+        "network.trr.confirmation_telemetry_enabled" = false;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "privacy.bounceTrackingProtection.enabled" = true;
+        "browser.urlbar.showSearchSuggestionsFirst" = false;
+        "browser.urlbar.suggest.searches" = false;
+        "privacy.clearOnShutdown.cookies" = false;
+        "services.sync.prefs.sync.privacy.clearOnShutdown.cookies" = false;
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "browser.search.suggest.enabled" = false;
+        "extensions.htmlaboutaddons.recommendations.enabled" = false;
+        "devtools.webconsole.input.editorOnboarding" = false;
+        "browser.preferences.moreFromMozilla" = false;
       };
     };
-  };
 }
 #+end_src
 
@@ -1353,18 +1313,18 @@ Window controls will be all wrong without it
 #+begin_src nix
 { inputs, outputs, lib, config, pkgs, ... }: {
 
-  # home.file."org-protocol.desktop" = {
-  #   target = ".local/share/applications/org-protocol.desktop";
-  #   text = ''
-  #       [Desktop Entry]
-  #       Name=Org-Protocol
-  #       Exec=emacsclient %u
-  #       Icon=emacs-icon
-  #       Type=Application
-  #       Terminal=false
-  #       MimeType=x-scheme-handler/org-protocol
-  #     '';
-  # };
+  home.file."org-protocol.desktop" = {
+    target = ".local/share/applications/org-protocol.desktop";
+    text = ''
+        [Desktop Entry]
+        Name=Org-Protocol
+        Exec=emacsclient %u
+        Icon=emacs-icon
+        Type=Application
+        Terminal=false
+        MimeType=x-scheme-handler/org-protocol
+      '';
+  };
 }
 #+end_src
 

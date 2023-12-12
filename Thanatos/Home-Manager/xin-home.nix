@@ -11,7 +11,7 @@
     ./Home-Packages/starship.nix
     ./Home-Packages/visidata.nix
     ./Home-Packages/Firefox/firefox.nix
-    ./Home-Packages/Firefox/policies.nix
+    ./Home-Packages/Firefox/userPolicies.nix
     ./Home-Packages/Firefox/userChrome.nix
     ./Home-Packages/Firefox/tridactyl.nix
     ./Home-Packages/Firefox/extensions.nix
@@ -33,7 +33,7 @@
   home = {
     username = "xin";
     homeDirectory = "/home/xin";
-    stateVersion = "23.11";
+    stateVersion = "23.05";
   };
 
   nixpkgs = {
