@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-12 Tue 15:41]
+#+LAST_MODIFIED: [2023-12-13 Wed 09:51]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -784,9 +784,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   programs.firefox = {
     enable = true;
     package = pkgs.firefox.override {
-      nativeMessagingHosts = with pkgs; [
-        tridactyl-native
-      ];
+      cfg.enableTridactylNative = true;
     };
   };
 }
@@ -803,8 +801,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   programs.firefox.profiles.xin = {
       isDefault = true;
       settings = {
-        "app.update.auto" = true;
+        "app.update.auto" = false;
         "app.shield.optoutstudies.enabled" = true;
+        "reader.parse-on-load.force-enabled" = true;
+        "privacy.webrtc.legacyGlobalIndicator" = false;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.startup.homepage" = "https://en.wikipedia.org/wiki/Special:Random";
         "browser.link.open_newwindow" = "3";

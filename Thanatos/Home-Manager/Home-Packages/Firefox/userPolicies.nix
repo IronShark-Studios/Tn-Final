@@ -3,8 +3,10 @@
   programs.firefox.profiles.xin = {
       isDefault = true;
       settings = {
-        "app.update.auto" = true;
+        "app.update.auto" = false;
         "app.shield.optoutstudies.enabled" = true;
+        "reader.parse-on-load.force-enabled" = true;
+        "privacy.webrtc.legacyGlobalIndicator" = false;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.startup.homepage" = "https://en.wikipedia.org/wiki/Special:Random";
         "browser.link.open_newwindow" = "3";
