@@ -129,6 +129,7 @@ xul|vbox.tabmodalprompt-mainContainer{
   background-color: var(--toolbar-bgcolor) !important;
   color: var(--lwt-text-color,-moz-dialogtext) !important;
 }
+
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/blank_page_background.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
@@ -138,6 +139,7 @@ See the above repository for updates as well as full license text. */
 #tabbrowser-tabpanels{
   background-color: var(--uc-light-bkgnd-color,rgb(46,54,69)) !important;
 }
+
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_checkboxes_and_radios.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
@@ -209,6 +211,7 @@ button.panel-button{ padding: 2px 2px 1px 2px !important; }
 
 #customization-done-button{ background-color: #0a84ff !important; }
 #customization-done-button:hover{ background-color: #0a64df !important; }
+
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_context_menus.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
@@ -296,6 +299,7 @@ See the above repository for updates as well as full license text. */
     button{ fill: #f4f4f4 !important; }
   }
 }
+
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_theme_aware_statuspanel.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
@@ -308,110 +312,6 @@ Meaning, if theme text is light then the statuspanel uses dark background and li
   background-color: rgb(50,50,52) !important;
   color: rgb(187,187,189) !important;
   border-color: grey !important;
-}
-
-/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_main_toolbar.css made available under Mozilla Public License v. 2.0
-See the above repository for updates as well as full license text. */
-
-/* This style hides the main toolbar and shows it when the cursor is over the tabs toolbar as well as whenever the focus is inside nav-bar, such as when urlbar is focused. */
-
-:root{ --uc-navbar-transform: -40px }
-:root[uidensity="compact"]{ --uc-navbar-transform: -34px }
-
-#navigator-toolbox > div{ display: contents; }
-:root[sessionrestored] :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox){
-  transform: translateY(var(--uc-navbar-transform))
-}
-:root:is([customizing],[chromehidden*="toolbar"]) :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox){
-  transform: none !important;
-  opacity: 1 !important;
-}
-
-#nav-bar:not([customizing]){
-  opacity: 0;
-  transition:  transform 400ms ease 1.8s, opacity 400ms ease 1.8s !important;
-  position: relative;
-  z-index: 2;
-}
-#TabsToolbar{ position: relative; z-index: 3 }
-
-/* Show when toolbox is focused, like when urlbar has received focus */
-#navigator-toolbox:focus-within > .browser-toolbar{
-  transform: translateY(0);
-  opacity: 1;
-  transition-duration: 500ms, 200ms !important;
-  transition-delay: 0s !important;
-}
-/* Show when toolbox is hovered */
-#titlebar:hover ~ .browser-toolbar,
-#nav-bar:hover,
-#nav-bar:hover + #PersonalToolbar{
-  transform: translateY(0);
-  opacity: 1;
-  transition-duration: 500ms, 200ms !important;
-  transition-delay: 0s !important;
-}
-
-/* Bookmarks toolbar needs so extra rules */
-#PersonalToolbar{ transition: transform 400ms ease 1.8s !important; position: relative; z-index: 1 }
-
-/* Move up the content view */
-:root[sessionrestored]:not([inFullscreen]) > body > #browser{ margin-top: var(--uc-navbar-transform); }
-
-/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/hide_tabs_toolbar.css made available under Mozilla Public License v. 2.0
-See the above repository for updates as well as full license text. */
-
-/* Hides tabs toolbar */
-/* For OSX use hide_tabs_toolbar_osx.css instead */
-
-/* Note, if you have either native titlebar or menubar enabled, then you don't really need this style.
- * In those cases you can just use: #TabsToolbar{ visibility: collapse !important }
- */
-
-/* IMPORTANT */
-/*
-Get window_control_placeholder_support.css
-Window controls will be all wrong without it
-*/
-
-:root[tabsintitlebar]{ --uc-toolbar-height: 40px; }
-:root[tabsintitlebar][uidensity="compact"]{ --uc-toolbar-height: 32px }
-
-#TabsToolbar{ visibility: collapse !important }
-
-:root[sizemode="fullscreen"] #TabsToolbar > :is(#window-controls,.titlebar-buttonbox-container){
-  visibility: visible !important;
-  z-index: 2;
-}
-
-:root:not([inFullscreen]) #nav-bar{
-  margin-top: calc(0px - var(--uc-toolbar-height,0px));
-}
-
-:root[tabsintitlebar] #toolbar-menubar[autohide="true"]{
-  min-height: unset !important;
-  height: var(--uc-toolbar-height,0px) !important;
-  position: relative;
-}
-
-#toolbar-menubar[autohide="false"]{
-  margin-bottom: var(--uc-toolbar-height,0px)
-}
-
-:root[tabsintitlebar] #toolbar-menubar[autohide="true"] #main-menubar{
-  flex-grow: 1;
-  align-items: stretch;
-  background-color: var(--toolbar-bgcolor,--toolbar-non-lwt-bgcolor);
-  background-clip: padding-box;
-  border-right: 30px solid transparent;
-  border-image: linear-gradient(to left, transparent, var(--toolbar-bgcolor,--toolbar-non-lwt-bgcolor) 30px) 20 / 30px
-}
-
-#toolbar-menubar:not([inactive]){ z-index: 2 }
-#toolbar-menubar[autohide="true"][inactive] > #menubar-items {
-  opacity: 0;
-  pointer-events: none;
-  margin-left: var(--uc-window-drag-space-pre,0px)
 }
 '';
 }

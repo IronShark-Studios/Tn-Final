@@ -1,5 +1,6 @@
 * Current Focus
-Configure Org Journal
+*** TODO Create Initial install script
+*** TODO Integrate org capture templates with Org-Journal
 * Tn-Final Remainder
 ** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Create set up script
@@ -55,7 +56,9 @@ Configure Org Journal
 - Would work best with a rolling back up save system
 *** TODO Learn more about undo tree
 - https://www.emacswiki.org/emacs/UndoTree
-*** TODO Learn more about emacs rolling save files
+*** CANCELLED Learn more about emacs rolling save files
+- State "CANCELLED"  from "TODO"       [2023-12-13 Wed 13:08] \\
+  What I want from this is better done with git / magit
 *** TODO Consider additional Packages
 **** TODO Org-wild-notifier
 **** TODO Gnu go

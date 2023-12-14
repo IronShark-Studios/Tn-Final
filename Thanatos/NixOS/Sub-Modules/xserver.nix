@@ -72,9 +72,13 @@
           };
       };
 
-      desktopManager.xfce = {
+      # desktopManager.xfce = {
+      #   enable = true;
+      #   enableScreensaver = false;
+      # };
+
+      desktopManager.enlightenment = {
         enable = true;
-        enableScreensaver = false;
       };
     };
 
