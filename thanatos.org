@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-13 Wed 20:15]
+#+LAST_MODIFIED: [2023-12-19 Tue 14:27]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -264,11 +264,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
           theme = "chili";
           };
       };
-
-      # desktopManager.xfce = {
-      #   enable = true;
-      #   enableScreensaver = false;
-      # };
 
       desktopManager.enlightenment = {
         enable = true;
