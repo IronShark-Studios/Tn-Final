@@ -1,10 +1,11 @@
 #! /bin/sh
 
 echo "Creating System SSH-Key"
-ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh
+mkdir ~/.ssh
+ssh-keygen -t rsa -b 4096 -N "" -f /home/xin/.ssh/id_rsa
 
-mkdir Archive
-mkdir Projects
-mkdir Media
+mkdir ~/Archive
+mkdir ~/Projects
+mkdir ~/Media
 
 cat ~/.ssh/id_rsa.pub
