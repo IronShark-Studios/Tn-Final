@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-19 Tue 14:27]
+#+LAST_MODIFIED: [2023-12-20 Wed 12:15]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -25,6 +25,7 @@ This section contains all root level or otherwise system wide configuration sett
     ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
     ./Tools/Scripts/rebuild.nix
+    ./Tools/Scripts/test.nix
     ./Tools/Scripts/upgrade.nix
   ];
 
@@ -347,7 +348,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 
 ***** Scripts
 
-***** rebuild.nix
+******* rebuild.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/rebuild.nix
 :END:
@@ -374,7 +375,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
 }
 #+end_src
 
-***** test.nix
+******* test.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/test.nix
 :END:
@@ -394,7 +395,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
-***** upgrade.nix
+******* upgrade.nix
 :PROPERTIES:
 :header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/upgrade.nix
 :END:
@@ -692,13 +693,14 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     cd = "z";
     lx = "ls -la";
     ll = "ls -l";
-    rma = "rm -rf";
+    rma = "move_to_tmp() { mv "$1" /tmp }";
     power-off = "sudo shutdown -h now";
     logout = "sudo kill -9 -1";
     restart = "sudo reboot";
     eo = "emacsclient -n";
     rebuild = "bash /etc/scripts/rebuild.sh";
     upgrade = "bash /etc/scripts/upgrade.sh";
+    test = "bash /etc/scripts/test.sh"
     clean = "sudo nix-collect-garbage --delete-old && rebuild";
     cb = "xclip -selection clipboard";
   };
