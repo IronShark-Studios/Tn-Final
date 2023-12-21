@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-20 Wed 12:15]
+#+LAST_MODIFIED: [2023-12-20 Wed 19:28]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
