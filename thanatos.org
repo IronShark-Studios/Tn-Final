@@ -1247,7 +1247,6 @@ Meaning, if theme text is light then the statuspanel uses dark background and li
       "*~"
       ".*~"
       "#*#"
-      "'#*#'"
       ".*.swp"
     ];
     aliases = {
