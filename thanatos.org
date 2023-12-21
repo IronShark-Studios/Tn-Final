@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-20 Wed 19:28]
+#+LAST_MODIFIED: [2023-12-20 Wed 19:35]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2481,7 +2481,7 @@ it can be passed in POS."
 
 ************* capture templates
 
-************* default
+*************** default
 
 #+begin_src emacs-lisp
 ;; (("d" "default" plain "%?"
@@ -2490,7 +2490,7 @@ it can be passed in POS."
 ;;   :unnarrowed t))
 #+end_src
 
-************* daily
+*************** daily
 
 #+begin_src emacs-lisp
 ;; (setq org-roam-dailies-capture-templates
