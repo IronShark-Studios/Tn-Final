@@ -787,7 +787,8 @@ it can be passed in POS."
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
-      org-journal-file-header "#+STARTUP: showeverything\n\n"
+      org-journal-enable-cache t
+      org-journal-file-header "#+STARTUP: showeverything\n#+LAST_MODIFIED:\n\n"
       org-journal-file-format "%Y%m%d"
       org-journal-date-prefix "#+TITLE: "
       org-journal-date-format "%A  %Y-%m-%d"
