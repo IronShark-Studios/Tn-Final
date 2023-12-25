@@ -1854,6 +1854,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ([?\s-q] . Tn/lock-screen)
 
 ([?\s-p] . helm-projectile)
+([?\s-s] . Tn/save-and-magit)
 
 ([?\s-.] . alsamixer-up-volume)
 ([?\s-,] . alsamixer-down-volume)
