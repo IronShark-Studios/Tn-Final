@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-20 Wed 19:35]
+#+LAST_MODIFIED: [2023-12-24 Sun 19:54]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2161,6 +2161,16 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
 #+end_src
 
+********* projectile
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :init
+  (projectile-mode +1))
+
+;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
+#+end_src
+
 ********* which-key, and helpful
 
 #+begin_src emacs-lisp
@@ -2530,6 +2540,7 @@ it can be passed in POS."
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
+      org-journal-enable-cache t
       org-journal-file-header "#+STARTUP: showeverything\n#+LAST_MODIFIED:\n\n"
       org-journal-file-format "%Y%m%d"
       org-journal-date-prefix "#+TITLE: "
