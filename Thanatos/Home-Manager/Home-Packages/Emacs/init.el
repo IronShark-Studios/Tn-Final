@@ -239,6 +239,7 @@
 ([?\s-q] . Tn/lock-screen)
 
 ([?\s-p] . helm-projectile)
+([?\s-s] . Tn/save-and-magit)
 
 ([?\s-.] . alsamixer-up-volume)
 ([?\s-,] . alsamixer-down-volume)
@@ -487,6 +488,12 @@
 
 (use-package magit)
 (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+
+(defun Tn/save-and-magit ()
+  "Save the current buffer and call Magit status."
+  (interactive)
+  (save-buffer)
+  (magit-status))
 
 (use-package projectile
   :init
@@ -740,21 +747,16 @@ it can be passed in POS."
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
+         ("C-c n e" . org-roam-dailies-capture-today)
          ("C-c n c" . org-roam-capture))
 
   :config
   (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
+        org-roam-dailies-directory (file-truename "~/Archive/Feronomicon/Notes/")
         org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
-
-(add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-direction)
-               (direction . right)
-               (window-width . 0.33)
-               (window-height . fit-window-to-buffer)))
 
 ;; (("d" "default" plain "%?"
 ;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -766,6 +768,13 @@ it can be passed in POS."
 ;;          "* %?"
 ;;          :target (file+head "%<%Y-%m-%d>.org"
 ;;                             "#+title: %<%Y-%m-%d>\n"))))
+
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -784,7 +793,7 @@ it can be passed in POS."
   (("C-c n n" . org-journal-new-entry)
    ("C-c n s" . org-journal-new-date-entry)))
 
-(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journals/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
       org-journal-enable-cache t
