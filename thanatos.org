@@ -2149,7 +2149,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
       backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
 #+end_src
 
-********* magit, and projectile
+********* magit
 
 #+begin_src emacs-lisp
 (use-package magit)
