@@ -2155,6 +2155,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package magit)
 (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
 
+(defun Tn/save-and-magit ()
+  "Save the current buffer and call Magit status."
+  (interactive)
+  (save-buffer)
+  (magit-status))
 #+end_src
 
 ********* projectile
