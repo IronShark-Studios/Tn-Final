@@ -2540,7 +2540,7 @@ it can be passed in POS."
   (("C-c n n" . org-journal-new-entry)
    ("C-c n s" . org-journal-new-date-entry)))
 
-(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journals/")
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
       org-journal-enable-cache t
