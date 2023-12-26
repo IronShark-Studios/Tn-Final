@@ -2544,13 +2544,21 @@ it can be passed in POS."
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
       org-journal-enable-cache t
-      org-journal-file-header "#+STARTUP: showeverything\n#+LAST_MODIFIED:\n\n"
-      org-journal-file-format "%Y%m%d"
+      org-journal-file-format "%Y%m%d.org"
       org-journal-date-prefix "#+TITLE: "
+      org-journal-file-header "#+LAST_MODIFIED:\n#+STARTUP: showeverything\n"
       org-journal-date-format "%A  %Y-%m-%d"
-      org-journal-time-prefix "* "
+      org-journal-time-prefix "*** "
       org-journal-time-format "%H:%M"
       org-journal-start-on-weekday 0)
+
+
+(defun Tn/org-journal-header-func (time)
+  "Inserts custom template in a new journal file."
+  (when (= (buffer-size) 0)
+    (insert (format-time-string "#+TITLE: *%A %Y%m%d*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* Todos\n* Notes\n* Finaces\n* Food & Fitness\n* Journal") time)))
+
+(setq org-journal-file-header 'Tn/org-journal-header-func)
 #+end_src
 
 *********** org-bibtex
