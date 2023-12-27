@@ -718,7 +718,7 @@ it can be passed in POS."
       org-enforce-todo-checkbox-dependencies t
       org-odd-levels-only t
       org-fold-catch-invisible-edits 'show-and-error
-      org-directory "~/Archive/Feronomicon/ORG/"
+      org-directory "~/Archive/Feronomicon/ORG"
       org-archive-location (format
                             "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
                             (Tn/current-year)))
@@ -790,20 +790,70 @@ it can be passed in POS."
 
 (use-package org-journal
   :bind
-  (("C-c n n" . org-journal-new-entry)
+  (("C-c n t o" . Tn/open-todays-journal)
+   ("C-c n t O" . org-journal-new-entry)
+   ("C-c n t t" . Tn/todays-todos-capture)
+   ("C-c n t m" . Tn/todays-notes-capture)
+   ("C-c n t f" . Tn/todays-finaces-capture)
+   ("C-c n t e" . Tn/todays-food&fitness-capture)
+   ("C-c n t n" . Tn/todays-journal-capture)
    ("C-c n s" . org-journal-new-date-entry)))
 
-(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journals/")
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+      org-journal-file-header 'Tn/org-journal-header-func
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
       org-journal-enable-cache t
-      org-journal-file-header "#+STARTUP: showeverything\n#+LAST_MODIFIED:\n\n"
-      org-journal-file-format "%Y%m%d"
+      org-journal-file-format "%Y%m%d.org"
       org-journal-date-prefix "#+TITLE: "
-      org-journal-date-format "%A  %Y-%m-%d"
-      org-journal-time-prefix "* "
+      org-journal-date-format "%Y%m%d"
+      org-journal-time-prefix "*** "
       org-journal-time-format "%H:%M"
-      org-journal-start-on-weekday 0)
+      org-journal-start-on-weekday 0
+      org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
+
+(add-hook 'org-capture-mode-hook 'delete-other-windows)
+
+(defun Tn/org-journal-header-func (time)
+  "Inserts custom template in a new journal file."
+  (when (= (buffer-size) 0)
+    (insert (format-time-string "#+TITLE: *%A %Y%m%d*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos") time)))
+
+(defun Tn/org-journal-capture-date-string ()
+  "Return a formatted date string for journal capture templates."
+  (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
+
+(defun Tn/open-todays-journal ()
+  (interactive)
+  "Opens todays Org-Journal"
+  (find-file (Tn/org-journal-capture-date-string)))
+
+(setq org-capture-templates
+      '(("tt" "TODO Capture" entry (file+olp Tn/org-journal-capture-date-string "Todos") "*** TODO %?")
+        ("tm" "Notes Capture" entry (file+olp Tn/org-journal-capture-date-string "Notes") "*** %?")
+        ("tf" "Finances" entry (file+olp Tn/org-journal-capture-date-string "Finaces") "*** %?")
+        ("te" "Food & Fitness" entry (file+olp Tn/org-journal-capture-date-string "Food & Fitness") "*** %?")
+        ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")))
+
+(defun Tn/todays-todos-capture ()
+  (interactive)
+  (org-capture nil "tt"))
+
+(defun Tn/todays-notes-capture ()
+  (interactive)
+  (org-capture nil "tm"))
+
+(defun Tn/todays-finaces-capture ()
+  (interactive)
+  (org-capture nil "tf"))
+
+(defun Tn/todays-food&fitness-capture ()
+  (interactive)
+  (org-capture nil "te"))
+
+(defun Tn/todays-journal-capture ()
+  (interactive)
+  (org-capture nil "tn"))
 
 (require 'bibtex)
 

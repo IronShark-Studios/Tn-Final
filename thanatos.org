@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-26 Tue 12:19]
+#+LAST_MODIFIED: [2023-12-27 Wed 00:52]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2561,7 +2561,9 @@ it can be passed in POS."
 
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 #+end_src
+************* custom functions
 
+#+begin_src emacs-lisp
 (defun Tn/org-journal-header-func (time)
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
@@ -2576,13 +2578,20 @@ it can be passed in POS."
   "Opens todays Org-Journal"
   (find-file (Tn/org-journal-capture-date-string)))
 #+end_src
+************* capture templates
+
+#+begin_src emacs-lisp
 (setq org-capture-templates
       '(("tt" "TODO Capture" entry (file+olp Tn/org-journal-capture-date-string "Todos") "*** TODO %?")
         ("tm" "Notes Capture" entry (file+olp Tn/org-journal-capture-date-string "Notes") "*** %?")
         ("tf" "Finances" entry (file+olp Tn/org-journal-capture-date-string "Finaces") "*** %?")
         ("te" "Food & Fitness" entry (file+olp Tn/org-journal-capture-date-string "Food & Fitness") "*** %?")
         ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")))
+
 #+end_src
+************* keybind functions
+
+#+begin_src emacs-lisp
 (defun Tn/todays-todos-capture ()
   (interactive)
   (org-capture nil "tt"))
