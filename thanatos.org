@@ -2571,7 +2571,7 @@ it can be passed in POS."
   "Return a formatted date string for journal capture templates."
   (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
 
-(setq org-journal-file-header 'Tn/org-journal-header-func)
+(defun Tn/open-todays-journal ()
 #+end_src
 
 *********** org-bibtex
