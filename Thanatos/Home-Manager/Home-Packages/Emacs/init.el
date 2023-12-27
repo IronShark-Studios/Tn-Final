@@ -752,7 +752,6 @@ it can be passed in POS."
 
   :config
   (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
-        org-roam-dailies-directory (file-truename "~/Archive/Feronomicon/Notes/")
         org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 
   (org-roam-db-autosync-mode)
@@ -762,12 +761,6 @@ it can be passed in POS."
 ;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 ;;                      "#+title: ${title}\n")
 ;;   :unnarrowed t))
-
-;; (setq org-roam-dailies-capture-templates
-;;       '(("d" "default" entry
-;;          "* %?"
-;;          :target (file+head "%<%Y-%m-%d>.org"
-;;                             "#+title: %<%Y-%m-%d>\n"))))
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -817,11 +810,12 @@ it can be passed in POS."
 (defun Tn/org-journal-header-func (time)
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
-    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))) time)))
+    (let ((file-id (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" file-id file-id) time))))
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
-  (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
+  (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format)))
 
 (defun Tn/open-todays-journal ()
   (interactive)
@@ -830,11 +824,10 @@ it can be passed in POS."
   (Tn/org-journal-header-func))
 
 (defvar org-journal--date-location-scheduled-time nil)
-
 (defun Tn/journal-future-capture (&optional scheduled-time)
   (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
     (setq org-journal--date-location-scheduled-time scheduled-time)
-    (find-file (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
+    (find-file (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
     (Tn/org-journal-header-func scheduled-time)))
 
 (setq org-capture-templates

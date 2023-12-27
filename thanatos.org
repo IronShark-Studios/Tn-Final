@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-27 Wed 14:03]
+#+LAST_MODIFIED: [2023-12-27 Wed 18:53]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2570,7 +2570,6 @@ it can be passed in POS."
   (Tn/org-journal-header-func))
 
 (defvar org-journal--date-location-scheduled-time nil)
-
 (defun Tn/journal-future-capture (&optional scheduled-time)
   (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
     (setq org-journal--date-location-scheduled-time scheduled-time)
