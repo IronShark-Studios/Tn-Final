@@ -797,7 +797,7 @@ it can be passed in POS."
    ("C-c n t f" . Tn/todays-finaces-capture)
    ("C-c n t e" . Tn/todays-food&fitness-capture)
    ("C-c n t n" . Tn/todays-journal-capture)
-   ("C-c n s" . org-journal-new-date-entry)))
+   ("C-c n s" . Tn/future-journal-capture)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-journal-file-header 'Tn/org-journal-header-func
@@ -817,7 +817,7 @@ it can be passed in POS."
 (defun Tn/org-journal-header-func (time)
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
-    (insert (format-time-string "#+TITLE: *%A %Y%m%d*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos") time)))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))) time)))
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
@@ -826,14 +826,25 @@ it can be passed in POS."
 (defun Tn/open-todays-journal ()
   (interactive)
   "Opens todays Org-Journal"
-  (find-file (Tn/org-journal-capture-date-string)))
+  (find-file (Tn/org-journal-capture-date-string))
+  (Tn/org-journal-header-func))
+
+(defvar org-journal--date-location-scheduled-time nil)
+
+(defun Tn/journal-future-capture (&optional scheduled-time)
+  (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
+    (setq org-journal--date-location-scheduled-time scheduled-time)
+    (find-file (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
+    (Tn/org-journal-header-func scheduled-time)))
 
 (setq org-capture-templates
       '(("tt" "TODO Capture" entry (file+olp Tn/org-journal-capture-date-string "Todos") "*** TODO %?")
         ("tm" "Notes Capture" entry (file+olp Tn/org-journal-capture-date-string "Notes") "*** %?")
         ("tf" "Finances" entry (file+olp Tn/org-journal-capture-date-string "Finaces") "*** %?")
         ("te" "Food & Fitness" entry (file+olp Tn/org-journal-capture-date-string "Food & Fitness") "*** %?")
-        ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")))
+        ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")
+        ("ff" "Future Todo" entry (function Tn/journal-future-capture)
+                               "* %?** TODO ")))
 
 (defun Tn/todays-todos-capture ()
   (interactive)
@@ -854,6 +865,10 @@ it can be passed in POS."
 (defun Tn/todays-journal-capture ()
   (interactive)
   (org-capture nil "tn"))
+
+(defun Tn/future-journal-capture ()
+  (interactive)
+  (org-capture nil "ff"))
 
 (require 'bibtex)
 
