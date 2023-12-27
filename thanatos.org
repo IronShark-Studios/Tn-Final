@@ -2557,7 +2557,8 @@ it can be passed in POS."
 (defun Tn/org-journal-header-func (time)
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
-    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))) time)))
+    (let ((file-id (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" file-id file-id) time))))
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
