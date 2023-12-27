@@ -2583,7 +2583,26 @@ it can be passed in POS."
         ("te" "Food & Fitness" entry (file+olp Tn/org-journal-capture-date-string "Food & Fitness") "*** %?")
         ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")))
 #+end_src
+(defun Tn/todays-todos-capture ()
+  (interactive)
+  (org-capture nil "tt"))
 
+(defun Tn/todays-notes-capture ()
+  (interactive)
+  (org-capture nil "tm"))
+
+(defun Tn/todays-finaces-capture ()
+  (interactive)
+  (org-capture nil "tf"))
+
+(defun Tn/todays-food&fitness-capture ()
+  (interactive)
+  (org-capture nil "te"))
+
+(defun Tn/todays-journal-capture ()
+  (interactive)
+  (org-capture nil "tn"))
+#+end_src
 *********** org-bibtex
 ************* bibtex-core
 
