@@ -2491,16 +2491,6 @@ it can be passed in POS."
 ;;   :unnarrowed t))
 #+end_src
 
-*************** daily
-
-#+begin_src emacs-lisp
-;; (setq org-roam-dailies-capture-templates
-;;       '(("d" "default" entry
-;;          "* %?"
-;;          :target (file+head "%<%Y-%m-%d>.org"
-;;                             "#+title: %<%Y-%m-%d>\n"))))
-#+end_src
-
 ************* roam-node widow
 - Roam node window navigation is controlled by magit bindings
 
