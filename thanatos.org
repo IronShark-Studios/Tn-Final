@@ -2547,13 +2547,12 @@ it can be passed in POS."
    ("C-c n s" . org-journal-new-date-entry)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+      org-journal-file-header 'Tn/org-journal-header-func
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
       org-journal-enable-cache t
       org-journal-file-format "%Y%m%d.org"
       org-journal-date-prefix "#+TITLE: "
-      org-journal-file-header "#+LAST_MODIFIED:\n#+STARTUP: showeverything\n"
-      org-journal-date-format "%A  %Y-%m-%d"
       org-journal-time-prefix "*** "
       org-journal-time-format "%H:%M"
       org-journal-start-on-weekday 0)
