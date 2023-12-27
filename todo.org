@@ -6,6 +6,10 @@
 ** TODO Create set up script
 *** TODO Home Directory Set up
 *** TODO Git SSH Key
+** TODO Unify Org-capture Keybindings
+*** TODO Create A Hydra Key-map
+*** TODO Bind both Org-Journal and Org-Roam capture keys to it
+*** TODO Add EXWM Bindings =(s-c)= and =(C-c c)= to call hydra map
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
 **** TODO (M-x shell) to call Alacritty
