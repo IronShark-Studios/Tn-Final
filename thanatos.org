@@ -2537,7 +2537,13 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (use-package org-journal
   :bind
-  (("C-c n n" . org-journal-new-entry)
+  (("C-c n t o" . Tn/open-todays-journal)
+   ("C-c n t O" . org-journal-new-entry)
+   ("C-c n t t" . Tn/todays-todos-capture)
+   ("C-c n t m" . Tn/todays-notes-capture)
+   ("C-c n t f" . Tn/todays-finaces-capture)
+   ("C-c n t e" . Tn/todays-food&fitness-capture)
+   ("C-c n t n" . Tn/todays-journal-capture)
    ("C-c n s" . org-journal-new-date-entry)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
