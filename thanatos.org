@@ -2567,6 +2567,9 @@ it can be passed in POS."
   (when (= (buffer-size) 0)
     (insert (format-time-string "#+TITLE: *%A %Y%m%d*\n:PROPERTIES:\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos") time)))
 
+(defun Tn/org-journal-capture-date-string ()
+  "Return a formatted date string for journal capture templates."
+  (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
 
 (setq org-journal-file-header 'Tn/org-journal-header-func)
 #+end_src
