@@ -2544,7 +2544,7 @@ it can be passed in POS."
    ("C-c n t f" . Tn/todays-finaces-capture)
    ("C-c n t e" . Tn/todays-food&fitness-capture)
    ("C-c n t n" . Tn/todays-journal-capture)
-   ("C-c n s" . org-journal-new-date-entry)))
+   ("C-c n s" . Tn/future-journal-capture)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
       org-journal-file-header 'Tn/org-journal-header-func
