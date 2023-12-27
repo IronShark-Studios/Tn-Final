@@ -2572,6 +2572,10 @@ it can be passed in POS."
   (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
 
 (defun Tn/open-todays-journal ()
+  (interactive)
+  "Opens todays Org-Journal"
+  (find-file (Tn/org-journal-capture-date-string)))
+#+end_src
 #+end_src
 
 *********** org-bibtex
