@@ -2535,7 +2535,7 @@ it can be passed in POS."
    ("C-c n t n" . Tn/todays-journal-capture)
    ("C-c n s" . Tn/future-journal-capture)))
 
-(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journal/")
       org-journal-file-header 'Tn/org-journal-header-func
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
