@@ -2561,7 +2561,7 @@ it can be passed in POS."
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
-  (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format)))
+  (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format)))
 
 (defun Tn/open-todays-journal ()
   (interactive)
@@ -2574,7 +2574,7 @@ it can be passed in POS."
 (defun Tn/journal-future-capture (&optional scheduled-time)
   (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
     (setq org-journal--date-location-scheduled-time scheduled-time)
-    (find-file (format "~/Archive/Feronomicon/%s.org" (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
+    (find-file (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
     (Tn/org-journal-header-func scheduled-time)))
 #+end_src
 ************* capture templates
