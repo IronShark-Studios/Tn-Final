@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-27 Wed 18:59]
+#+LAST_MODIFIED: [2023-12-28 Thu 15:21]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -441,6 +441,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
+
 * Home-Manager
 
 *** xin-home.nix
@@ -2033,6 +2034,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
               org-ref-insert-ref-function 'org-ref-insert-ref-link
               org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
 #+end_src
+
 ********* evil
 
 *********** core
@@ -2509,7 +2511,6 @@ it can be passed in POS."
 
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
-
 #+end_src
 ************* capture templates
 
@@ -2678,19 +2679,10 @@ it can be passed in POS."
       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-      bibtex-completion-browser-function 'browser-url-firefox
+      bibtex-completion-notes-extension ".org"
       bibtex-completion-pdf-field "File"
-      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
-      bibtex-completion-additional-search-fields '(keywords)
-      bibtex-completion-display-formats
-        '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-          (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-          (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-          (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-          (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
-        bibtex-completion-pdf-open-function
-        (lambda (fpath)
-          (call-process "open" nil 0 nil fpath)))
+      bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+      bibtex-completion-additional-search-fields '(tags))
 #+end_src
 ************* pdf-tools
 

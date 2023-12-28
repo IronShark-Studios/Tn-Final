@@ -13,6 +13,7 @@
     ./Tools/Scripts/rebuild.nix
     ./Tools/Scripts/test.nix
     ./Tools/Scripts/upgrade.nix
+    ./Tools/Scripts/mv-to-tmp.nix
   ];
 
   boot = {

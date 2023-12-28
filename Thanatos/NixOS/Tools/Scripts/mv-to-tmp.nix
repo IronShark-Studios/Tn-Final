@@ -5,8 +5,11 @@
     text = ''
       #!/bin/sh
 
-      move_to_tmp()
-        { mv "$1" /tmp }
+      mv-to-tmp() {
+        mv "$1" /tmp
+      }
+
+        mv-to-tmp "$1"
     '';
   };
 }

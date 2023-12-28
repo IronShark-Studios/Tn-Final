@@ -362,6 +362,14 @@
         bibtex-completion-pdf-symbol "⌘"
         bibtex-completion-notes-symbol "✎"))
 
+(use-package org-ref-helm
+  :ensure nil
+  :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+              org-ref-insert-cite-function 'org-ref-cite-insert-helm
+              org-ref-insert-label-function 'org-ref-insert-label-link
+              org-ref-insert-ref-function 'org-ref-insert-ref-link
+              org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
+
 (use-package evil
   :init
   (setq evil-want-integration t
@@ -718,10 +726,10 @@ it can be passed in POS."
       org-enforce-todo-checkbox-dependencies t
       org-odd-levels-only t
       org-fold-catch-invisible-edits 'show-and-error
-      org-directory "~/Archive/Feronomicon/ORG"
-      org-archive-location (format
-                            "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
-                            (Tn/current-year)))
+      org-directory "~/Archive/Apocrypha/Org/"
+      org-archive-location (format  "%sArchive/\%s-archive.org::datetree/" (symbol-value 'org-directory) (Tn/current-year)))
+
+(symbol-value 'org-archive-location)
 
 (use-package org
 :hook
@@ -792,7 +800,7 @@ it can be passed in POS."
    ("C-c n t n" . Tn/todays-journal-capture)
    ("C-c n s" . Tn/future-journal-capture)))
 
-(setq org-journal-dir (file-truename "~/Archive/Feronomicon/")
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journal/")
       org-journal-file-header 'Tn/org-journal-header-func
       org-enable-org-journal-support t
       org-journal-find-file #'find-file
@@ -880,25 +888,18 @@ it can be passed in POS."
 
 (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 
+(symbol-value 'bibtex-completion-bibliography)
+
 (use-package org-ref)
 
-(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/Org-Files/reference-index.bib")
-      bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
-      bibtex-completion-notes-path '("~/Archive/Grimoire")
+(setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
+      bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+      bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-      bibtex-completion-browser-function 'browser-url-firefox
+      bibtex-completion-notes-extension ".org"
       bibtex-completion-pdf-field "File"
-      bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
-      bibtex-completion-additional-search-fields '(keywords)
-      bibtex-completion-display-formats
-        '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-          (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-          (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-          (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-          (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
-        bibtex-completion-pdf-open-function
-        (lambda (fpath)
-          (call-process "open" nil 0 nil fpath)))
+      bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+      bibtex-completion-additional-search-fields '(tags))
 
 (use-package pdf-tools)
 

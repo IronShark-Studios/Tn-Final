@@ -1,6 +1,6 @@
 * Current Focus
 *** TODO Create Initial install script
-*** TODO Integrate org capture templates with Org-Journal
+*** TODO Create =outOfStoreSymLinks= for emacs files. Eg =bookmarks=
 * Tn-Final Remainder
 ** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Create set up script
@@ -1452,6 +1452,8 @@ file for the active year when a task is marked done
 *** [[https://www.audible.com/pd/The-Extended-Mind-Audiobook/B0B1QWHMTZ][The Extended Mind]]
 * Long Term
 ** TODO Finalize =README.org=
+** TODO Go through DoomEmacs Docs and figure out if its worth using
+- [[https://github.com/hlissner/dotfiles][DoomEmacs Creators NixOS Configuration]]
 ** TODO Fix Firefox -> Roam-protocol error
 ** TODO Configure =org-tag-alist= to use hydras. For more efficient tags
 ** TODO Write new blog article on config refactor
