@@ -27,6 +27,7 @@ This section contains all root level or otherwise system wide configuration sett
     ./Tools/Scripts/rebuild.nix
     ./Tools/Scripts/test.nix
     ./Tools/Scripts/upgrade.nix
+    ./Tools/Scripts/mv-to-tmp.nix
   ];
 
   boot = {
@@ -418,6 +419,28 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
   };
 }
 #+end_src
+******* mv-to-tmp.nix
+:PROPERTIES:
+:header-args: :tangle ./Thanatos/NixOS/Tools/Scripts/mv-to-tmp.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."mv-to-tmp.nix" = {
+    target = "scripts/mv-to-tmp.sh";
+    text = ''
+      #!/bin/sh
+
+      mv-to-tmp() {
+        mv "$1" /tmp
+      }
+
+        mv-to-tmp "$1"
+    '';
+  };
+}
+#+end_src
 * Home-Manager
 
 *** xin-home.nix
@@ -693,7 +716,7 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     cd = "z";
     lx = "ls -la";
     ll = "ls -l";
-    rma = ''move_to_tmp() { mv "$1" /tmp }'';
+    rma = ''sudo bash /etc/scripts/mv-to-tmp.sh'';
     power-off = "sudo shutdown -h now";
     logout = "sudo kill -9 -1";
     restart = "sudo reboot";
