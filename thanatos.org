@@ -2456,10 +2456,10 @@ it can be passed in POS."
       org-enforce-todo-checkbox-dependencies t
       org-odd-levels-only t
       org-fold-catch-invisible-edits 'show-and-error
-      org-directory "~/Archive/Feronomicon/ORG"
       org-archive-location (format
                             "~/Archive/Feronomicon/ORG/\%s-archive.org::datetree/"
                             (Tn/current-year)))
+      org-directory "~/Archive/Apocrypha/Org/"
 #+end_src
 *********** org-core
 #+begin_src emacs-lisp
