@@ -2674,9 +2674,9 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 (use-package org-ref)
 
-(setq bibtex-completion-bibliography '("~/Archive/Apocrypha/Org-Files/reference-index.bib")
-      bibtex-completion-library-path '("~/Archive/Apocrypha/PDF/")
-      bibtex-completion-notes-path '("~/Archive/Grimoire")
+(setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
+      bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+      bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
       bibtex-completion-browser-function 'browser-url-firefox
       bibtex-completion-pdf-field "File"
