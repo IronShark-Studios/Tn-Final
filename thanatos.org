@@ -1,7 +1,7 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
 #+PROPERTY: :tangle yes :noweb yes
-#+LAST_MODIFIED: [2023-12-28 Thu 15:21]
+#+LAST_MODIFIED: [2023-12-29 Fri 10:08]
 
 * NixOS
 This section contains all root level or otherwise system wide configuration settings.
@@ -2583,6 +2583,7 @@ it can be passed in POS."
 
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 #+end_src
+
 ************* custom functions
 
 #+begin_src emacs-lisp
@@ -2608,6 +2609,7 @@ it can be passed in POS."
         (org-journal-new-entry)
         (Tn/org-journal-header-func)
         (org-journal--carryover))
+
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
   (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
@@ -2653,7 +2655,6 @@ it can be passed in POS."
 (defun Tn/future-journal-capture ()
   (interactive)
   (org-capture nil "ff"))
-
 #+end_src
 *********** org-bibtex
 ************* bibtex-core

@@ -2,18 +2,31 @@
 *** TODO Create Initial install script
 *** TODO Create =outOfStoreSymLinks= for emacs files. Eg =bookmarks=
 * Tn-Final Remainder
-** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Create set up script
-*** TODO Home Directory Set up
-*** TODO Git SSH Key
+*** DONE Home Directory Set up
+*** DONE Git SSH Key
+*** TODO Move ~projects~ into ~archive~ and use home manager out of store symlinks to put at home root.
 ** TODO Unify Org-capture Keybindings
 *** TODO Create A Hydra Key-map
 *** TODO Bind both Org-Journal and Org-Roam capture keys to it
+*** TODO Bind Org-Bibtex Bindings to it
 *** TODO Add EXWM Bindings =(s-c)= and =(C-c c)= to call hydra map
 ** TODO Configure Emacs Core
 *** TODO Create (M-x programName) functions for all frequently used programs
-**** TODO (M-x shell) to call Alacritty
-**** TODO revert buffer ~(C-x x g)~ with out confirmation prompt
+**** CANCELLED (M-x shell) to call Alacritty
+- State "CANCELLED"  from "TODO"       [2023-12-28 Thu 15:38] \\
+  not a usefull idea
+**** CANCELLED revert buffer ~(C-x x g)~ with out confirmation prompt
+- State "CANCELLED"  from "TODO"       [2023-12-28 Thu 15:44] \\
+  not a usefull change, reverting is a major operation that I would rather have a confirmation for at the moment. If I wanted to do I could create a custom function and do it with that. Eg.
+
+  #+begin_src emacs-lisp
+  (defun my-revert-without-query ()
+    (interactive)
+    (revert-buffer t t))
+
+  (global-set-key (kbd "C-x x g") 'my-revert-without-query)
+  #+end_src
 *** TODO Fix error with =org-appear=
 *** TODO Buffer Mangement
 **** DONE Emacs-Winner mode for faster layout management
@@ -36,11 +49,14 @@
 **** TODO [[https://melpa.org/#/helm-company][Helm-Company]]
 **** TODO [[https://melpa.org/#/flyspell-correct-helm][Fly-Spell Helm]]
 *** TODO FlyMake
-*** DONE Configure default starting message
-- State "DONE"       from "TODO"       [2023-11-27 Mon 01:46]
+*** TODO Configure default starting buffer
+***** DONE Cofigure Scratch buffer mode
+- State "DONE"       from "TODO"       [2023-12-28 Thu 15:48]
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode)
 #+end_src
+***** TODO Configure scratch buffer message
+***** TODO Configure start up buffer contents
 *** TODO Create a custom function to edit sudo files with tramp.
 - Try to create a shell command =seo= to do the same or second function to reopen current file as root
 - [[https://emacs.stackexchange.com/questions/52/edit-file-with-super-user-rights]]
@@ -79,6 +95,7 @@
 #+end_src
 **** TODO Figure out how to configure default directory for org attachments
 - allows moving tasks without breaking links
+- This might be some what sorted out by having a stanadardized home directory.
 *** CANCELLED Move org tangle hook to before save
 - State "CANCELLED"  from "TODO"       [2023-11-27 Mon 01:49] \\
   auto tangleling turned out to be a bad idea
@@ -134,8 +151,10 @@
               ("MEETING" :foreground "gainboro" :weight bold)
               ("PHONE" :foreground "gainboro" :weight bold))))
 #+end_src
-*** TODO Auto add tags based on todo state
+*** CANCELLED Auto add tags based on todo state
 
+- State "CANCELLED"  from "TODO"       [2023-12-28 Thu 15:53] \\
+  Not sure what I would need that for
 #+begin_src emacs-lisp
 (setq org-todo-state-tags-triggers
       (quote (("CANCELLED" ("CANCELLED" . t))
@@ -179,13 +198,13 @@
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies 1)
 #+end_src
-**** This behavior can be overridden on a specific heading with
+-  This behavior can be overridden on a specific heading with
 #+begin_src emacs-lisp
   :PROPERTIES:
   :NOBLOCKING: t
   :END:
 #+end_src
-**** Enforces Dependencies to be completed in order
+- Enforces Dependencies to be completed in order
 #+begin_src emacs-lisp
   :PROPERTIES:
   :ORDERED: t
