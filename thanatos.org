@@ -2586,11 +2586,11 @@ it can be passed in POS."
 ************* custom functions
 
 #+begin_src emacs-lisp
-(defun Tn/org-journal-header-func (time)
+(defun Tn/org-journal-header-func ()
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
     (let ((file-id (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))))
-    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" file-id file-id) time))))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n\n* End Of Day Review\n\n* Notes\n\n* Finaces\n\n* Food & Fitness\n\n* Journal\n\n* Todos" file-id file-id)))))
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
