@@ -2597,8 +2597,8 @@ it can be passed in POS."
   (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format)))
 
 (defun Tn/open-todays-journal ()
-  (interactive)
   "Opens todays Org-Journal"
+  (interactive)
   (find-file (Tn/org-journal-capture-date-string))
   (Tn/org-journal-header-func))
 
