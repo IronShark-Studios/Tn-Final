@@ -2391,21 +2391,6 @@ it can be passed in POS."
 (defun Tn/current-year () (interactive)
   (shell-command-to-string "echo -n $(date +%Y)"))
 #+end_src
-************* capture templates
-
-#+begin_src emacs-lisp
-(setq org-capture-templates
-  '(("j" "Journal Entry"
-         (org-journal-open-current-journal-file)
-         "* %<%H:%M> %?"
-         :empty-lines 1)
-    ("f" "Journal TODO"
-         (org-journal-open-current-journal-file)
-         entry (file (org-journal-open-current-journal-file))
-         "* %<%H:%M> \n ** TODO %?"
-         :empty-lines 1)))
-#+end_src
-
 ************* todo states
 
 #+begin_src emacs-lisp
