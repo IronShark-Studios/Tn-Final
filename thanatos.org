@@ -2560,7 +2560,7 @@ it can be passed in POS."
 (use-package org-journal
   :bind
   (("C-c n t o" . Tn/open-todays-journal)
-   ("C-c n t O" . org-journal-new-entry)
+   ("C-c n t O" . Tn/org-journal-new-entry)
    ("C-c n t t" . Tn/todays-todos-capture)
    ("C-c n t m" . Tn/todays-notes-capture)
    ("C-c n t f" . Tn/todays-finaces-capture)
@@ -2602,6 +2602,12 @@ it can be passed in POS."
   (find-file (Tn/org-journal-capture-date-string))
   (Tn/org-journal-header-func))
 
+(defun Tn/org-journal-new-entry ()
+        "Creates a new journal entry with custom header and todo carryover"
+        (interactive)
+        (org-journal-new-entry)
+        (Tn/org-journal-header-func)
+        (org-journal--carryover))
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
   (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
