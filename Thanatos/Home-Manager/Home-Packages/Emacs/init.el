@@ -348,6 +348,8 @@
        (  "\\Minibuf.+\\*"
                "\\` "
                "\\*.+\\*"
+               "\\magit-process:"
+               "\\magit-diff:"
                   )))
 
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -356,19 +358,19 @@
 
 (use-package helm-projectile)
 
-(use-package helm-bibtex
-  :config
-  (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
-        bibtex-completion-pdf-symbol "⌘"
-        bibtex-completion-notes-symbol "✎"))
+;; (use-package helm-bibtex
+;;   :config
+;;   (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
+;;         bibtex-completion-pdf-symbol "⌘"
+;;         bibtex-completion-notes-symbol "✎"))
 
-(use-package org-ref-helm
-  :ensure nil
-  :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-              org-ref-insert-cite-function 'org-ref-cite-insert-helm
-              org-ref-insert-label-function 'org-ref-insert-label-link
-              org-ref-insert-ref-function 'org-ref-insert-ref-link
-              org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
+;; (use-package org-ref-helm
+;;   :ensure nil
+;;   :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+;;               org-ref-insert-cite-function 'org-ref-cite-insert-helm
+;;               org-ref-insert-label-function 'org-ref-insert-label-link
+;;               org-ref-insert-ref-function 'org-ref-insert-ref-link
+;;               org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
 
 (use-package evil
   :init
@@ -663,17 +665,6 @@ it can be passed in POS."
 (defun Tn/current-year () (interactive)
   (shell-command-to-string "echo -n $(date +%Y)"))
 
-(setq org-capture-templates
-  '(("j" "Journal Entry"
-         (org-journal-open-current-journal-file)
-         "* %<%H:%M> %?"
-         :empty-lines 1)
-    ("f" "Journal TODO"
-         (org-journal-open-current-journal-file)
-         entry (file (org-journal-open-current-journal-file))
-         "* %<%H:%M> \n ** TODO %?"
-         :empty-lines 1)))
-
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "ACTIVE(a@/!)" "|" "DONE(d@/!)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "INACTIVE(i@/!)" "|" "CANCELLED(c@/!)"))))
@@ -686,6 +677,12 @@ it can be passed in POS."
               ("WAITING" :foreground "blue violet" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
+
+(defun Tn/org-todo-change-and-save ()
+  "changes the state of a todo heading and then saves buffer"
+  (interactive)
+  (org-todo)
+  (save-buffer))
 
 (setq org-tag-alist
       '((:startgroup . ART)
@@ -729,13 +726,14 @@ it can be passed in POS."
       org-directory "~/Archive/Apocrypha/Org/"
       org-archive-location (format  "%sArchive/\%s-archive.org::datetree/" (symbol-value 'org-directory) (Tn/current-year)))
 
-(symbol-value 'org-archive-location)
-
 (use-package org
 :hook
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
 (before-save . Tn/org-set-last-modified)
+
+:bind
+(("C-c C-t" . Tn/org-todo-change-and-save))
 
 :config
 (org-babel-do-load-languages
@@ -777,10 +775,10 @@ it can be passed in POS."
                (window-width . 0.33)
                (window-height . fit-window-to-buffer)))
 
-(use-package org-roam-bibtex
-  :after org-roam
-  :config
-  (require 'org-ref))
+;; (use-package org-roam-bibtex
+;;   :after org-roam
+;;   :config
+;;   (require 'org-ref))
 
 (use-package org-roam-ui
     :config
@@ -792,13 +790,15 @@ it can be passed in POS."
 (use-package org-journal
   :bind
   (("C-c n t o" . Tn/open-todays-journal)
-   ("C-c n t O" . org-journal-new-entry)
+   ("C-c n t O" . Tn/org-journal-new-entry)
    ("C-c n t t" . Tn/todays-todos-capture)
    ("C-c n t m" . Tn/todays-notes-capture)
    ("C-c n t f" . Tn/todays-finaces-capture)
    ("C-c n t e" . Tn/todays-food&fitness-capture)
    ("C-c n t n" . Tn/todays-journal-capture)
-   ("C-c n s" . Tn/future-journal-capture)))
+   ("C-c n s" . Tn/future-journal-capture))
+  :hook
+  ((org-capture-mode-hook . delete-other-windows)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journal/")
       org-journal-file-header 'Tn/org-journal-header-func
@@ -813,23 +813,30 @@ it can be passed in POS."
       org-journal-start-on-weekday 0
       org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
 
-(add-hook 'org-capture-mode-hook 'delete-other-windows)
+;(add-hook 'org-capture-mode-hook 'delete-other-windows)
 
-(defun Tn/org-journal-header-func (time)
+(defun Tn/org-journal-header-func ()
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
     (let ((file-id (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))))
-    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: showall\n:END:\n\n* End Of Day Review\n* Notes\n* Finaces\n* Food & Fitness\n* Journal\n* Todos" file-id file-id) time))))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: overview\n:END:\n\n\n* End Of Day Review\n\n* Notes\n\n* Finaces\n\n* Food & Fitness\n\n* Journal\n\n* Todos" file-id file-id)))))
 
 (defun Tn/org-journal-capture-date-string ()
   "Return a formatted date string for journal capture templates."
   (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format)))
 
 (defun Tn/open-todays-journal ()
-  (interactive)
   "Opens todays Org-Journal"
+  (interactive)
   (find-file (Tn/org-journal-capture-date-string))
   (Tn/org-journal-header-func))
+
+(defun Tn/org-journal-new-entry ()
+        "Creates a new journal entry with custom header and todo carryover"
+        (interactive)
+        (org-journal-new-entry)
+        (Tn/org-journal-header-func)
+        (org-journal--carryover))
 
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
@@ -871,37 +878,58 @@ it can be passed in POS."
   (interactive)
   (org-capture nil "ff"))
 
-(require 'bibtex)
+;; (use-package org-ref)
 
-(setq bibtex-autokey-year-length 4
-      bibtex-autokey-name-year-separator "-"
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-"
-      bibtex-autokey-titlewords 2
-      bibtex-autokey-titlewords-stretch 1
-      bibtex-autokey-titleword-length 5
-      bibtex-completion-format-citation-functions
-  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
-    (latex-mode    . bibtex-completion-format-citation-cite)
-    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-    (default       . bibtex-completion-format-citation-default)))
-
-(define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
-
-(symbol-value 'bibtex-completion-bibliography)
-
-(use-package org-ref)
-
-(setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
-      bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-      bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
-      bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-      bibtex-completion-notes-extension ".org"
-      bibtex-completion-pdf-field "File"
-      bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-      bibtex-completion-additional-search-fields '(tags))
+;; (setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
+;;       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+;;       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
+;;       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+;;       bibtex-completion-notes-extension ".org"
+;;       bibtex-completion-pdf-field "File"
+;;       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+;;       bibtex-completion-additional-search-fields '(tags))
 
 (use-package pdf-tools)
+
+(use-package bibtex
+    :custom
+    (bibtex-dialect 'biblateX)
+    (bibtex-user-optional-fields
+     '(("keywords" "Keywords to describe the entry" "")
+       ("file" "Link to a document file." "" )))
+    (bibtex-align-at-equal-sign t))
+
+;;(require 'bibtex)
+
+;; (setq bibtex-autokey-year-length 4
+;;       bibtex-autokey-name-year-separator "-"
+;;       bibtex-autokey-year-title-separator "-"
+;;       bibtex-autokey-titleword-separator "-"
+;;       bibtex-autokey-titlewords 2
+;;       bibtex-autokey-titlewords-stretch 1
+;;       bibtex-autokey-titleword-length 5
+;;       bibtex-completion-format-citation-functions
+;;   '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+;;     (latex-mode    . bibtex-completion-format-citation-cite)
+;;     (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+;;     (default       . bibtex-completion-format-citation-default)))
+
+;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+
+(use-package biblio)
+
+  (defun Tn/biblio-lookup ()
+    "Combines biblio-lookup and biblio-doi-insert-bibtex."
+    (interactive)
+    (let* ((dbs (biblio--named-backends))
+           (db-list (append dbs '(("DOI" . biblio-doi-backend))))
+           (db-selected (biblio-completing-read-alist
+                         "Database:"
+                         db-list)))
+      (if (eq db-selected 'biblio-doi-backend)
+          (let ((doi (read-string "DOI: ")))
+            (biblio-doi-insert-bibtex doi))
+        (biblio-lookup db-selected))))
 
 (require 'org-agenda)
 
