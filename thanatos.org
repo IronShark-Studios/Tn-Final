@@ -2229,7 +2229,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (which-key-mode)
   (setq which-key-idle-delay 1))
 #+end_src
-********* org mode
+********* org
 *********** org bullets
 
 #+begin_src emacs-lisp
