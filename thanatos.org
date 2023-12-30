@@ -2008,6 +2008,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
        (  "\\Minibuf.+\\*"
                "\\` "
                "\\*.+\\*"
+               "\\magit-process:"
+               "\\magit-diff:"
                   )))
 
 (global-set-key (kbd "M-x") 'helm-M-x)
