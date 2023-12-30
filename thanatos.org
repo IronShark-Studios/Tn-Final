@@ -2412,12 +2412,6 @@ it can be passed in POS."
               ("WAITING" :foreground "blue violet" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
-
-(defun Tn/org-todo-change-and-save ()
-  "changes the state of a todo heading and then saves buffer"
-  (interactive)
-  (org-todo)
-  (save-buffer))
 #+end_src
 
 ************* tag alist
@@ -2476,9 +2470,6 @@ it can be passed in POS."
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
 (before-save . Tn/org-set-last-modified)
-
-:bind
-(("C-c C-t" . Tn/org-todo-change-and-save))
 
 :config
 (org-babel-do-load-languages
