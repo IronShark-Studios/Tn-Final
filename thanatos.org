@@ -2660,7 +2660,27 @@ it can be passed in POS."
   (org-capture nil "ff"))
 #+end_src
 *********** org-bibtex
-************* bibtex-core
+************* org-ref
+
+#+begin_src emacs-lisp
+;; (use-package org-ref)
+
+;; (setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
+;;       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+;;       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
+;;       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+;;       bibtex-completion-notes-extension ".org"
+;;       bibtex-completion-pdf-field "File"
+;;       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+;;       bibtex-completion-additional-search-fields '(tags))
+#+end_src
+************* pdf-tools
+
+#+begin_src emacs-lisp
+(use-package pdf-tools)
+#+end_src
+********* bibtex
+*********** bibtex-core
 
 #+begin_src emacs-lisp
 ;; (require 'bibtex)
