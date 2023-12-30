@@ -2554,6 +2554,7 @@ it can be passed in POS."
 #+end_src
 *********** org-journal
 
+************* core
 #+begin_src emacs-lisp
 (use-package org-journal
   :bind
