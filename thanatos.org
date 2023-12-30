@@ -2022,11 +2022,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 *********** helm-bibtex
 
 #+begin_src emacs-lisp
-;; (use-package helm-bibtex
-;;   :config
-;;   (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
-;;         bibtex-completion-pdf-symbol "⌘"
-;;         bibtex-completion-notes-symbol "✎"))
+(use-package helm-bibtex
+  :config
+  (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
+        bibtex-completion-pdf-symbol "⌘"
+        bibtex-completion-notes-symbol "✎"))
 #+end_src
 
 ************* org-ref-helm
