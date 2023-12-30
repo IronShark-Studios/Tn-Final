@@ -2022,23 +2022,23 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 *********** helm-bibtex
 
 #+begin_src emacs-lisp
-(use-package helm-bibtex
-  :config
-  (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
-        bibtex-completion-pdf-symbol "⌘"
-        bibtex-completion-notes-symbol "✎"))
+;; (use-package helm-bibtex
+;;   :config
+;;   (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
+;;         bibtex-completion-pdf-symbol "⌘"
+;;         bibtex-completion-notes-symbol "✎"))
 #+end_src
 
 ************* org-ref-helm
 
 #+begin_src emacs-lisp
-(use-package org-ref-helm
-  :ensure nil
-  :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-              org-ref-insert-cite-function 'org-ref-cite-insert-helm
-              org-ref-insert-label-function 'org-ref-insert-label-link
-              org-ref-insert-ref-function 'org-ref-insert-ref-link
-              org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
+;; (use-package org-ref-helm
+;;   :ensure nil
+;;   :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+;;               org-ref-insert-cite-function 'org-ref-cite-insert-helm
+;;               org-ref-insert-label-function 'org-ref-insert-label-link
+;;               org-ref-insert-ref-function 'org-ref-insert-ref-link
+;;               org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
 #+end_src
 
 ********* evil
@@ -2538,10 +2538,10 @@ it can be passed in POS."
 ************* roam-bibtex
 
 #+begin_src emacs-lisp
-(use-package org-roam-bibtex
-  :after org-roam
-  :config
-  (require 'org-ref))
+;; (use-package org-roam-bibtex
+;;   :after org-roam
+;;   :config
+;;   (require 'org-ref))
 #+end_src
 
 ************* roam-ui
@@ -2663,36 +2663,37 @@ it can be passed in POS."
 ************* bibtex-core
 
 #+begin_src emacs-lisp
-(require 'bibtex)
+;; (require 'bibtex)
 
-(setq bibtex-autokey-year-length 4
-      bibtex-autokey-name-year-separator "-"
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-"
-      bibtex-autokey-titlewords 2
-      bibtex-autokey-titlewords-stretch 1
-      bibtex-autokey-titleword-length 5
-      bibtex-completion-format-citation-functions
-  '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
-    (latex-mode    . bibtex-completion-format-citation-cite)
-    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-    (default       . bibtex-completion-format-citation-default)))
+;; (setq bibtex-autokey-year-length 4
+;;       bibtex-autokey-name-year-separator "-"
+;;       bibtex-autokey-year-title-separator "-"
+;;       bibtex-autokey-titleword-separator "-"
+;;       bibtex-autokey-titlewords 2
+;;       bibtex-autokey-titlewords-stretch 1
+;;       bibtex-autokey-titleword-length 5
+;;       bibtex-completion-format-citation-functions
+;;   '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
+;;     (latex-mode    . bibtex-completion-format-citation-cite)
+;;     (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+;;     (default       . bibtex-completion-format-citation-default)))
 
-(define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 #+end_src
+
 ************* org-ref
 
 #+begin_src emacs-lisp
-(use-package org-ref)
+;; (use-package org-ref)
 
-(setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
-      bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-      bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
-      bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-      bibtex-completion-notes-extension ".org"
-      bibtex-completion-pdf-field "File"
-      bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-      bibtex-completion-additional-search-fields '(tags))
+;; (setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
+;;       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+;;       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
+;;       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+;;       bibtex-completion-notes-extension ".org"
+;;       bibtex-completion-pdf-field "File"
+;;       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+;;       bibtex-completion-additional-search-fields '(tags))
 #+end_src
 ************* pdf-tools
 
