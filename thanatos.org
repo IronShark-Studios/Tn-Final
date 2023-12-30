@@ -2560,7 +2560,9 @@ it can be passed in POS."
    ("C-c n t f" . Tn/todays-finaces-capture)
    ("C-c n t e" . Tn/todays-food&fitness-capture)
    ("C-c n t n" . Tn/todays-journal-capture)
-   ("C-c n s" . Tn/future-journal-capture)))
+   ("C-c n s" . Tn/future-journal-capture))
+  :hook
+  ((org-capture-mode-hook . delete-other-windows)))
 
 (setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journal/")
       org-journal-file-header 'Tn/org-journal-header-func
@@ -2575,7 +2577,7 @@ it can be passed in POS."
       org-journal-start-on-weekday 0
       org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
 
-(add-hook 'org-capture-mode-hook 'delete-other-windows)
+;(add-hook 'org-capture-mode-hook 'delete-other-windows)
 #+end_src
 
 ************* custom functions
