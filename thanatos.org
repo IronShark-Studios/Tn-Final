@@ -2724,9 +2724,24 @@ it can be passed in POS."
 ;;       bibtex-completion-additional-search-fields '(tags))
 #+end_src
 ************* pdf-tools
+*********** biblio
 
 #+begin_src emacs-lisp
 (use-package pdf-tools)
+(use-package biblio)
+
+  (defun Tn/biblio-lookup ()
+    "Combines biblio-lookup and biblio-doi-insert-bibtex."
+    (interactive)
+    (let* ((dbs (biblio--named-backends))
+           (db-list (append dbs '(("DOI" . biblio-doi-backend))))
+           (db-selected (biblio-completing-read-alist
+                         "Database:"
+                         db-list)))
+      (if (eq db-selected 'biblio-doi-backend)
+          (let ((doi (read-string "DOI: ")))
+            (biblio-doi-insert-bibtex doi))
+        (biblio-lookup db-selected))))
 #+end_src
 ********* agenda
 
