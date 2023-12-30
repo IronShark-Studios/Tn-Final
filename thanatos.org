@@ -2683,7 +2683,15 @@ it can be passed in POS."
 *********** bibtex-core
 
 #+begin_src emacs-lisp
-;; (require 'bibtex)
+ (use-package bibtex
+    :custom
+    (bibtex-dialect 'biblateX)
+    (bibtex-user-optional-fields
+     '(("keywords" "Keywords to describe the entry" "")
+       ("file" "Link to a document file." "" )))
+    (bibtex-align-at-equal-sign t))
+
+;;(require 'bibtex)
 
 ;; (setq bibtex-autokey-year-length 4
 ;;       bibtex-autokey-name-year-separator "-"
