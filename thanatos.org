@@ -2678,6 +2678,16 @@ it can be passed in POS."
 
 ;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 #+end_src
+*********** citar
+
+#+begin_src emacs-lisp
+(use-package citar
+  :bind
+    (("C-c c o" . citar-open)
+     (:map org-mode-map
+           :package org
+           ("C-c c i". #'org-cite-insert))))
+#+end_src
 
 *********** biblio
 
