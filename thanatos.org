@@ -2670,11 +2670,6 @@ it can be passed in POS."
 ;;       bibtex-autokey-titlewords 2
 ;;       bibtex-autokey-titlewords-stretch 1
 ;;       bibtex-autokey-titleword-length 5
-;;       bibtex-completion-format-citation-functions
-;;   '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
-;;     (latex-mode    . bibtex-completion-format-citation-cite)
-;;     (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-;;     (default       . bibtex-completion-format-citation-default)))
 
 ;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 #+end_src
@@ -2682,6 +2677,12 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (use-package citar
+  :config
+  (setq org-cite-follow-processor 'citar
+        org-cite-insert-processor 'citar
+        org-cite-activate-processor 'citar
+        org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
+        citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
   :bind
     (("C-c c o" . citar-open)
      (:map org-mode-map
