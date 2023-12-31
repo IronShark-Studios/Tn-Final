@@ -2645,7 +2645,7 @@ it can be passed in POS."
 #+begin_src emacs-lisp
  (use-package bibtex
     :custom
-    (bibtex-dialect 'biblateX)
+    (bibtex-dialect 'biblatex)
     (bibtex-user-optional-fields
      '(("keywords" "Keywords to describe the entry" "")
        ("file" "Link to a document file." "" )))
