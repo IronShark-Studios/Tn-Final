@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2023-12-30 Sat 15:16]
+#+LAST_MODIFIED: [2023-12-31 Sun 09:00]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -2632,7 +2632,6 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 ;; (use-package org-ref)
-
 #+end_src
 ************* pdf-tools
 
@@ -2661,6 +2660,7 @@ it can be passed in POS."
        bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
        bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
        bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+
 ;;(require 'bibtex)
 
 ;; (setq bibtex-autokey-year-length 4

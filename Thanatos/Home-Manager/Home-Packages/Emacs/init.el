@@ -358,20 +358,6 @@
 
 (use-package helm-projectile)
 
-;; (use-package helm-bibtex
-;;   :config
-;;   (setq org-cite-follow-processor 'helm-bibtex-org-cite-follow
-;;         bibtex-completion-pdf-symbol "⌘"
-;;         bibtex-completion-notes-symbol "✎"))
-
-;; (use-package org-ref-helm
-;;   :ensure nil
-;;   :init (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-;;               org-ref-insert-cite-function 'org-ref-cite-insert-helm
-;;               org-ref-insert-label-function 'org-ref-insert-label-link
-;;               org-ref-insert-ref-function 'org-ref-insert-ref-link
-;;               org-ref-cite-onclick-function (lambda (_)                (org-ref-citation-hydra/body))))
-
 (use-package evil
   :init
   (setq evil-want-integration t
@@ -678,12 +664,6 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
-(defun Tn/org-todo-change-and-save ()
-  "changes the state of a todo heading and then saves buffer"
-  (interactive)
-  (org-todo)
-  (save-buffer))
-
 (setq org-tag-alist
       '((:startgroup . ART)
         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
@@ -731,9 +711,6 @@ it can be passed in POS."
 (org-mode . Tn/org-mode-setup)
 (org-mode . Tn/org-font-setup)
 (before-save . Tn/org-set-last-modified)
-
-:bind
-(("C-c C-t" . Tn/org-todo-change-and-save))
 
 :config
 (org-babel-do-load-languages
@@ -834,8 +811,7 @@ it can be passed in POS."
 (defun Tn/org-journal-new-entry ()
         "Creates a new journal entry with custom header and todo carryover"
         (interactive)
-        (org-journal-new-entry)
-        (Tn/org-journal-header-func)
+        (Tn/open-todays-journal)
         (org-journal--carryover))
 
 (defvar org-journal--date-location-scheduled-time nil)
@@ -880,24 +856,26 @@ it can be passed in POS."
 
 ;; (use-package org-ref)
 
-;; (setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
-;;       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-;;       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
-;;       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-;;       bibtex-completion-notes-extension ".org"
-;;       bibtex-completion-pdf-field "File"
-;;       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-;;       bibtex-completion-additional-search-fields '(tags))
-
 (use-package pdf-tools)
 
 (use-package bibtex
     :custom
-    (bibtex-dialect 'biblateX)
+    (bibtex-dialect 'biblatex)
     (bibtex-user-optional-fields
-     '(("keywords" "Keywords to describe the entry" "")
-       ("file" "Link to a document file." "" )))
+     '(("Tags" "Tags to describe the entry" "")
+       ("File" "Link to a document file." "" )))
     (bibtex-align-at-equal-sign t))
+
+(setq  bibtex-completion-pdf-symbol "⌘"
+       bibtex-completion-pdf-field "File"
+       bibtex-completion-notes-symbol "✎"
+       bibtex-completion-additional-search-fields '(Tags)
+       bibtex-completion-notes-extension ".org"
+       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
+       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
 
 ;;(require 'bibtex)
 
@@ -908,13 +886,21 @@ it can be passed in POS."
 ;;       bibtex-autokey-titlewords 2
 ;;       bibtex-autokey-titlewords-stretch 1
 ;;       bibtex-autokey-titleword-length 5
-;;       bibtex-completion-format-citation-functions
-;;   '((org-mode      . bibtex-completion-format-citation-org-title-link-to-PDF)
-;;     (latex-mode    . bibtex-completion-format-citation-cite)
-;;     (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-;;     (default       . bibtex-completion-format-citation-default)))
 
 ;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+
+(use-package citar
+  :config
+  (setq org-cite-follow-processor 'citar
+        org-cite-insert-processor 'citar
+        org-cite-activate-processor 'citar
+        org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
+        citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+  :bind
+    (("C-c c o" . citar-open)
+     (:map org-mode-map
+           :package org
+           ("C-c c i". #'org-cite-insert))))
 
 (use-package biblio)
 
