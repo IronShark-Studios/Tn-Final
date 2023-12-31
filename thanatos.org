@@ -2578,8 +2578,7 @@ it can be passed in POS."
 (defun Tn/org-journal-new-entry ()
         "Creates a new journal entry with custom header and todo carryover"
         (interactive)
-        (org-journal-new-entry)
-        (Tn/org-journal-header-func)
+        (Tn/open-todays-journal)
         (org-journal--carryover))
 
 (defvar org-journal--date-location-scheduled-time nil)
