@@ -2642,15 +2642,10 @@ it can be passed in POS."
 *********** bibtex-core
 
 #+begin_src emacs-lisp
- (use-package bibtex
-    :custom
-    (bibtex-dialect 'biblatex)
-    (bibtex-user-optional-fields
-     '(("Tags" "Tags to describe the entry" "")
-       ("File" "Link to a document file." "" )))
-    (bibtex-align-at-equal-sign t))
-
-(setq  bibtex-completion-pdf-symbol "⌘"
+ (use-package bibtex)
+(setq  bibtex-dialect 'biblatex
+       bibtex-align-at-equal-sign t
+       bibtex-completion-pdf-symbol "⌘"
        bibtex-completion-pdf-field "File"
        bibtex-completion-notes-symbol "✎"
        bibtex-completion-additional-search-fields '(Tags)
@@ -2658,8 +2653,11 @@ it can be passed in POS."
        bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
        bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
        bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
-       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+       bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
+                                     ("file" "Link to a document file." "" ))
+       bibtex-completion-browser-function
+       (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+       bibtex-completion-bibliography     '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
 
 ;;(require 'bibtex)
 
