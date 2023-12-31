@@ -2633,14 +2633,6 @@ it can be passed in POS."
 #+begin_src emacs-lisp
 ;; (use-package org-ref)
 
-;; (setq bibtex-completion-bibliography (format "%sbibliography-index.bib" (symbol-value 'org-directory))
-;;       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-;;       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/"
-;;       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-;;       bibtex-completion-notes-extension ".org"
-;;       bibtex-completion-pdf-field "File"
-;;       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-;;       bibtex-completion-additional-search-fields '(tags))
 #+end_src
 ************* pdf-tools
 
@@ -2659,6 +2651,16 @@ it can be passed in POS."
        ("file" "Link to a document file." "" )))
     (bibtex-align-at-equal-sign t))
 
+(setq  bibtex-completion-pdf-symbol "⌘"
+       bibtex-completion-pdf-field "File"
+       bibtex-completion-notes-symbol "✎"
+       bibtex-completion-additional-search-fields '(Tags)
+       bibtex-completion-notes-extension ".org"
+       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
+       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
 ;;(require 'bibtex)
 
 ;; (setq bibtex-autokey-year-length 4
