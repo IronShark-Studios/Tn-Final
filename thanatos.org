@@ -2471,7 +2471,6 @@ it can be passed in POS."
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n e" . org-roam-dailies-capture-today)
          ("C-c n c" . org-roam-capture))
 
   :config
