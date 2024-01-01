@@ -2647,7 +2647,15 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
  (use-package bibtex)
-(setq  bibtex-dialect 'biblatex
+
+ (setq bibtex-dialect 'biblatex
+       bibtex-autokey-year-length 4
+       bibtex-autokey-name-year-separator "-"
+       bibtex-autokey-year-title-separator "-"
+       bibtex-autokey-titleword-separator "-"
+       bibtex-autokey-titlewords 2
+       bibtex-autokey-titlewords-stretch 1
+       bibtex-autokey-titleword-length 5
        bibtex-align-at-equal-sign t
        bibtex-completion-pdf-symbol "⌘"
        bibtex-completion-pdf-field "File"
