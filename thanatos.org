@@ -2746,8 +2746,14 @@ it can be passed in POS."
         (preview . "${author editor:%etal} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
         (note . "Notes on ${author editor:%etal}, ${title}")))
 #+end_src
+*********** citar-org-roam
 
 #+begin_src emacs-lisp
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config (citar-org-roam-mode))
+
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/reference-notes/"))
 #+end_src
 ********* agenda
 
