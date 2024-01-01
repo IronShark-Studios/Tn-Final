@@ -2637,13 +2637,7 @@ it can be passed in POS."
   (interactive)
   (org-capture nil "ff"))
 #+end_src
-*********** org-bibtex
-************* org-ref
-
-#+begin_src emacs-lisp
-;; (use-package org-ref)
-#+end_src
-************* pdf-tools
+*********** pdf-tools
 
 #+begin_src emacs-lisp
 (use-package pdf-tools)
