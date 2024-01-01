@@ -2261,7 +2261,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (use-package ox-hugo
   :after ox)
 
-(setq org-export-backends '(ascii html icalendar latex md odt freemind))
+(setq org-export-backends '(ascii html icalendar latex md odt))
 #+end_src
 *********** tempo
 
