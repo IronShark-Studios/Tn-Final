@@ -2710,6 +2710,9 @@ it can be passed in POS."
         org-cite-activate-processor 'citar
         org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
         citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
   :bind
   (("C-c c o" . citar-open)
    ("C-c c l" . citar-open-link)
