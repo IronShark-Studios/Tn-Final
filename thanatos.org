@@ -2670,7 +2670,34 @@ it can be passed in POS."
        bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
                                      ("file" "Link to a document file." "" )))
 #+end_src
+*********** custom capture template
+#+begin_src emacs-lisp
 
+(add-to-list 'bibtex-biblatex-entry-alist '("Movie" "Feature length video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("writer")
+                                     ("cast")
+                                     ("genre")
+                                     ("tags")
+                                     ("file")
+                                     ("url")
+                                     ("notes"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Video" "Short form video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
 
 ;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 #+end_src
