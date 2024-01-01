@@ -2482,13 +2482,22 @@ it can be passed in POS."
 #+end_src
 ************* capture templates
 
-*************** default
-
 #+begin_src emacs-lisp
-;; (("d" "default" plain "%?"
-;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;;                      "#+title: ${title}\n")
-;;   :unnarrowed t))
+(setq org-roam-capture-templates
+      '(("r" "bibliography reference" plain "%?"
+        :target
+        (file+head "reference-notes/${citekey}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+        ("n" "literature note" plain
+         "%?"
+         :target
+         (file+head
+          "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/reference-notes/${citar-citekey}.org"
+          "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
+         :unnarrowed t)
+        ("d" "default" plain "%?"
+         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)))
 #+end_src
 
 ************* roam-node widow
