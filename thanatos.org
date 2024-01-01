@@ -2563,7 +2563,6 @@ it can be passed in POS."
       org-journal-start-on-weekday 0
       org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
 
-;(add-hook 'org-capture-mode-hook 'delete-other-windows)
 #+end_src
 
 ************* custom functions
