@@ -2711,10 +2711,17 @@ it can be passed in POS."
         org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
         citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
   :bind
-    (("C-c c o" . citar-open)
-     (:map org-mode-map
-           :package org
-           ("C-c c i". #'org-cite-insert))))
+  (("C-c c o" . citar-open)
+   ("C-c c l" . citar-open-link)
+   ("C-c c n" . citar-open-notes)
+   ("C-c c f" . citar-open-files)
+   ("C-c c e" . citar-open-entry)
+   ("C-c c i" . citar-insert-citation)
+   ("C-c b o" . Tn/open-bibliography)
+   ("C-c b n" . bibtex-entry)
+   ("C-c b v" . Tn/bibtex-validate-and-save)))
+
+(define-key helm-comp-read-map (kbd "C-c C-c") 'helm-cr-empty-string)
 #+end_src
 
 *********** biblio
