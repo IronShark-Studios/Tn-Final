@@ -2588,6 +2588,7 @@ it can be passed in POS."
         "Creates a new journal entry with custom header and todo carryover"
         (interactive)
         (Tn/open-todays-journal)
+        (org-journal-mode)
         (org-journal--carryover))
 
 (defvar org-journal--date-location-scheduled-time nil)
