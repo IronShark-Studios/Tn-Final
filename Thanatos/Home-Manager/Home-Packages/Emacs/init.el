@@ -550,7 +550,7 @@
 (use-package ox-hugo
   :after ox)
 
-(setq org-export-backends '(ascii html icalendar latex md odt freemind))
+(setq org-export-backends '(ascii html icalendar latex md odt))
 
 (require 'org-tempo)
 (add-to-list 'org-structure-template-alist
@@ -730,7 +730,6 @@ it can be passed in POS."
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n e" . org-roam-dailies-capture-today)
          ("C-c n c" . org-roam-capture))
 
   :config
@@ -740,10 +739,21 @@ it can be passed in POS."
   (org-roam-db-autosync-mode)
   (require 'org-roam-protocol))
 
-;; (("d" "default" plain "%?"
-;;   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;;                      "#+title: ${title}\n")
-;;   :unnarrowed t))
+(setq org-roam-capture-templates
+      '(("r" "bibliography reference" plain "%?"
+        :target
+        (file+head "reference-notes/${citekey}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+        ("n" "literature note" plain
+         "%?"
+         :target
+         (file+head
+          "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/reference-notes/${citar-citekey}.org"
+          "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
+         :unnarrowed t)
+        ("d" "default" plain "%?"
+         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)))
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -752,10 +762,12 @@ it can be passed in POS."
                (window-width . 0.33)
                (window-height . fit-window-to-buffer)))
 
-;; (use-package org-roam-bibtex
-;;   :after org-roam
-;;   :config
-;;   (require 'org-ref))
+(use-package org-roam-bibtex
+  :after
+  (org-roam)
+
+  :config
+  (org-roam-bibtex-mode +1))
 
 (use-package org-roam-ui
     :config
@@ -790,8 +802,6 @@ it can be passed in POS."
       org-journal-start-on-weekday 0
       org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
 
-;(add-hook 'org-capture-mode-hook 'delete-other-windows)
-
 (defun Tn/org-journal-header-func ()
   "Inserts custom template in a new journal file."
   (when (= (buffer-size) 0)
@@ -812,6 +822,7 @@ it can be passed in POS."
         "Creates a new journal entry with custom header and todo carryover"
         (interactive)
         (Tn/open-todays-journal)
+        (org-journal-mode)
         (org-journal--carryover))
 
 (defvar org-journal--date-location-scheduled-time nil)
@@ -854,40 +865,57 @@ it can be passed in POS."
   (interactive)
   (org-capture nil "ff"))
 
-;; (use-package org-ref)
-
 (use-package pdf-tools)
 
-(use-package bibtex
-    :custom
-    (bibtex-dialect 'biblatex)
-    (bibtex-user-optional-fields
-     '(("Tags" "Tags to describe the entry" "")
-       ("File" "Link to a document file." "" )))
-    (bibtex-align-at-equal-sign t))
+(use-package bibtex)
 
-(setq  bibtex-completion-pdf-symbol "⌘"
-       bibtex-completion-pdf-field "File"
-       bibtex-completion-notes-symbol "✎"
-       bibtex-completion-additional-search-fields '(Tags)
-       bibtex-completion-notes-extension ".org"
-       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
-       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
-       bibtex-completion-browser-function (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+(setq bibtex-dialect 'biblatex
+      bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5
+      bibtex-align-at-equal-sign t
+      bibtex-completion-pdf-symbol "⌘"
+      bibtex-completion-pdf-field "File"
+      bibtex-completion-notes-symbol "✎"
+      bibtex-completion-additional-search-fields '(Tags)
+      bibtex-completion-notes-extension ".org"
+      bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+      bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+      bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
+      bibtex-completion-browser-function
+      (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+      bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
+                                    ("file" "Link to a document file." "" )))
 
-;;(require 'bibtex)
+(add-to-list 'bibtex-biblatex-entry-alist '("Movie" "Feature length video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("writer")
+                                     ("cast")
+                                     ("genre")
+                                     ("tags")
+                                     ("file")
+                                     ("url")
+                                     ("notes"))))
 
-;; (setq bibtex-autokey-year-length 4
-;;       bibtex-autokey-name-year-separator "-"
-;;       bibtex-autokey-year-title-separator "-"
-;;       bibtex-autokey-titleword-separator "-"
-;;       bibtex-autokey-titlewords 2
-;;       bibtex-autokey-titlewords-stretch 1
-;;       bibtex-autokey-titleword-length 5
-
-;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
+(add-to-list 'bibtex-biblatex-entry-alist '("Video" "Short form video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
 
 (use-package citar
   :config
@@ -896,26 +924,46 @@ it can be passed in POS."
         org-cite-activate-processor 'citar
         org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
         citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
+
   :bind
-    (("C-c c o" . citar-open)
-     (:map org-mode-map
-           :package org
-           ("C-c c i". #'org-cite-insert))))
+  (("C-c c o" . citar-open)
+   ("C-c c l" . citar-open-link)
+   ("C-c c n" . citar-open-notes)
+   ("C-c c f" . citar-open-files)
+   ("C-c c e" . citar-open-entry)
+   ("C-c c i" . citar-insert-citation)
+   ("C-c b o" . Tn/open-bibliography)
+   ("C-c b n" . bibtex-entry)
+   ("C-c b v" . Tn/bibtex-validate-and-save)))
 
-(use-package biblio)
+(define-key helm-comp-read-map (kbd "C-c C-c") 'helm-cr-empty-string)
 
-  (defun Tn/biblio-lookup ()
-    "Combines biblio-lookup and biblio-doi-insert-bibtex."
-    (interactive)
-    (let* ((dbs (biblio--named-backends))
-           (db-list (append dbs '(("DOI" . biblio-doi-backend))))
-           (db-selected (biblio-completing-read-alist
-                         "Database:"
-                         db-list)))
-      (if (eq db-selected 'biblio-doi-backend)
-          (let ((doi (read-string "DOI: ")))
-            (biblio-doi-insert-bibtex doi))
-        (biblio-lookup db-selected))))
+(defun Tn/bibtex-validate-and-save ()
+  "saves file and validates bibtex formatting"
+  (interactive)
+  (bibtex-validate)
+  (save-buffer))
+
+(defun Tn/open-bibliography ()
+"opens the global bibliography file"
+  (interactive)
+    (find-file "~/Archive/Apocrypha/Org/bibliography-index.bib"))
+
+(setq citar-templates
+      '((main . "     ${title:48}")
+        (suffix . "${=type=:12}    ${tags keywords:*}")
+        (preview . "${author editor:%etal} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
+        (note . "Notes on ${author editor:%etal}, ${title}")))
+
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config (citar-org-roam-mode))
+
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/reference-notes/"))
 
 (require 'org-agenda)
 

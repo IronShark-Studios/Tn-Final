@@ -25,7 +25,7 @@
 #+begin_src emacs-lisp
 (setq org-roam-completion-everywhere t)
 #+end_src
-
+***** TODO [[https://github.com/oantolin/embark][embark]]
 *** TODO Fix unclutter cursor hiding
 *** TODO refactor polybar
 ***** TODO have only current workspace number show on bar
@@ -1351,9 +1351,8 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 *** TODO [[https://www.youtube.com/watch?v=yufC22262I4&list=WL&index=6&t=552s&pp=gAQBiAQB][LocalSend]]
 *** TODO [[https://www.youtube.com/watch?v=-RW546svPOc&list=WL&index=170&t=629s&pp=gAQBiAQB][CURL]] utils
 *** TODO GH and Gitlab equivalent
-** TODO combine Org-Roam, and Org-Journal
-*** TODO Capture windows for quick journaling
-*** TODO journal files tracked by roam database
+** TODO Replace hard paths with variables where possible
+** TODO Add hook to fold heading after inserting todo state change message.
 * Reading List
 ** Saved for later : using nvidia Graphics Drivers
 Enables the use of a Nvidia Graphics card. Exports all graphics processing to the GPU.
