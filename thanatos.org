@@ -2664,14 +2664,12 @@ it can be passed in POS."
        bibtex-completion-notes-extension ".org"
        bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
        bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
-       bibtex-completion-notes-path "~/Archive/Grimoire/Biliography-Notes/" ;; I think this might not be needed whith orb later
-       bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
-                                     ("file" "Link to a document file." "" ))
+       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
        bibtex-completion-browser-function
        (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
-       bibtex-completion-bibliography     '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
-
-;;(require 'bibtex)
+       bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
+                                     ("file" "Link to a document file." "" )))
+#+end_src
 
 
 ;; (define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
