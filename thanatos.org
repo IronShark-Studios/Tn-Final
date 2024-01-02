@@ -2616,7 +2616,7 @@ it can be passed in POS."
     (setq org-journal--date-location-scheduled-time scheduled-time)
     (find-file (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
     (Tn/org-journal-header-func scheduled-time)))
-;;test commit
+;;test commit, second
 #+end_src
 ************* capture templates
 
