@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-01 Mon 20:19]
+#+LAST_MODIFIED: [2024-01-02 Tue 09:00]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -2295,6 +2295,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 (add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
+
+(advice-add 'org-deadline       :after #'save-buffer)
+(advice-add 'org-schedule       :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'save-buffer)
+(advice-add 'org-todo           :after #'save-buffer)
 #+end_src
 ************* font configuration
 
@@ -2401,6 +2406,13 @@ it can be passed in POS."
               ("WAITING" :foreground "blue violet" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
+
+(defun Tn/org-todo-and-fold ()
+  "automattically folds any notes captured by org todo"
+  (interactive)
+  (org-todo)
+  (let ((current-prefix-arg '(4))) ; Set prefix argument for `org-cycle`
+    (org-cycle)))
 #+end_src
 
 ************* tag alist
@@ -2472,6 +2484,7 @@ it can be passed in POS."
 
 (global-set-key (kbd "C-c C-l") 'org-store-link)
 (global-set-key (kbd "C-c l") 'org-insert-link)
+(global-set-key (kbd "C-c C-t") 'Tn/org-todo-and-fold)
 #+end_src
 *********** org-roam
 ************* roam-core
@@ -2594,7 +2607,8 @@ it can be passed in POS."
         (interactive)
         (Tn/open-todays-journal)
         (org-journal-mode)
-        (org-journal--carryover))
+        (org-journal--carryover)
+        (save-buffer))
 
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)

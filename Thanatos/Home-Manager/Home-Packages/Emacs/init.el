@@ -158,6 +158,12 @@
   (interactive)
   (shell-command "sudo light -U 5"))
 
+(defun Tn/evil-normal-and-save ()
+  "switches to evil normal mode, and saves buffer"
+  (interactive)
+  (evil-normal-state)
+  (save-buffer))
+
 (use-package burly)
 
 (use-package alsamixer)
@@ -218,6 +224,8 @@
 ([?\s-a] . org-agenda)
 
 ([?\s-\M-a] . org-agenda-exit)
+
+([?\s-<escape>] . Tn/evil-normal-and-save)
 
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
@@ -567,6 +575,11 @@
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 (add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
 
+(advice-add 'org-deadline       :after #'save-buffer)
+(advice-add 'org-schedule       :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'save-buffer)
+(advice-add 'org-todo           :after #'save-buffer)
+
 (defun Tn/org-font-setup ()
 ;; This is magic code that changes the font of non-heading bullet point lists.
 (font-lock-add-keywords 'org-mode
@@ -664,6 +677,13 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
+(defun Tn/org-todo-and-fold ()
+  "automattically folds any notes captured by org todo"
+  (interactive)
+  (org-todo)
+  (let ((current-prefix-arg '(4))) ; Set prefix argument for `org-cycle`
+    (org-cycle)))
+
 (setq org-tag-alist
       '((:startgroup . ART)
         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
@@ -724,6 +744,7 @@ it can be passed in POS."
 
 (global-set-key (kbd "C-c C-l") 'org-store-link)
 (global-set-key (kbd "C-c l") 'org-insert-link)
+(global-set-key (kbd "C-c C-t") 'Tn/org-todo-and-fold)
 
 (use-package org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
@@ -818,7 +839,8 @@ it can be passed in POS."
         (interactive)
         (Tn/open-todays-journal)
         (org-journal-mode)
-        (org-journal--carryover))
+        (org-journal--carryover)
+        (save-buffer))
 
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
