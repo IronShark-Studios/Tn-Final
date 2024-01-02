@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-01 Mon 09:05]
+#+LAST_MODIFIED: [2024-01-01 Mon 19:54]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -366,12 +366,10 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
-      git add . &&
-      git status &&
-      echo -n Commit Message: &&
-      read -r CommitMessage &&
-      sudo nixos-rebuild switch --flake .#$HOSTNAME &&
-      git commit -m "$HOST Rebuild: $NIXOS_GENERATION $CommitMessage" &&
+      git add .
+      git status
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "$HOST Rebuild: $NIXOS_GENERATION"
       git push &&
       echo
       echo System Generation $NIXOS_GENERATION Active.
@@ -393,9 +391,11 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
+      git add .
       sudo nixos-rebuild test --flake .#$HOSTNAME &&
       echo
-      echo System Generation Temporarily $NIXOS_GENERATION Active.
+      echo System Generation $NIXOS_GENERATION Temporarily Active.
+      git commit -m "Test Rebuild $HOSTNAME $NIXOS_GENERATION"
     '';
   };
 }
@@ -414,10 +414,12 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
       #!/bin/sh
 
       git add .
-      git commit -m "Upgrading $HOSTNAME $NIXOS_GENERATION"
       sudo nix flake update
-      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade &&
-      git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
+      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade
+      sudo nix-collect-garbage --delete-old
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "Upgrading $HOSTNAME $NIXOS_GENERATION"
+      git commit -m "$HOSTNAME Upgraded and Rebuilt: $NIXOS_GENERATION"
       git push
     '';
   };
@@ -436,11 +438,16 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
-      mv-to-tmp() {
-        mv "$1" /tmp
-      }
+      # mv-to-tmp() {
+      #   mv "$1" /tmp
+      # }
 
-        mv-to-tmp "$1"
+      mv-to-tmp() {
+        for file in "$@"; do
+          mv "$file" /tmp || echo "Error: Failed to move '$file' to /tmp."
+        done
+      }
+        mv-to-tmp "$@"
     '';
   };
 }
@@ -2484,19 +2491,14 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
-      '(("r" "bibliography reference" plain "%?"
-        :target
-        (file+head "reference-notes/${citekey}.org" "#+title: ${title}\n")
-        :unnarrowed t)
-        ("n" "literature note" plain
-         "%?"
-         :target
-         (file+head
-          "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/reference-notes/${citar-citekey}.org"
-          "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
+      '(("n" "node" plain "%?"
+         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
          :unnarrowed t)
-        ("d" "default" plain "%?"
-         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         ("p" "personal" plain "%?"
+         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+        ("t" "Topic" plain "%?"
+         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
          :unnarrowed t)))
 #+end_src
 
@@ -2645,7 +2647,7 @@ it can be passed in POS."
 *********** bibtex-core
 
 #+begin_src emacs-lisp
- (use-package bibtex)
+ (require 'bibtex)
 
  (setq bibtex-dialect 'biblatex
        bibtex-autokey-year-length 4
@@ -2698,6 +2700,57 @@ it can be passed in POS."
                                      ("file")
                                      ("tags"))))
 
+(add-to-list 'bibtex-biblatex-entry-alist '("Image" "Painting, Illustration, Photography"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Object" "Sculpture, Architecture, Invention"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Music" "Music or Sound of any kind"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Web-Page" "General Web Pages"
+                                            (("title")
+                                             ("url")
+                                             ("urldate"))
+                                            nil
+                                           (("publisher")
+                                            ("series")
+                                            ("episode")
+                                            ("guests")
+                                            ("date")
+                                            ("file")
+                                            ("tags"))))
 #+end_src
 *********** citar
 
@@ -2754,7 +2807,7 @@ it can be passed in POS."
   :after (citar org-roam)
   :config (citar-org-roam-mode))
 
-(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/reference-notes/"))
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/"))
 #+end_src
 ********* agenda
 

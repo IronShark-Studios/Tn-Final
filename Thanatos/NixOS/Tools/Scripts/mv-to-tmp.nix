@@ -5,11 +5,16 @@
     text = ''
       #!/bin/sh
 
-      mv-to-tmp() {
-        mv "$1" /tmp
-      }
+      # mv-to-tmp() {
+      #   mv "$1" /tmp
+      # }
 
-        mv-to-tmp "$1"
+      mv-to-tmp() {
+        for file in "$@"; do
+          mv "$file" /tmp || echo "Error: Failed to move '$file' to /tmp."
+        done
+      }
+        mv-to-tmp "$@"
     '';
   };
 }

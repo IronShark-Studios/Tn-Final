@@ -5,12 +5,10 @@
     text = ''
       #!/bin/sh
 
-      git add . &&
-      git status &&
-      echo -n Commit Message: &&
-      read -r CommitMessage &&
-      sudo nixos-rebuild switch --flake .#$HOSTNAME &&
-      git commit -m "$HOST Rebuild: $NIXOS_GENERATION $CommitMessage" &&
+      git add .
+      git status
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "$HOST Rebuild: $NIXOS_GENERATION"
       git push &&
       echo
       echo System Generation $NIXOS_GENERATION Active.

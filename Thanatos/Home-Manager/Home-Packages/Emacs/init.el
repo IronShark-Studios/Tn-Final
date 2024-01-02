@@ -740,19 +740,14 @@ it can be passed in POS."
   (require 'org-roam-protocol))
 
 (setq org-roam-capture-templates
-      '(("r" "bibliography reference" plain "%?"
-        :target
-        (file+head "reference-notes/${citekey}.org" "#+title: ${title}\n")
-        :unnarrowed t)
-        ("n" "literature note" plain
-         "%?"
-         :target
-         (file+head
-          "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/reference-notes/${citar-citekey}.org"
-          "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
+      '(("n" "node" plain "%?"
+         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
          :unnarrowed t)
-        ("d" "default" plain "%?"
-         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         ("p" "personal" plain "%?"
+         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+        ("t" "Topic" plain "%?"
+         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
          :unnarrowed t)))
 
 (add-to-list 'display-buffer-alist
@@ -867,7 +862,7 @@ it can be passed in POS."
 
 (use-package pdf-tools)
 
-(use-package bibtex)
+(require 'bibtex)
 
 (setq bibtex-dialect 'biblatex
       bibtex-autokey-year-length 4
@@ -917,6 +912,58 @@ it can be passed in POS."
                                      ("file")
                                      ("tags"))))
 
+(add-to-list 'bibtex-biblatex-entry-alist '("Image" "Painting, Illustration, Photography"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Object" "Sculpture, Architecture, Invention"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Music" "Music or Sound of any kind"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Web-Page" "General Web Pages"
+                                            (("title")
+                                             ("url")
+                                             ("urldate"))
+                                            nil
+                                           (("publisher")
+                                            ("series")
+                                            ("episode")
+                                            ("guests")
+                                            ("date")
+                                            ("file")
+                                            ("tags"))))
+
 (use-package citar
   :config
   (setq org-cite-follow-processor 'citar
@@ -963,7 +1010,7 @@ it can be passed in POS."
   :after (citar org-roam)
   :config (citar-org-roam-mode))
 
-(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/reference-notes/"))
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/"))
 
 (require 'org-agenda)
 
