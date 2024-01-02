@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-01 Mon 19:54]
+#+LAST_MODIFIED: [2024-01-01 Mon 20:19]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -438,15 +438,12 @@ $6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3Kxh
     text = ''
       #!/bin/sh
 
-      # mv-to-tmp() {
-      #   mv "$1" /tmp
-      # }
-
       mv-to-tmp() {
         for file in "$@"; do
           mv "$file" /tmp || echo "Error: Failed to move '$file' to /tmp."
         done
       }
+
         mv-to-tmp "$@"
     '';
   };
@@ -1793,6 +1790,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (interactive)
   (shell-command "sudo light -U 5"))
 
+(defun Tn/evil-normal-and-save ()
+  "switches to evil normal mode, and saves buffer"
+  (interactive)
+  (evil-normal-state)
+  (save-buffer))
 #+end_src
 *********** packages
 
@@ -1868,6 +1870,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ([?\s-a] . org-agenda)
 
 ([?\s-\M-a] . org-agenda-exit)
+
+([?\s-<escape>] . Tn/evil-normal-and-save)
 
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
