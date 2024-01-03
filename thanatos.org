@@ -2900,7 +2900,8 @@ it can be passed in POS."
   :after (citar org-roam)
   :config (citar-org-roam-mode))
 
-(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/"))
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/")
+      citar-org-roam-capture-template-key "s")
 #+end_src
 ********* agenda
 
