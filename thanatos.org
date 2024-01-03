@@ -1789,12 +1789,6 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (defun Tn/brightness-down ()
   (interactive)
   (shell-command "sudo light -U 5"))
-
-(defun Tn/evil-normal-and-save ()
-  "switches to evil normal mode, and saves buffer"
-  (interactive)
-  (evil-normal-state)
-  (save-buffer))
 #+end_src
 *********** packages
 
@@ -1870,8 +1864,6 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 ([?\s-a] . org-agenda)
 
 ([?\s-\M-a] . org-agenda-exit)
-
-([?\s-<escape>] . Tn/evil-normal-and-save)
 
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
@@ -2048,6 +2040,8 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (define-key evil-insert-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
+  (define-key evil-normal-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
   (define-key evil-normal-state-map (kbd "<SPC>") 'helm-occur)
   (define-key evil-normal-state-map (kbd "/") 'helm-regexp)
   (evil-ex-define-cmd "q" 'kill-this-buffer) ;Evil nomral mode ':q' kills active buffer
@@ -2128,6 +2122,11 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (global-evil-colemak-basics-mode))
 #+end_src
 
+(defun Tn/evil-normal-and-save ()
+  "switches to evil normal mode, and saves buffer"
+  (interactive)
+  (evil-normal-state)
+  (save-buffer))
 ********* ibuffer
 
 #+begin_src emacs-lisp
