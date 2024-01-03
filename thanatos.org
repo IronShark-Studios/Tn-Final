@@ -2508,7 +2508,20 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
+      '(("n" "Node" plain "%?"
+         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Node:")
+         :unnarrowed t :empty-lines-before 1)
+         ("s" "Source" plain "%?"
+         :target (file+head "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
+          "#+title: ${citar-citekey} ${note-title}\n#+LAST_MODIFIED: \n#+filetags: :Source:")
+         :unnarrowed t :empty-lines-before 1)
+         ("e" "Internal" plain "%?"
+         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Internal:")
+         :unnarrowed t :empty-lines-before 1)
         ("t" "Topic" plain "%?"
+         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Topic: \n\n")
+         :unnarrowed t :empty-lines-before 1)))
 #+end_src
 
 ************* roam-node widow
