@@ -2309,9 +2309,9 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 
 (advice-add 'org-deadline       :after #'save-buffer)
 (advice-add 'org-schedule       :after #'save-buffer)
+(advice-add 'org-todo           :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'org-cycle)
-(advice-add 'org-todo           :after #'save-buffer)
 #+end_src
 ************* font configuration
 
