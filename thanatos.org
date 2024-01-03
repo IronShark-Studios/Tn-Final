@@ -2501,7 +2501,7 @@ it can be passed in POS."
          ("C-c n i e" . Tn/Internal-insert)
          ("C-c n i t" . Tn/Topic-insert)
          ("C-c n i s" . Tn/Source-insert)
-         ("C-c n i" . org-roam-node-insert)
+         ("C-c n i a" . org-roam-node-insert)
          ("C-c n c n" . Tn/Node-capture)
          ("C-c n c e" . Tn/Internal-capture)
          ("C-c n c t" . Tn/Topic-capture)
