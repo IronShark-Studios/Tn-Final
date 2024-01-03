@@ -1217,6 +1217,8 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
    - https://github.com/emacs-lsp/dap-mode
 *** TODO Including git Workflow
 **** TODO Magit
+***** TODO have magit commit messages copied into journal
+- [[https://github.com/magit/orgit][Orgit]] : Adds magit link support to org
 **** TODO Git time machine
  https://codeberg.org/pidu/git-timemachine
 ** TODO Create Task Management Workflow

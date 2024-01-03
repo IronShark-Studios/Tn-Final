@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-02 Tue 09:00]
+#+LAST_MODIFIED: [2024-01-02 Tue 19:29]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -2131,11 +2131,13 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (interactive)
   (evil-normal-state)
   (evil-append 2))
+
 (defun Tn/evil-normal-and-save ()
   "switches to evil normal mode, and saves buffer"
   (interactive)
   (evil-normal-state)
   (save-buffer))
+#+end_src
 ********* ibuffer
 
 #+begin_src emacs-lisp
@@ -2415,7 +2417,6 @@ it can be passed in POS."
               ("WAITING" :foreground "blue violet" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
-
 #+end_src
 
 ************* tag alist

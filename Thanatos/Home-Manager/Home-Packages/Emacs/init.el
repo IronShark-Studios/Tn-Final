@@ -158,12 +158,6 @@
   (interactive)
   (shell-command "sudo light -U 5"))
 
-(defun Tn/evil-normal-and-save ()
-  "switches to evil normal mode, and saves buffer"
-  (interactive)
-  (evil-normal-state)
-  (save-buffer))
-
 (use-package burly)
 
 (use-package alsamixer)
@@ -224,8 +218,6 @@
 ([?\s-a] . org-agenda)
 
 ([?\s-\M-a] . org-agenda-exit)
-
-([?\s-<escape>] . Tn/evil-normal-and-save)
 
 ([?\s-`] . (lambda (command)
              (interactive (list (read-shell-command "$ ")))
@@ -379,6 +371,9 @@
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (define-key evil-insert-state-map (kbd "S-<SPC>") 'Tn/evil-jump-character)
+  (define-key evil-insert-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
+  (define-key evil-normal-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
   (define-key evil-normal-state-map (kbd "<SPC>") 'helm-occur)
   (define-key evil-normal-state-map (kbd "/") 'helm-regexp)
   (evil-ex-define-cmd "q" 'kill-this-buffer) ;Evil nomral mode ':q' kills active buffer
@@ -445,6 +440,18 @@
   (setq evil-colemak-basics-char-jump-commands 'evil-snipe)
   :config
   (global-evil-colemak-basics-mode))
+
+(defun Tn/evil-jump-character ()
+  "moves point forward past the next character"
+  (interactive)
+  (evil-normal-state)
+  (evil-append 2))
+
+(defun Tn/evil-normal-and-save ()
+  "switches to evil normal mode, and saves buffer"
+  (interactive)
+  (evil-normal-state)
+  (save-buffer))
 
 (setq ibuffer-formats
       '((mark modified read-only " "
@@ -578,6 +585,7 @@
 (advice-add 'org-deadline       :after #'save-buffer)
 (advice-add 'org-schedule       :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'org-cycle)
 (advice-add 'org-todo           :after #'save-buffer)
 
 (defun Tn/org-font-setup ()
@@ -677,13 +685,6 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
-(defun Tn/org-todo-and-fold ()
-  "automattically folds any notes captured by org todo"
-  (interactive)
-  (org-todo)
-  (let ((current-prefix-arg '(4))) ; Set prefix argument for `org-cycle`
-    (org-cycle)))
-
 (setq org-tag-alist
       '((:startgroup . ART)
         ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
@@ -732,6 +733,10 @@ it can be passed in POS."
 (org-mode . Tn/org-font-setup)
 (before-save . Tn/org-set-last-modified)
 
+:bind
+(("C-c C-l" . org-store-link)
+ ("C-c l" . org-insert-link))
+
 :config
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -742,17 +747,24 @@ it can be passed in POS."
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
-(global-set-key (kbd "C-c C-l") 'org-store-link)
-(global-set-key (kbd "C-c l") 'org-insert-link)
-(global-set-key (kbd "C-c C-t") 'Tn/org-todo-and-fold)
-
 (use-package org-roam
   :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
+         ("C-c n i n" . Tn/Node-insert)
+         ("C-c n i e" . Tn/Internal-insert)
+         ("C-c n i t" . Tn/Topic-insert)
+         ("C-c n i s" . Tn/Source-insert)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture))
-
+         ("C-c n c n" . Tn/Node-capture)
+         ("C-c n c e" . Tn/Internal-capture)
+         ("C-c n c t" . Tn/Topic-capture)
+         ("C-c n c s" . Tn/Source-capture)
+         ("C-c n c a" . org-roam-capture)
+         ("C-c n f n" . Tn/Node-open)
+         ("C-c n f e" . Tn/Internal-open)
+         ("C-c n f t" . Tn/Topic-capture)
+         ("C-c n f s" . Tn/Source-open)
+         ("C-c n f a" . org-roam-node-find))
   :config
   (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
         org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -761,15 +773,88 @@ it can be passed in POS."
   (require 'org-roam-protocol))
 
 (setq org-roam-capture-templates
-      '(("n" "node" plain "%?"
-         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)
-         ("p" "personal" plain "%?"
-         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)
+      '(("n" "Node" plain "%?"
+         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Node:")
+         :unnarrowed t :empty-lines-before 1)
+         ("s" "Source" plain "%?"
+         :target (file+head "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
+          "#+title: ${citar-citekey} ${note-title}\n#+LAST_MODIFIED: \n#+filetags: :Source:")
+         :unnarrowed t :empty-lines-before 1)
+         ("e" "Internal" plain "%?"
+         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Internal:")
+         :unnarrowed t :empty-lines-before 1)
         ("t" "Topic" plain "%?"
-         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)))
+         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Topic: \n\n")
+         :unnarrowed t :empty-lines-before 1)))
+
+(defun Tn/Node (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Node" tags)))
+
+(defun Tn/Node-capture ()
+  (interactive)
+  (org-roam-capture :templates "n"))
+
+(defun Tn/Node-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Node))
+
+(defun Tn/Node-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Node))
+
+(defun Tn/Source (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Source" tags)))
+
+(defun Tn/Source-capture ()
+  (interactive)
+  (org-roam-capture :templates "s"))
+
+(defun Tn/Source-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Source))
+
+(defun Tn/Source-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Source))
+
+(defun Tn/Internal (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Internal" tags)))
+
+(defun Tn/Internal-capture ()
+  (interactive)
+  (org-roam-capture :templates "e"))
+
+(defun Tn/Internal-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Internal))
+
+(defun Tn/Internal-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Internal))
+
+(defun Tn/Topic (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Topic" tags)))
+
+(defun Tn/Topic-capture ()
+  (interactive)
+  (org-roam-capture :templates "t"))
+
+(defun Tn/Topic-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Topic))
+
+(defun Tn/Topic-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Topic))
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -832,15 +917,15 @@ it can be passed in POS."
   "Opens todays Org-Journal"
   (interactive)
   (find-file (Tn/org-journal-capture-date-string))
+  (org-journal-mode)
   (Tn/org-journal-header-func))
 
 (defun Tn/org-journal-new-entry ()
-        "Creates a new journal entry with custom header and todo carryover"
-        (interactive)
-        (Tn/open-todays-journal)
-        (org-journal-mode)
-        (org-journal--carryover)
-        (save-buffer))
+  "Creates a new journal entry with custom header and todo carryover"
+  (interactive)
+  (Tn/open-todays-journal)
+  (org-journal--carryover)
+  (save-buffer))
 
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
@@ -976,13 +1061,12 @@ it can be passed in POS."
 (add-to-list 'bibtex-biblatex-entry-alist '("Web-Page" "General Web Pages"
                                             (("title")
                                              ("url")
-                                             ("urldate"))
+                                             ("date"))
                                             nil
                                            (("publisher")
                                             ("series")
                                             ("episode")
                                             ("guests")
-                                            ("date")
                                             ("file")
                                             ("tags"))))
 
@@ -1032,7 +1116,8 @@ it can be passed in POS."
   :after (citar org-roam)
   :config (citar-org-roam-mode))
 
-(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/"))
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/")
+      citar-org-roam-capture-template-key "s")
 
 (require 'org-agenda)
 
