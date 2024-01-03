@@ -2523,7 +2523,77 @@ it can be passed in POS."
          :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Topic: \n\n")
          :unnarrowed t :empty-lines-before 1)))
 #+end_src
+************* keybind functions
 
+#+begin_src emacs-lisp
+(defun Tn/Node (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Node" tags)))
+
+(defun Tn/Node-capture ()
+  (interactive)
+  (org-roam-capture :templates "n"))
+
+(defun Tn/Node-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Node))
+
+(defun Tn/Node-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Node))
+
+(defun Tn/Source (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Source" tags)))
+
+(defun Tn/Source-capture ()
+  (interactive)
+  (org-roam-capture :templates "s"))
+
+(defun Tn/Source-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Source))
+
+(defun Tn/Source-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Source))
+
+(defun Tn/Internal (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Internal" tags)))
+
+(defun Tn/Internal-capture ()
+  (interactive)
+  (org-roam-capture :templates "e"))
+
+(defun Tn/Internal-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Internal))
+
+(defun Tn/Internal-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Internal))
+
+(defun Tn/Topic (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Topic" tags)))
+
+(defun Tn/Topic-capture ()
+  (interactive)
+  (org-roam-capture :templates "t"))
+
+(defun Tn/Topic-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Topic))
+
+(defun Tn/Topic-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Topic))
+#+end_src
 ************* roam-node widow
 - Roam node window navigation is controlled by magit bindings
 
