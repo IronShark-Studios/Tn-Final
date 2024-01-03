@@ -2675,15 +2675,15 @@ it can be passed in POS."
   "Opens todays Org-Journal"
   (interactive)
   (find-file (Tn/org-journal-capture-date-string))
+  (org-journal-mode)
   (Tn/org-journal-header-func))
 
 (defun Tn/org-journal-new-entry ()
-        "Creates a new journal entry with custom header and todo carryover"
-        (interactive)
-        (Tn/open-todays-journal)
-        (org-journal-mode)
-        (org-journal--carryover)
-        (save-buffer))
+  "Creates a new journal entry with custom header and todo carryover"
+  (interactive)
+  (Tn/open-todays-journal)
+  (org-journal--carryover)
+  (save-buffer))
 
 (defvar org-journal--date-location-scheduled-time nil)
 (defun Tn/journal-future-capture (&optional scheduled-time)
