@@ -445,7 +445,8 @@
   "moves point forward past the next character"
   (interactive)
   (evil-normal-state)
-  (evil-append 2))
+  (evil-forward-char)
+  (evil-append 1))
 
 (defun Tn/evil-normal-and-save ()
   "switches to evil normal mode, and saves buffer"
@@ -584,9 +585,9 @@
 
 (advice-add 'org-deadline       :after #'save-buffer)
 (advice-add 'org-schedule       :after #'save-buffer)
+(advice-add 'org-todo           :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'org-cycle)
-(advice-add 'org-todo           :after #'save-buffer)
 
 (defun Tn/org-font-setup ()
 ;; This is magic code that changes the font of non-heading bullet point lists.
