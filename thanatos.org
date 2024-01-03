@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-02 Tue 19:29]
+#+LAST_MODIFIED: [2024-01-02 Tue 20:10]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
