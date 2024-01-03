@@ -1,6 +1,6 @@
 #+TITLE: Thanatos Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-03 Wed 12:50]
+#+LAST_MODIFIED: [2024-01-03 Wed 14:43]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -2344,7 +2344,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
   (set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
                       :weight 'semi-bold :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
   (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
