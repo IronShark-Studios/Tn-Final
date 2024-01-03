@@ -2508,15 +2508,7 @@ it can be passed in POS."
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
-      '(("n" "node" plain "%?"
-         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)
-         ("p" "personal" plain "%?"
-         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)
         ("t" "Topic" plain "%?"
-         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)))
 #+end_src
 
 ************* roam-node widow
