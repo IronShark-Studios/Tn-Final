@@ -2475,6 +2475,10 @@ it can be passed in POS."
 (org-mode . Tn/org-font-setup)
 (before-save . Tn/org-set-last-modified)
 
+:bind
+(("C-c C-l" . org-store-link)
+ ("C-c l" . org-insert-link))
+
 :config
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -2484,10 +2488,6 @@ it can be passed in POS."
    (scheme . t)))
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes))
-
-(global-set-key (kbd "C-c C-l") 'org-store-link)
-(global-set-key (kbd "C-c l") 'org-insert-link)
-(global-set-key (kbd "C-c C-t") 'Tn/org-todo-and-fold)
 #+end_src
 *********** org-roam
 ************* roam-core
