@@ -2307,6 +2307,7 @@ Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split in
 (advice-add 'org-deadline       :after #'save-buffer)
 (advice-add 'org-schedule       :after #'save-buffer)
 (advice-add 'org-store-log-note :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'org-cycle)
 (advice-add 'org-todo           :after #'save-buffer)
 #+end_src
 ************* font configuration
@@ -2415,12 +2416,6 @@ it can be passed in POS."
               ("HOLD" :foreground "dark red" :weight bold)
               ("CANCELLED" :foreground "dim gray" :weight bold))))
 
-(defun Tn/org-todo-and-fold ()
-  "automattically folds any notes captured by org todo"
-  (interactive)
-  (org-todo)
-  (let ((current-prefix-arg '(4))) ; Set prefix argument for `org-cycle`
-    (org-cycle)))
 #+end_src
 
 ************* tag alist
