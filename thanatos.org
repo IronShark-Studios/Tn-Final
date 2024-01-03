@@ -2836,13 +2836,12 @@ it can be passed in POS."
 (add-to-list 'bibtex-biblatex-entry-alist '("Web-Page" "General Web Pages"
                                             (("title")
                                              ("url")
-                                             ("urldate"))
+                                             ("date"))
                                             nil
                                            (("publisher")
                                             ("series")
                                             ("episode")
                                             ("guests")
-                                            ("date")
                                             ("file")
                                             ("tags"))))
 #+end_src
