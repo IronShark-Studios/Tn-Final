@@ -274,8 +274,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
         enable = true;
       };
 
-      windowManager.xmonad-with-packages = {
+      windowManager.xmonad = {
         enable = true;
+        enableContribAndExtras = true;
       };
     };
 
