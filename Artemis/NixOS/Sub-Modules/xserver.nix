@@ -64,7 +64,6 @@
       ];
 
       displayManager = {
-
         sddm = {
           enable = true;
           autoNumlock = true;
@@ -73,6 +72,10 @@
       };
 
       desktopManager.enlightenment = {
+        enable = true;
+      };
+
+      windowManager.xmonad-with-packages = {
         enable = true;
       };
     };

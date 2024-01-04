@@ -6,10 +6,7 @@
     ./Home-Packages/Alacritty/alacritty.nix
     ./Home-Packages/Alacritty/alacrittyConfig.nix
     ./Home-Packages/lf.nix
-    ./Home-Packages/openscad.nix
-    ./Home-Packages/vim.nix
     ./Home-Packages/starship.nix
-    ./Home-Packages/visidata.nix
     ./Home-Packages/Firefox/firefox.nix
     ./Home-Packages/Firefox/userPolicies.nix
     ./Home-Packages/Firefox/userChrome.nix
@@ -22,7 +19,6 @@
     ./Home-Packages/bash.nix
     ./Home-Packages/git.nix
     ./Home-Packages/thunar.nix
-    ./Home-Packages/polybar.nix
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
     ./Home-Packages/communication.nix
