@@ -1,0 +1,2867 @@
+#+TITLE: Artemis Tangle File
+#+DESCRIPTION: Describes configuration settings specific to my travel laptop.
+#+LAST_MODIFIED: [2024-01-04 Thu 16:15]
+:PROPERTIES:
+#+STARTUP: content
+#+tangle: yes
+#+noweb: yes
+:END:
+
+* NixOS
+This section contains all root level or otherwise system wide configuration settings.
+
+*** configuration.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/configuration.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  system.stateVersion = "23.05";
+
+  imports = [
+    ./hardware-configuration.nix
+    ./Sub-Modules/nixpkgs.nix
+    ./Sub-Modules/users.nix
+    ./Sub-Modules/utf.nix
+    ./Sub-Modules/pkgs.nix
+    ./Sub-Modules/xserver.nix
+    ./Sub-Modules/network.nix
+    ./Tools/Scripts/rebuild.nix
+    ./Tools/Scripts/test.nix
+    ./Tools/Scripts/upgrade.nix
+    ./Tools/Scripts/mv-to-tmp.nix
+  ];
+
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+    };
+  };
+
+  systemd.sleep.extraConfig = ''
+    HandleSuspend=ignore
+  '';
+}
+#+end_src
+
+*** hardware-configuration.nix
+This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into =~/.../Technonomicon/Thanatos/NixOS/hardware-configuration.nix= as part of any fresh install. At some point I would like to be able to standardize it.
+
+*** Sub-Modules
+
+***** users.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/users.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, config, lib, pkgs, modulesPath, ... }: {
+
+  environment = {
+    etc.secrets.source = ../Tools/Secrets;
+    pathsToLink = [ "/share/zsh" ];
+  };
+
+
+  security = {
+    sudo.wheelNeedsPassword = false;
+    rtkit.enable = true;
+  };
+
+  users = {
+    mutableUsers = false;
+    users = {
+      root = {
+        hashedPasswordFile = "/etc/secrets/root/root-usrPasswd.nix";
+      };
+
+      xin = {
+        isNormalUser = true;
+        openssh.authorizedKeys.keys = [ ];
+        extraGroups = [ "wheel" ];
+        hashedPasswordFile = "/etc/secrets/xin/xin-usrPasswd.nix";
+      };
+    };
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      xin = import ../../Home-Manager/xin-home.nix;
+    };
+  };
+}
+#+end_src
+
+***** utf.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/utf.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  time.timeZone = "America/Detroit";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "en_US.UTF-8";
+    };
+  };
+}
+#+end_src
+
+***** nixpkgs.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/nixpkgs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.static-nxpkgs
+      outputs.overlays.static-hmpkgs
+      inputs.emacs-community.overlay
+    ];
+
+    config = {
+      allowUnfree = true;
+      hostPlatform = lib.mkDefault "x86_64-linux";
+    };
+  };
+
+  nix = {
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 10d";
+    };
+  };
+}
+#+end_src
+
+***** pkgs.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/pkgs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment = {
+    systemPackages = with pkgs; [
+      cachix
+      wget
+      unzip
+      alsa-utils
+    ];
+  };
+
+  fonts.packages = with pkgs; [
+    nerdfonts
+    iosevka
+    overpass
+    fira-code
+    fira-go
+  ];
+}
+#+end_src
+
+***** xserver.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/xserver.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment = {
+    systemPackages = with pkgs; [
+      xfce.xfce4-genmon-plugin
+      networkmanagerapplet
+      sddm-chili-theme
+      pavucontrol
+      xorg.xev
+      gparted
+      xdotool
+      pnmixer
+      udiskie
+      xcolor
+      slock
+      xclip
+      xsel
+      xdo
+    ];
+  };
+
+  programs = {
+    dconf.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-media-tags-plugin
+        thunar-volman
+      ];
+    };
+  };
+
+  security.pam.services.gdm.enableGnomeKeyring = true;
+
+  services = {
+    blueman.enable = true;
+    gnome.gnome-keyring.enable = true;
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
+
+    xserver = {
+      enable = true;
+      libinput.enable = true;
+      autorun = true;
+      layout = "us";
+      xkbVariant = "colemak_dh";
+      xkbOptions = "caps:escape";
+      videoDrivers = [ "modesetting" ];
+      excludePackages = with pkgs; [
+        xterm
+      ];
+
+      displayManager = {
+
+        sddm = {
+          enable = true;
+          autoNumlock = true;
+          theme = "chili";
+          };
+      };
+
+      desktopManager.enlightenment = {
+        enable = true;
+      };
+    };
+
+    unclutter-xfixes = {
+      enable = true;
+      threshold = 10;
+      timeout = 1;
+    };
+
+    picom = {
+      enable = true;
+      vSync = true;
+      backend = "glx";
+    };
+  };
+
+  sound = {
+    enable = true;
+    mediaKeys.enable = true;
+  };
+
+  hardware = {
+    pulseaudio.enable = false;
+    bluetooth.enable = true;
+  };
+}
+#+end_src
+
+***** network.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Sub-Modules/network.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  networking = {
+    hostName = "Artemis";
+    networkmanager.enable = true;
+    useDHCP = lib.mkDefault true;
+  };
+
+
+  services = {
+    openssh = {
+      enable = false;
+      settings = {
+        permitRootLogin = "no";
+        passwordAuthentication = false;
+      };
+    };
+
+    printing.enable = true;
+  };
+}
+#+end_src
+
+*** Tools
+
+***** Secrets
+
+******* Root
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Secrets/root/root-usrPasswd.nix
+:END:
+
+#+begin_src nix
+$6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3KxhYGOs/w6d4nQeFJIz/s9XnCjIJ0
+#+end_src
+
+******* Xin
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Secrets/xin/xin-usrPasswd.nix
+:END:
+#+begin_src nix
+$6$KY5i2kUTspBbJUVy$2P5N9ks4kNpW5iKRRCNUX9FmTvwUKC4mkPfpWchiBFMuBHHJoa2/le4H3KxhYGOs/w6d4nQeFJIz/s9XnCjIJ0
+#+end_src
+
+***** Scripts
+
+******* rebuild.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Scripts/rebuild.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."rebuild.nix" = {
+    target = "scripts/rebuild.sh";
+    text = ''
+      #!/bin/sh
+
+      git add .
+      git status
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "$HOST Rebuild: $NIXOS_GENERATION"
+      git push &&
+      echo
+      echo System Generation $NIXOS_GENERATION Active.
+    '';
+  };
+}
+#+end_src
+
+******* test.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Scripts/test.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."test.nix" = {
+    target = "scripts/test.sh";
+    text = ''
+      #!/bin/sh
+
+      git add .
+      sudo nixos-rebuild test --flake .#$HOSTNAME &&
+      echo
+      echo System Generation $NIXOS_GENERATION Temporarily Active.
+      git commit -m "Test Rebuild $HOSTNAME $NIXOS_GENERATION"
+    '';
+  };
+}
+#+end_src
+******* upgrade.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Scripts/upgrade.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."upgrade.nix" = {
+    target = "scripts/upgrade.sh";
+    text = ''
+      #!/bin/sh
+
+      git add .
+      git commit -m "Pre-Upgrade: $HOSTNAME $NIXOS_GENERATION"
+      sudo nix flake update
+      sudo nixos-rebuild switch --flake .#$HOSTNAME --upgrade
+      git add .
+      git commit -m "Upgraded: $HOSTNAME $NIXOS_GENERATION"
+      git push
+    '';
+  };
+}
+#+end_src
+******* mv-to-tmp.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/NixOS/Tools/Scripts/mv-to-tmp.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  environment.etc."mv-to-tmp.nix" = {
+    target = "scripts/mv-to-tmp.sh";
+    text = ''
+      #!/bin/sh
+
+      mv-to-tmp() {
+        for file in "$@"; do
+          mv "$file" /tmp || echo "Error: Failed to move '$file' to /tmp."
+        done
+      }
+
+        mv-to-tmp "$@"
+    '';
+  };
+}
+#+end_src
+
+* Home-Manager
+
+*** xin-home.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/xin-home.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  imports = [
+    ./Home-Packages/home-manager.nix
+    ./Home-Packages/Emacs/emacs.nix
+    ./Home-Packages/XDG/user-dirs.nix
+    ./Home-Packages/Alacritty/alacritty.nix
+    ./Home-Packages/Alacritty/alacrittyConfig.nix
+    ./Home-Packages/lf.nix
+    ./Home-Packages/starship.nix
+    ./Home-Packages/Firefox/firefox.nix
+    ./Home-Packages/Firefox/userPolicies.nix
+    ./Home-Packages/Firefox/userChrome.nix
+    ./Home-Packages/Firefox/tridactyl.nix
+    ./Home-Packages/Firefox/extensions.nix
+    ./Home-Packages/Zsh/zsh.nix
+    ./Home-Packages/Zsh/theme.nix
+    ./Home-Packages/Zsh/alaises.nix
+    ./Home-Packages/Zsh/oh-my-zsh.nix
+    ./Home-Packages/bash.nix
+    ./Home-Packages/git.nix
+    ./Home-Packages/thunar.nix
+    ./Home-Packages/flameshot.nix
+    ./Home-Packages/blueman.nix
+    ./Home-Packages/communication.nix
+  ];
+
+  programs.home-manager.enable = true;
+
+  home = {
+    username = "xin";
+    homeDirectory = "/home/xin";
+    stateVersion = "23.05";
+  };
+
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.static-nxpkgs
+      outputs.overlays.static-hmpkgs
+      inputs.emacs-community.overlay
+    ];
+
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
+
+  systemd.user.startServices = "sd-switch";
+}
+#+end_src
+
+*** Home-Packages
+
+***** home-manager.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/home-manager.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.home-manager = {
+    enable = true;
+  };
+}
+#+end_src
+
+***** Alacritty
+I want this to be pointed at the file in thanatos though
+******* alacritty.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Alacritty/alacritty.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+    };
+  };
+
+  home.packages = with pkgs; [
+    btop
+    htop
+    nmon
+    kmon
+    fzf
+    rsync
+    zoxide
+    neofetch
+  ];
+}
+#+end_src
+******* alacrittyConfig.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Alacritty/alacrittyConfig.nix
+:END:
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file."alacritty.yml" = {
+    target = ".config/alacritty/alacritty.yml";
+    text = ''
+      shell:
+        program: /home/xin/.nix-profile/bin/zsh
+        args:
+          - --login
+
+      save_to_clipboard: true
+
+      font:
+        family: "Iosevka"
+        size: 16
+        weight: "Regular"
+        ligatures: true
+        monospace: "Iosevka Mono"
+
+      colors:
+        primary:
+           background: "#20282f"
+           foreground: "#C5C8C6"
+        cursor:
+          text: "#f8f8f2"
+          background: "#5ec4ff"
+
+      visual_bell:
+        animation: EaseOutExpo
+        duration: 0
+        color: '0xffffff'
+
+      cursor:
+        style:
+          shape: "block"
+          blinking: Always
+          blink_interval: 500
+
+      key_bindings:
+        - { key: Space, mods: Shift, action: "ToggleViMode" }
+        - { key: U, mode: "Vi", action: "ToggleViMode" }
+        - { key: M, mode: "Vi", action: "Left" }
+        - { key: N, mode: "Vi", action: "Down" }
+        - { key: E, mode: "Vi", action: "Up" }
+        - { key: I, mode: "Vi", action: "Right" }
+    '';
+  };
+}
+#+end_src
+***** bash.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/bash.nix
+:END:
+add call to firefox here preferable to youtube
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.bash = {
+    enable = true;
+
+    profileExtra = ''
+      udiskie --no-notify --tray &
+      nm-applet &
+      pnmixer &
+    '';
+  };
+}
+#+end_src
+***** Zsh
+point this at thanatos
+******* zsh.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Zsh/zsh.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh = {
+    enable = true;
+
+    autocd = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+
+    history.ignoreAllDups = true;
+    historySubstringSearch.enable = true;
+
+    sessionVariables = {
+      SUDO_EDITOR = "\"emacsclient\"";
+      NIXOS_GENERATION = "$(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -n 1 | sed 's/(current)//')";
+    };
+
+    initExtra = ''
+      autoload -Uz compinit && compinit
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      eval "$(zoxide init zsh)"
+      bindkey '^H' backward-kill-word
+      bindkey -a 'm' vi-backward-char
+      bindkey -v
+      neofetch
+    '';
+  };
+}
+#+end_src
+
+******* theme.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Zsh/theme.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.syntaxHighlighting = {
+    enable = true;
+    styles = {
+      comment = "fg=#41505E,underline";
+      constant = "fg=#D95468,bold";
+      entity = "fg=#D98E48,italic";
+      function = "fg=#8BD49C";
+      alias = "fg=#33CED8";
+      suffix-alias = "fg=#33CED8,bold";
+      global-alias = "fg=#33CED8,bold";
+      builtin = "fg=#EBBF83";
+      reserved-word = "fg=#5EC4FF,bold";
+      hashed-command = "fg=#539AFC";
+      path = "fg=#718CA1";
+      globbing = "fg=#E27E8D";
+      history-expansion = "fg=#B62D65";
+      single-hyphen-option = "fg=#70E1E8,bold";
+      double-hyphen-option = "fg=#70E1E8,bold";
+      back-quoted-argument = "fg=#008B94";
+      single-quoted-argument = "fg=#008B94";
+      double-quoted-argument = "fg=#008B94";
+      dollar-double-quoted-argument = "fg=#008B94";
+      back-double-quoted-argument = "fg=#008B94";
+      assign = "fg=#D95468";
+      precommand = "fg=#008B94,italic";
+      autodirectory = "fg=#008B94,bold";
+      commandseparator = "fg=#008B94,bold";
+      command-substitution-delimiter = "fg=#008B94,bold";
+      command-substitution-delimiter-unquoted = "fg=#008B94";
+      unknown-token = "fg=#539AFC";
+    };
+  };
+}
+#+end_src
+******* alaises.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Zsh/alaises.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.shellAliases = {
+    cd = "z";
+    lx = "ls -la";
+    ll = "ls -l";
+    rma = ''sudo bash /etc/scripts/mv-to-tmp.sh'';
+    power-off = "sudo shutdown -h now";
+    logout = "sudo kill -9 -1";
+    restart = "sudo reboot";
+    eo = "emacsclient -n";
+    rebuild = "bash /etc/scripts/rebuild.sh";
+    upgrade = "bash /etc/scripts/upgrade.sh";
+    test = "bash /etc/scripts/test.sh";
+    clean = "sudo nix-collect-garbage --delete-old && rebuild";
+    cb = "xclip -selection clipboard";
+  };
+}
+#+end_src
+******* oh-my-zsh.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Zsh/oh-my-zsh.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.zsh.oh-my-zsh = {
+    enable = true;
+    plugins = [
+      "ag"
+      "colored-man-pages"
+      "colorize"
+      "copypath"
+      "copyfile"
+      "cp"
+      "zoxide"
+      "vi-mode"
+      "colemak"
+    ];
+    extraConfig = ''
+        VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+        VI_MODE_SET_CURSOR=true
+        VI_MODE_CURSOR_NORMAL=1
+        VI_MODE_CURSOR_INSERT=5
+      '';
+  };
+}
+#+end_src
+******* starship.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/starship.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      character.success_symbol = "[❯](bold blue)";
+    };
+  };
+}
+#+end_src
+******* lf.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/lf.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.lf = {
+    enable = true;
+    keybindings = {
+      n = "down";
+      e = "up";
+      o = "open";
+      m = "updir";
+    };
+  };
+}
+#+end_src
+
+***** Firefox
+point this at thanatos
+******* firefox.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Firefox/firefox.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.firefox = {
+    enable = true;
+    package = pkgs.firefox.override {
+      cfg.enableTridactylNative = true;
+    };
+  };
+}
+#+end_src
+
+******* userPolicies.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Firefox/userPolicies.nix
+:END:
+
+#+begin_src nix
+{ config, lib, pkgs, modulesPath, ... }: {
+
+  programs.firefox.profiles.xin = {
+      isDefault = true;
+      settings = {
+        "app.update.auto" = false;
+        "app.shield.optoutstudies.enabled" = true;
+        "reader.parse-on-load.force-enabled" = true;
+        "privacy.webrtc.legacyGlobalIndicator" = false;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.startup.homepage" = "https://en.wikipedia.org/wiki/Special:Random";
+        "browser.link.open_newwindow" = "3";
+        "full-screen-api.ignore-widgets" = true;
+        "media.rdd-vpx.enabled" = true;
+        "general.smoothScroll" = true;
+        "browser.tabs.closeWindowWithLastTab" = false;
+        "layers.acceleration.force-enabled" = true;
+        "dom.forms.autocomplete.formautofill" = false;
+        "browser.formfill.enable" = false;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+        "browser.formfill.expire_days" = "1";
+        "font.name.monospace.x-western" = "Iosevka Nerd Font Mono";
+        "font.name.sans-serif.x-western" = "IosevkaTerm Nerd Font Propo";
+        "font.name.serif.x-western" = "Iosevka Nerd Font";
+        "font.size.monospace.x-western" = "18";
+        "font.size.variable.x-western" = "18";
+        "extensions.pocket.enabled" = false;
+        "browser.urlbar.suggest.pocket" = false;
+        "network.trr.confirmation_telemetry_enabled" = false;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "privacy.bounceTrackingProtection.enabled" = true;
+        "browser.urlbar.showSearchSuggestionsFirst" = false;
+        "browser.urlbar.suggest.searches" = false;
+        "privacy.clearOnShutdown.cookies" = false;
+        "services.sync.prefs.sync.privacy.clearOnShutdown.cookies" = false;
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "browser.search.suggest.enabled" = false;
+        "extensions.htmlaboutaddons.recommendations.enabled" = false;
+        "devtools.webconsole.input.editorOnboarding" = false;
+        "browser.preferences.moreFromMozilla" = false;
+      };
+    };
+}
+#+end_src
+
+******* userChrome.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Firefox/userChrome.nix
+:END:
+This file is generated using [[https://mrotherguy.github.io/firefox-csshacks][MrOtherGuy-CSS-Hacks]] site, along with a few items from mozzila forums at the very top. Other that those =statuspanel= in section. It would generally be better to rewrite the whole thing using the link above rather that trying to modify this one.
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.firefox.profiles.xin.userChrome = ''
+/* DISABLE BOTTOM LEFT MESSAGES */
+#statuspanel[type="overLink"] {
+  display: none !important;
+}
+
+#statuspanel[type="overLink"] #statuspanel-label
+#statuspanel[type="status"] #statuspanel-label[value^="Look"],
+#statuspanel[type="status"] #statuspanel-label[value^="Connect"],
+#statuspanel[type="status"] #statuspanel-label[value^="Send"],
+#statuspanel[type="status"] #statuspanel-label[value^="Transfer"],
+#statuspanel[type="status"] #statuspanel-label[value^="Read"],
+#statuspanel[type="status"] #statuspanel-label[value^="Wrote"],
+#statuspanel[type="status"] #statuspanel-label[value^="Wait"],
+#statuspanel[type="status"] #statuspanel-label[value*="TLS handshake"],
+#statuspanel[type="status"] #statuspanel-label[value*="FTP transaction"] {
+display:none!important;
+}
+/* END BOTTOM LEFT MESSAGES */
+
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/hide_toolbox_top_bottom_borders.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+:root[sizemode="normal"]{ border-top: none !important }
+#navigator-toolbox::after{ content: none !important }
+#navigator-toolbox{ border-bottom: none !important }
+/* Removes few remaining extra lines above tabs in non-maximized windows */
+/* Also prevents small vertical shift when moving tabs in compact density - who knows why */
+:root[sizemode="normal"] #titlebar{ -moz-appearance: none !important; }
+
+
+/* OPTIONAL - uncomment to remove still remaining space atop of tabs */
+/* This just increases the height of tabs by few pixels, not decrease the toolbar height */
+
+Fx pre-65
+#navigator-toolbox > #TabsToolbar{margin-top: -2px;}
+Fx65+
+#TabsToolbar > .toolbar-items > spacer{ display: none; }
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_additional_windows.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Dark library, page-info and bookmark-properties */
+/* Color scheme matches default dark theme */
+
+/* If you are going to open Library in the (places.xhtml) in a tab then this file should also be imported in userContent.css */
+
+@namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+@-moz-document url(chrome://browser/content/places/places.xhtml),
+  url(chrome://browser/content/places/bookmarkProperties.xhtml),
+  url(chrome://global/content/commonDialog.xhtml),
+  url-prefix(chrome://browser/content/preferences/dialogs/),
+  url("chrome://mozapps/content/handling/dialog.xhtml"),
+  url-prefix(chrome://browser/content/pageinfo/),
+  url-prefix(chrome://browser/content/sanitize.xhtml),
+  url-prefix("chrome://mozapps/content/downloads"){
+  :root{
+    background-color: #2b2a33 !important;
+    --in-content-box-background: #23222b !important;
+  }
+  #placesToolbox,
+  #placesView,
+  #placesToolbar,
+  #main-window,
+  #topBar,
+  dialog,
+  tree{
+    -moz-appearance: none !important;
+    color: rgb(249,249,250) !important;
+  }
+
+  #placesToolbar,
+  tree{
+    background: transparent !important;
+  }
+
+  #imagecontainerbox{ background: url("chrome://global/skin/media/imagedoc-darknoise.png") !important }
+
+  search-textbox,
+  #searchFilter,
+  menulist,
+  input,
+  textbox,
+  richlistbox,
+  treecol,
+  treecolpicker,
+  button,
+  menu,
+  #permList{
+    -moz-appearance: none !important;
+    color: inherit !important;
+  }
+
+  menulist{ border: 1px solid graytext; padding-inline-end: 4px }
+  dropmarker{ filter: invert(1) }
+  menulist:hover{ border-color: highlight; background-color: rgba(255,255,255,0.1) }
+
+  .menubar-left{ fill: currentColor; -moz-context-properties: fill; }
+  #topBar,#searchFilter,search-textbox,input,textbox,richlistbox{ background-color: rgba(0,0,0,0.2) !important; }
+  input[mozactionhint="search"],input[readonly],td > input{ background-color: transparent !important; }
+
+  treecol:not([hideheader]){ height: 24px; }
+  treecol:hover{ filter: brightness(160%) }
+  treechildren::-moz-tree-row(multicol, odd), #permList{ background-color: rgba(0,0,0,0.2) !important; }
+
+  radiogroup > radio[selected],
+  radiogroup > radio:hover,
+  #permList > .permission:hover,
+  treechildren::-moz-tree-row(hover),
+  button:hover{ background-color: rgba(255,255,255,0.1) !important; color: inherit !important;}
+
+  treechildren::-moz-tree-row(selected){ background-color: Highlight !important; }
+  button{ padding: 3px }
+  #placesMenu > menu{ border: none !important; }
+
+  search-textbox,input,button{ border: 1px solid graytext; border-radius: 3px }
+  search-textbox,input{ padding: 2px }
+
+}
+
+/* modal prompts (alert() & friends) */
+
+xul|vbox.paymentDialogContainerFrame,
+xul|vbox.tabmodalprompt-mainContainer{
+  background-color: var(--toolbar-bgcolor) !important;
+  color: var(--lwt-text-color,-moz-dialogtext) !important;
+}
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/blank_page_background.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Set blank page background-color */
+/* Uses color from theme_colors if available */
+
+#tabbrowser-tabpanels{
+  background-color: var(--uc-light-bkgnd-color,rgb(46,54,69)) !important;
+}
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_checkboxes_and_radios.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Change the appearance of natively styled widgets including radios, checkboxes, buttons and expender "dropdown" arrows */
+/* Their background will be transparent instead of white so they will appear fitting to whatever is on the background */
+/* As such, this might cause a small issue if the background happens to be same color as the border of these buttons or the checkbox-image */
+
+/* In short, these native widgets will be dark on dark theme and light on light theme */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#editBMPanel_tagsSelector > richlistitem > image,
+radio > .radio-check,
+checkbox > .checkbox-check{
+  -moz-appearance: none !important;
+  border: 1px solid graytext;
+  border-radius: 2px;
+  height: 1.3em;
+  width: 1.3em;
+  padding: 1px;
+}
+
+#editBMPanel_tagsSelector > richlistitem > image{
+  background-color: var(--toolbar-bgcolor,rgb(50,50,52)) !important;
+  margin: 1px !important;
+  border-color: graytext !important;
+  border-radius: 2px !important;
+}
+
+#editBMPanel_tagsSelector > richlistitem:not([disabled]):hover > image,
+radio:not([disabled]):hover > .radio-check,
+checkbox:not([disabled]):hover > .checkbox-check{ border-color: highlight !important; }
+
+radio > .radio-check{ padding: 0; border-radius: 20px }
+
+#editBMPanel_tagsSelector > richlistitem[checked] > image,
+radio[selected] > .radio-check,
+checkbox[checked] > .checkbox-check{
+  list-style-image: url("chrome://global/skin/icons/check.svg");
+  -moz-context-properties: fill;
+  fill: highlight;
+}
+
+radio[selected] > .radio-check{ list-style-image: url("chrome://global/skin/in-content/radio.svg"); }
+
+#editBMPanel_tagsSelector > richlistitem[disabled] > image,
+radio[disabled] > .radio-check,
+checkbox[disabled] > .checkbox-check{ fill: graytext !important; }
+
+/*Buttons*/
+/* This only applies to natively-ish styled buttons, not the buttons in toolbars */
+
+button{
+  -moz-appearance: none !important;
+  color: inherit !important;
+  background-color: rgba(127,127,127,0.1) !important;
+  border: 1px solid graytext;
+}
+
+button[disabled]{ opacity: 0.8 }
+
+
+button:not([disabled]):hover{ border-color: highlight; background-color: rgba(0,0,0,0.1) !important; box-shadow: inset 0 0 2px highlight }
+button:not([disabled]):active{ box-shadow: inset 0 0 3px 0px black }
+button.searchbar-engine-one-off-item,
+.panel-footer > button{ border-width: 1px 0 0 0; }
+
+button.panel-button{ padding: 2px 2px 1px 2px !important; }
+
+#customization-done-button{ background-color: #0a84ff !important; }
+#customization-done-button:hover{ background-color: #0a64df !important; }
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_context_menus.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Makes context menus dark. Also affects some portions of menu popups */
+/* Uses dark theme colors but does not respect dark theme variables (they wouldn't work on sidebar context menu) */
+
+:root{
+  --uc-menu-bkgnd: rgb(74,74,79);
+  --uc-menu-color: rgb(230,230,230);
+  --uc-menu-dimmed: rgba(255,255,255,0.1);
+  --uc-menu-disabled: rgb(50,50,50);
+}
+panel richlistbox,
+panel tree,
+panel button,
+panel menulist,
+panel textbox,
+panel input,
+menupopup,
+menu,
+menuitem{ -moz-appearance: none !important; }
+
+menulist,
+menuitem,
+menu{ min-height: 1.8em }
+
+panel menulist{ border: 1px solid transparent }
+
+panel richlistbox,
+panel tree,
+panel button,
+panel menulist,
+panel textbox,
+panel input,
+panel #searchbar,
+menupopup:not(#BMB_bookmarksPopup),
+#main-menubar > menu > menupopup,
+#context-navigation{
+  color: var(--uc-menu-color) !important;
+  padding: 2px;
+  background-color: var(--uc-menu-bkgnd) !important;
+  border-color: var(--uc-menu-disabled) !important;
+}
+
+panel textbox input{ padding: 2px !important; }
+
+panel input{ border-width: 1px; border-style: solid; background-color: rgba(0,0,0,0.1) !important; }
+panel #searchbar{ background-color: rgba(0,0,0,0.1) !important; padding: 0 !important; }
+panel #searchbar input{ background-color: transparent !important; }
+
+panel menulist:hover,
+panel menulist[open]{ border-color: Highlight !important; }
+
+#editBMPanel_folderMenuList > menupopup > menuitem{ color: var(--uc-menu-color) !important; }
+
+panel treechildren::-moz-tree-row(selected),
+panel button:hover,
+menu:hover,
+menu[_moz-menuactive],
+menu[open],
+menuitem:hover,
+menuitem[_moz-menuactive]{ background-color: var(--uc-menu-dimmed) !important; color: inherit !important; }
+
+menu[disabled="true"],
+menuitem[disabled="true"]{ color: var(--uc-menu-disabled) !important; }
+
+menu:not(.subviewbutton) > .menu-right{ filter: invert(1) }
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_date_picker_panel.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Makes the HTML <input type="date"> picker panel dark IF you use dark colored theme. It does not affect the input element on the page, only the popup */
+
+@media (-moz-toolbar-prefers-color-scheme: dark){
+  #DateTimePickerPanel{ --panel-background: #2b2a33 !important; }
+}
+@-moz-document url("chrome://global/content/datepicker.xhtml"){
+  @media (-moz-toolbar-prefers-color-scheme: dark){
+    :root{
+      --border: 0.1rem solid #a4a4a4 !important;
+      --weekend-font-color: #ff4030 !important
+    }
+    body,.month-year-view{ background: #2b2a33 !important; color: #f4f4f4 !important; }
+    button.month-year::after,
+    button{ fill: #f4f4f4 !important; }
+  }
+}
+
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/dark_theme_aware_statuspanel.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/*
+Makes statuspanel aware of the the theme text color
+Meaning, if theme text is light then the statuspanel uses dark background and light text. On themes with dark text the statuspanel has normal appearance.
+,*/
+
+:root[lwthemetextcolor="bright"] #statuspanel-label{
+  background-color: rgb(50,50,52) !important;
+  color: rgb(187,187,189) !important;
+  border-color: grey !important;
+}
+'';
+}
+#+end_src
+******* tridactyl.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Firefox/tridactyl.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home = {
+    packages = with pkgs; [
+      tridactyl-native
+    ];
+
+    file."tridactyl.nix" = {
+      target = ".config/tridactyl/tridactylrc";
+      text = ''
+        bind e scrollline -10
+        bind n scrollline 10
+      '';
+      };
+  };
+}
+#+end_src
+******* extensions.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Firefox/extensions.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file = {
+    "ytEnhancer.txt" = {
+    target = ".mozilla/firefox/extensions/ytEnhancer.txt";
+    text = ''
+{"version":"2.0.121","settings":{"blur":0,"brightness":100,"contrast":100,"grayscale":0,"huerotate":0,"invert":0,"saturate":100,"sepia":0,"applyvideofilters":false,"backgroundcolor":"#000000","backgroundopacity":90,"blackbars":false,"blockads":false,"blockadsexceptforsubs":false,"blockautoplay":true,"blockhfrformats":false,"blockwebmformats":false,"boostvolume":false,"cinemamode":true,"cinemamodewideplayer":true,"controlbar":{"active":true,"autohide":false,"centered":true,"position":"absolute"},"controls":["loop","reverse-playlist","volume-booster","whitelist","not-interested","cards-end-screens","cinema-mode","size","pop-up-player","speed","video-filters","screenshot","keyboard-shortcuts","options"],"controlsvisible":false,"controlspeed":false,"controlspeedmousebutton":false,"controlvolume":false,"controlvolumemousebutton":false,"convertshorts":false,"customcolors":{"--main-color":"#00adee","--main-background":"#111111","--second-background":"#181818","--hover-background":"#232323","--main-text":"#eff0f1","--dimmer-text":"#cccccc","--shadow":"#000000"},"customcssrules":"","customscript":"","customtheme":false,"darktheme":true,"date":1697149932257,"defaultvolume":true,"disableautoplay":false,"executescript":false,"expanddescription":true,"filter":"none","hidecardsendscreens":false,"hidechat":false,"hidecomments":false,"hiderelated":false,"hideshorts":false,"ignoreplaylists":true,"ignorepopupplayer":true,"localecode":"en_US","localedir":"ltr","message":false,"miniplayer":true,"miniplayerposition":"_top-left","miniplayersize":"_400x225","newestcomments":false,"overridespeeds":true,"pauseforegroundtab":false,"pausevideos":true,"popuplayersize":"640x360","qualityembeds":"hd720","qualityembedsfullscreen":"hd1080","qualityplaylists":"hd1080","qualityplaylistsfullscreen":"hd1080","qualityvideos":"hd1080","qualityvideosfullscreen":"hd1080","reload":false,"reversemousewheeldirection":false,"selectquality":true,"selectqualityfullscreenoff":false,"selectqualityfullscreenon":false,"speed":1,"speedvariation":0.1,"stopvideos":false,"theatermode":true,"theme":"default-dark","themevariant":"youtube-deep-dark.css","update":0,"volume":100,"volumemultiplier":3,"volumevariation":5,"whitelist":"","wideplayer":true,"wideplayerviewport":true}}
+    '';
+    };
+  };
+}
+#+end_src
+******* Roam Protocol
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file."org-protocol.desktop" = {
+    target = ".local/share/applications/org-protocol.desktop";
+    text = ''
+        [Desktop Entry]
+        Name=Org-Protocol
+        Exec=emacsclient %u
+        Icon=emacs-icon
+        Type=Application
+        Terminal=false
+        MimeType=x-scheme-handler/org-protocol
+      '';
+  };
+}
+#+end_src
+
+***** git.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/git.nix
+:END:
+point at thanatos
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.git = {
+    enable = true;
+    package = pkgs.gitFull;
+    lfs.enable = true;
+    userName = "xin";
+    userEmail = "git@ironshark.org";
+    ignores = [
+      "*~"
+      ".*~"
+      "#*#"
+      ".*.swp"
+    ];
+    aliases = {
+      send = ''
+        ! git status &&
+        echo -n Commit Message:  &&
+        read -r CommitMessage &&
+        git add . &&
+        git commit -m "$CommitMessage" &&
+        git push
+      '';
+    };
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+        pull = {
+          rebase = true;
+        };
+      };
+    };
+  };
+}
+#+end_src
+
+***** Emacs
+git rid of bookmarks and minimize init
+
+******* emacs.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Emacs/emacs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  programs.emacs = {
+    enable = true;
+    package = (pkgs.emacsWithPackagesFromUsePackage {
+      config = ./init.el;
+      defaultInitFile = true;
+      package = pkgs.emacs-unstable;
+      alwaysEnsure = true;
+      extraEmacsPackages = epkgs: with epkgs; [
+      ];
+    });
+  };
+
+  home = {
+    packages = with pkgs; [
+      fd
+      silver-searcher
+      hunspell
+      hunspellDicts.en_US-large
+    ];
+
+    file = {
+      emacs-init = {
+        source = ./init.el;
+        target = ".config/emacs/init.el";
+      };
+
+      emacs-bookmarks = {
+        source = config.lib.file.mkOutOfStoreSymlink ./bookmarks;
+        target = ".config/emacs/bookmarks";
+      };
+    };
+  };
+
+}
+#+end_src
+
+******* bookmarks
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Emacs/bookmarks
+:END:
+
+#+begin_src emacs-lisp
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("Burly: center-focus-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2030%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%2012%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%206%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%20240%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2078%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2048%29%29%20hc%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28combination-limit%29%20%28leaf%20%28pixel-width%20.%20960%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20120%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.25%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28pixel-width%20.%201920%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20240%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.5%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28last%20.%20t%29%20%28pixel-width%20.%20960%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20120%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.25%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%29")
+ (handler . burly-bookmark-handler))
+("Burly: right-focus-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2020%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%208%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%204%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%20160%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2052%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2032%29%29%20hc%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28combination-limit%29%20%28leaf%20%28pixel-width%20.%201280%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20160%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.3333333333333333%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28last%20.%20t%29%20%28pixel-width%20.%202560%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20320%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.6666666666666666%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%29")
+ (handler . burly-bookmark-handler))
+("Burly: left-focus-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2020%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%208%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%204%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%20160%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2052%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2032%29%29%20hc%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28combination-limit%29%20%28leaf%20%28pixel-width%20.%202560%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20320%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.6666666666666666%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28last%20.%20t%29%20%28pixel-width%20.%201280%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20160%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.3333333333333333%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%29")
+ (handler . burly-bookmark-handler))
+("Burly: triple-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2030%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%2012%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%206%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%20240%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2078%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2048%29%29%20hc%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28combination-limit%29%20%28leaf%20%28pixel-width%20.%201280%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20160%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.3333333333333333%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28pixel-width%20.%201280%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20160%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.3333333333333333%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28last%20.%20t%29%20%28pixel-width%20.%201280%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20160%29%20%28total-height%20.%2065%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.3333333333333333%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%29")
+ (handler . burly-bookmark-handler))
+("Burly: double-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2020%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%208%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%204%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%20160%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2052%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2032%29%29%20hc%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2064%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28combination-limit%29%20%28leaf%20%28pixel-width%20.%201920%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20240%29%20%28total-height%20.%2064%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.5%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%20%28leaf%20%28last%20.%20t%29%20%28pixel-width%20.%201920%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20240%29%20%28total-height%20.%2064%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%200.5%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29%29")
+ (handler . burly-bookmark-handler))
+("Burly: single-collumn"
+ (url . "emacs+burly+windows:?%28%28%28min-height%20.%204%29%20%28min-width%20.%2010%29%20%28min-height-ignore%20.%203%29%20%28min-width-ignore%20.%204%29%20%28min-height-safe%20.%201%29%20%28min-width-safe%20.%202%29%20%28min-pixel-height%20.%2064%29%20%28min-pixel-width%20.%2080%29%20%28min-pixel-height-ignore%20.%2036%29%20%28min-pixel-width-ignore%20.%2026%29%20%28min-pixel-height-safe%20.%2016%29%20%28min-pixel-width-safe%20.%2016%29%29%20leaf%20%28pixel-width%20.%203840%29%20%28pixel-height%20.%201032%29%20%28total-width%20.%20480%29%20%28total-height%20.%2064%29%20%28normal-height%20.%201.0%29%20%28normal-width%20.%201.0%29%20%28parameters%20%28burly-url%20.%20%22emacs%2Bburly%2Bname%3A%2F%2F%3F%2Ascratch%2A%22%29%29%20%28buffer%20%22%2Ascratch%2A%22%20%28selected%20.%20t%29%20%28hscroll%20.%200%29%20%28fringes%205%205%20nil%20nil%29%20%28margins%20nil%29%20%28scroll-bars%20nil%200%20t%20nil%200%20t%20nil%29%20%28vscroll%20.%200%29%20%28dedicated%29%20%28point%20.%20146%29%20%28start%20.%201%29%29%29")
+ (handler . burly-bookmark-handler))
+)
+#+end_src
+
+******* init.el
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/Emacs/init.el
+:END:
+
+Because =init.el= is evaluated as part of =nixos-rebuild=. It cannot be split into multiple files. Instead I am splitting it into pseudo files, each focused around a specific idea.
+
+********* early
+
+#+begin_src emacs-lisp
+(server-start)
+
+(bookmark-load bookmark-default-file t)
+
+(setq warning-minimum-level ":error")
+#+end_src
+
+********* package-management
+
+#+begin_src emacs-lisp
+(setq package-enable-at-startup nil
+      use-package-always-ensure t
+      vc-follow-symlinks t)
+#+end_src
+
+********* core fonts
+
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil
+                    :font "Iosevka"
+                    :weight 'regular
+                    :height 180)
+
+(set-face-attribute 'fixed-pitch nil
+                    :font "Iosevka"
+                    :weight 'semibold
+                    :height 180)
+
+(set-face-attribute 'variable-pitch nil
+                    :font "FiraGo"
+                    :weight 'regular
+                    :height 180)
+
+(defvar Tn/default-font-size 120)
+
+(prefer-coding-system 'utf-8)
+(when (display-graphic-p)
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+#+end_src
+
+********* personal-info
+
+#+begin_src emacs-lisp
+(setq calendar-latitude 39.96
+      calendar-longitude -82.99
+      calendar-location-name "Columbus,OH"
+      user-login-name "xin"
+      user-mail-address "xin@ironshark.org")
+#+end_src
+
+********* gui
+
+#+begin_src emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(show-paren-mode t)
+(set-fringe-mode 5)
+(scroll-bar-mode -1)
+(global-hl-line-mode 1)
+(global-auto-revert-mode 1)
+(global-visual-line-mode t)
+(global-display-line-numbers-mode t)
+(winner-mode +1)
+
+(setq visible-bell t
+      column-number-mode t
+      ring-bell-function 'ignore
+      initial-major-mode 'org-mode
+      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
+(setq-default fill-column 80
+              indent-tabs-mode nil
+              sentence-end-double-space nil)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(dolist (mode '(pdf-view-mode-hook
+                term-mode-hook
+                org-mode-hook
+                shell-mode-hook
+                eww-mode-hook
+                text-mode-hook
+                scad-preview-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
+
+(use-package doom-themes
+  :init (load-theme 'doom-city-lights t))
+#+end_src
+
+********* global-keybindings
+
+#+begin_src emacs-lisp
+(defadvice keyboard-escape-quit (around my-keyboard-escape-quit activate)
+  (let (orig-one-window-p)
+    (fset 'orig-one-window-p (symbol-function 'one-window-p))
+    (fset 'one-window-p (lambda (&optional nomini all-frames) t))
+    (unwind-protect
+        ad-do-it
+      (fset 'one-window-p (symbol-function 'orig-one-window-p)))))
+
+(global-set-key (kbd "<escape>")  'keyboard-escape-quit)
+(global-set-key (kbd "C-x c")  'centered-cursor-mode)
+(global-set-key (kbd "C-S-v") 'clipboard-yank)
+(global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "C-S-x") 'clipboard-kill-region)
+(global-set-key (kbd "C-M-u") 'universal-argument)
+
+(define-key winner-mode-map (kbd "<C-s-left>") #'winner-undo)
+(define-key winner-mode-map (kbd "<C-s-right>") #'winner-redo)
+#+end_src
+
+********* exwm
+*********** modelines
+
+#+begin_src emacs-lisp
+(defun Tn/exwm-update-title ()
+  (pcase exwm-class-name
+
+    ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title))
+     (setq mode-line-format nil))
+
+    ("OpenSCAD" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("SCAD/Preview" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("discord" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Alacritty" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))
+
+    ("Bitwarden" (exwm-input-release-keyboard)
+     (setq mode-line-format nil))))
+#+end_src
+*********** custom functions
+
+#+begin_src emacs-lisp
+(defun Tn/dmenu-launch ()
+  (interactive)
+  (execute-extended-command "" "dmenu"))
+
+(defun Tn/lock-screen ()
+  (interactive)
+  (shell-command "sudo slock"))
+
+(defun Tn/audio-set ()
+  (interactive)
+  (execute-extended-command "" "alsamixer-set-volume"))
+
+(defun Tn/single-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: single-collumn"))
+
+(defun Tn/double-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: double-collumn"))
+
+(defun Tn/triple-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: triple-collumn"))
+
+(defun Tn/left-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: left-focus-collumn"))
+
+(defun Tn/right-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: right-focus-collumn"))
+
+(defun Tn/center-focus-collumn-template ()
+  (interactive)
+  (bookmark-jump "Burly: center-focus-collumn"))
+
+(defun Tn/brightness-up ()
+  (interactive)
+  (shell-command "sudo light -A 5"))
+
+(defun Tn/brightness-down ()
+  (interactive)
+  (shell-command "sudo light -U 5"))
+#+end_src
+*********** packages
+
+#+begin_src emacs-lisp
+(use-package burly)
+
+(use-package alsamixer)
+
+(use-package exwm
+  :config
+
+(exwm-enable)
+#+end_src
+*********** system tray and workspaces
+
+#+begin_src emacs-lisp
+(require 'exwm-systemtray)
+(exwm-systemtray-enable)
+
+(setq exwm-workspace-number 9
+      exwm-layout-show-all-buffers t
+      exwm-workspace-show-all-buffers t)
+
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+          (exwm-workspace-rename-buffer exwm-class-name)))
+
+(add-hook 'exwm-update-title-hook #'Tn/exwm-update-title)
+
+
+#+end_src
+*********** prefix and simulation keys
+
+#+begin_src emacs-lisp
+(setq exwm-input-prefix-keys
+  '(?\C-x
+    ?\C-u
+    ?\C-h
+    ?\M-x
+    ?\M-`
+    ?\M-&
+    ?\M-:
+    ?\C-c
+    ?\C-\M-j  ;; Buffer list
+    ?\C-\     ;; Ctrl+Space
+    ))
+
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+(unless (get 'exwm-input-simulation-keys 'saved-value)
+  (setq exwm-input-simulation-keys
+        '(([?\C-b] . [left])
+          ([?\C-f] . [right])
+          ([?\C-p] . [up])
+          ([?\C-n] . [down])
+          ([?\C-a] . [home])
+          ([?\C-e] . [end])
+          ([?\M-v] . [prior])
+          ([?\C-v] . [next])
+          ([?\C-d] . [delete])
+          ([?\C-k] . [S-end delete]))))
+#+end_src
+*********** global keybinds
+
+#+begin_src emacs-lisp
+(setq exwm-input-global-keys
+      `(
+
+([?\s-r] . exwm-reset)
+
+([?\s-c] . org-capture)
+
+([?\s-a] . org-agenda)
+
+([?\s-\M-a] . org-agenda-exit)
+
+([?\s-`] . (lambda (command)
+             (interactive (list (read-shell-command "$ ")))
+             (start-process-shell-command command nil command)))
+
+([s-left] . windmove-left)
+([s-right] . windmove-right)
+([s-up] . windmove-up)
+([s-down] . windmove-down)
+
+([?\s-\ ] . helm-buffers-list)
+([s-backspace] . ibuffer)
+([?\s-b] . switch-to-buffer)
+([\C-s-right] . next-buffer)
+([\C-s-left] . previous-buffer)
+
+([?\s-x] . Tn/dmenu-launch)
+([?\s-f] . helm-find-files)
+([?\s-q] . Tn/lock-screen)
+
+([?\s-p] . helm-projectile)
+([?\s-s] . Tn/save-and-magit)
+
+([?\s-.] . alsamixer-up-volume)
+([?\s-,] . alsamixer-down-volume)
+([?\s-\M-/] . Tn/audio-set)
+([?\s-/] . alsamixer-toggle-mute)
+
+([?\s->] . Tn/brightness-up)
+([?\s-<] . Tn/brightness-down)
+
+([?\s-t] . Tn/org-agenda-day)
+([?\s-w] . Tn/org-agenda-week)
+
+([?\s-i] . Tn/org-clock-in)
+([?\s-o] . Tn/org-clock-out)
+
+([?\s-\C-1] . Tn/single-collumn-template)
+([?\s-\C-2] . Tn/double-collumn-template)
+([?\s-\C-3] . Tn/triple-collumn-template)
+([?\s-\C-4] . Tn/left-focus-collumn-template)
+([?\s-\C-4] . Tn/right-focus-collumn-template)
+([?\s-\C-4] . Tn/center-focus-collumn-template)
+
+([?\s-=] . balance-windows)
+([?\s-D] . kill-buffer-and-widow)
+([?\s-d] . kill-this-buffer)
+([?\s-\M-1] . delete-other-windows)
+([?\s-\M-2] . split-window-below)
+([?\s-\M-3] . split-window-right)
+([?\s-0] . delete-window)
+([?\s-|] . enlarge-window)
+([?\s-}] . enlarge-window-horizontally)
+([?\s-{] . shrink-window-horizontally)
+
+,@(mapcar (lambda (i)
+            `(,(kbd (format "s-%d"  i)) .
+              (lambda ()
+                (interactive)
+                (exwm-workspace-switch-create ,(- i 1)))))
+          (number-sequence 1 9))
+))) ;; last paren closes exwm block
+#+end_src
+
+********* emojis, icons, and ligatures
+
+#+begin_src emacs-lisp
+(use-package emojify)
+
+(use-package all-the-icons
+  :init
+  (unless (member "all-the-icons" (font-family-list))
+    (all-the-icons-install-fonts t)))
+
+(defvar ligatures-fixed '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                     ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                     "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                     "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                     "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                     "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                     "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                     "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                     ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                     "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                     "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                     "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                     "\\\\" "://"))
+
+(use-package ligature
+  :config
+  (ligature-set-ligatures 't ligatures-fixed)
+  (global-ligature-mode t))
+#+end_src
+
+********* indenting, and delimiters
+#+begin_src emacs-lisp
+(use-package aggressive-indent)
+(global-aggressive-indent-mode 1)
+
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package smartparens
+  :init
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'org-mode-hook #'smartparens-mode)
+
+  :config
+  (setq sp-show-pair-from-inside nil)
+  (require 'smartparens-config)
+
+  :diminish
+  smartparens-mode)
+
+(add-hook 'before-save-hook #'whitespace-cleanup)
+#+end_src
+
+********* major modes
+
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src
+
+********* helm
+
+*********** helm-core
+
+#+begin_src emacs-lisp
+(use-package helm)
+(helm-mode 1)
+
+(setq helm-mode-fuzzy-match t)
+
+(setq _helm-exciting-buffer-regexp-list
+      (quote
+       ("\\*magit:"
+        )))
+
+(setq helm-boring-buffer-regexp-list
+      (quote
+       (  "\\Minibuf.+\\*"
+               "\\` "
+               "\\*.+\\*"
+               "\\magit-process:"
+               "\\magit-diff:"
+                  )))
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(define-key helm-find-files-map (kbd "<SPC>") 'helm-find-files-up-one-level)
+
+(use-package helm-projectile)
+#+end_src
+
+********* evil
+
+*********** core
+
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-want-integration t
+       evil-want-keybinding nil
+       evil-want-C-u-scroll t
+       evil-want-C-i-jump nil
+       evil-respect-visual-line-mode t
+       evil-undo-system 'undo-tree)
+
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (define-key evil-insert-state-map (kbd "S-<SPC>") 'Tn/evil-jump-character)
+  (define-key evil-insert-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
+  (define-key evil-normal-state-map (kbd "S-<escape>") 'Tn/evil-normal-and-save)
+  (define-key evil-normal-state-map (kbd "<SPC>") 'helm-occur)
+  (define-key evil-normal-state-map (kbd "/") 'helm-regexp)
+  (evil-ex-define-cmd "q" 'kill-this-buffer) ;Evil nomral mode ':q' kills active buffer
+  (evil-ex-define-cmd "Q" 'kill-buffer-and-window)) ; Evil normal mode ':Q' kills buffer and window
+
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
+#+end_src
+
+*********** snipe
+
+#+begin_src emacs-lisp
+(use-package evil-snipe
+  :after evil
+  :config
+  (evil-snipe-mode +1)
+  (evil-snipe-override-mode +1))
+#+end_src
+
+*********** easy motion
+
+#+begin_src emacs-lisp
+(evil-define-key 'visual evil-snipe-local-mode-map "z" 'evil-snipe-s)
+(evil-define-key 'visual evil-snipe-local-mode-map "Z" 'evil-snipe-S)
+
+(evil-define-key '(normal motion) evil-snipe-local-mode-map
+  "s" 'evil-snipe-j
+  "t" 'evil-snipe-J)
+
+(evil-define-key 'motion evil-snipe-override-local-mode-map
+  "S" 'evil-snipe-t
+  "T" 'evil-snipe-T)
+
+(use-package evil-easymotion
+  :after evil evil-snipe
+  :config
+  (evilem-default-keybindings "RET")
+  (define-key evilem-map "n" #'evilem-motion-next-line)
+  (define-key evilem-map "e" #'evilem-motion-previous-line)
+  (define-key evilem-map "N" #'evil-scroll-page-down)
+  (define-key evilem-map "E" #'evil-scroll-page-up)
+  (define-key evilem-map "T" #'evil-scroll-line-to-center)
+  (define-key evilem-map "S" #'centered-cursor-mode)
+  (define-key evilem-map "x" #'eval-region)
+  (define-key evilem-map "t" #'evil-snipe-s)
+  (define-key evilem-map "s" #'evil-snipe-S))
+#+end_src
+
+*********** colemak collection
+
+#+begin_src emacs-lisp
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(defun  Tn/evil-collection-colemak (_mode mode-keymaps &rest _rest)
+  (evil-collection-translate-key 'normal mode-keymaps
+    "m" "h"
+    "n" "j"
+    "e" "k"
+    "i" "l"
+    "h" "m"
+    "j" "n"
+    "k" "e"
+    "l" "i"))
+
+;; called after evil-collection makes its keybindings
+(add-hook 'evil-collection-setup-hook #'Tn/evil-collection-colemak)
+
+(use-package evil-colemak-basics
+  :after evil evil-snipe
+  :diminish global-evil-colemak-basis-mode
+  :init
+  (setq evil-colemak-basics-layout-mod 'mod-dh)
+  (setq evil-colemak-basics-char-jump-commands 'evil-snipe)
+  :config
+  (global-evil-colemak-basics-mode))
+#+end_src
+
+*********** custom functions
+
+#+begin_src emacs-lisp
+(defun Tn/evil-jump-character ()
+  "moves point forward past the next character"
+  (interactive)
+  (evil-normal-state)
+  (evil-forward-char)
+  (evil-append 1))
+
+(defun Tn/evil-normal-and-save ()
+  "switches to evil normal mode, and saves buffer"
+  (interactive)
+  (evil-normal-state)
+  (save-buffer))
+#+end_src
+********* ibuffer
+
+#+begin_src emacs-lisp
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 40 40 :left :elide) ; change: 30s were originally 18s
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 9 9 :left :elide)
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))
+
+(with-eval-after-load 'ibuf-ext
+  (define-ibuffer-sorter alphabetic-ignore-case
+    "Sort the buffers by their names, ignoring case."
+    (:description "buffer name")
+    (string-collate-lessp
+     (buffer-name (car a))
+     (buffer-name (car b))
+     nil t))
+  ;; Assign the new command to the 'Name' header keymap.
+  (define-key ibuffer-name-header-map [(mouse-1)]
+    'ibuffer-do-sort-by-alphabetic-ignore-case)
+  (put 'ibuffer-make-column-name 'header-mouse-map
+       ibuffer-name-header-map))
+
+(setq ibuffer-expert t)
+(setq-default ibuffer-default-sorting-mode 'alphabetic-ignore-case)
+
+(add-hook 'ibuffer-mode-hook #'ibuffer-auto-mode)
+(remove-hook 'kill-buffer-query-functions 'process-kill-buffer-query-function)
+#+end_src
+
+********* flyspell, and undo-tree
+
+#+begin_src emacs-lisp
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda ()
+                   (flyspell-mode 1))))
+
+(add-hook 'prog-mode-hook #'flyspell-prog-mode)
+(add-hook 'text-mode-hook #'flyspell-mode)
+
+(use-package undo-tree)
+(global-undo-tree-mode 1)
+(setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/backup-files"))
+      backup-directory-alist '(("." . "~/.config/emacs/backup-files")))
+#+end_src
+
+********* magit
+
+#+begin_src emacs-lisp
+(use-package magit)
+(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+
+(defun Tn/save-and-magit ()
+  "Save the current buffer and call Magit status."
+  (interactive)
+  (save-buffer)
+  (magit-status))
+#+end_src
+
+********* projectile
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :init
+  (projectile-mode +1))
+
+;; (setq  projectile-project-search-path '("~/Projects" "~/Grimoire"))
+#+end_src
+
+********* which-key, and helpful
+
+#+begin_src emacs-lisp
+(use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
+  :bind
+  ([remap describe-command] . helpful-command)
+  ([remap describe-key] . helpful-key))
+
+(use-package which-key
+  :diminish which-key-mode
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 1))
+#+end_src
+********* org
+*********** org bullets
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+#+end_src
+*********** org appear
+
+#+begin_src emacs-lisp
+  (use-package org-appear)
+
+  (setq org-appear-trigger 'manual
+        org-appear-autoemphasis t
+        org-appear-autolinks t
+        org-link-descriptive t
+        org-pretty-entities t
+        org-appear-autoentities t
+        org-appear-autosubmarkers t
+        org-appear-autokeywords t
+        org-hidden-keywords t
+        org-appear-inside-latex t)
+
+  (add-hook 'org-mode-hook 'org-appear-mode)
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (add-hook 'evil-insert-state-entry-hook
+                                       #'org-appear-manual-start
+                                       nil
+                                       t)
+                             (add-hook 'evil-insert-state-exit-hook
+                                       #'org-appear-manual-stop
+                                       nil
+                                       t)))
+#+end_src
+*********** visual fill collumn
+
+#+begin_src emacs-lisp
+(defun Tn/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . Tn/org-mode-visual-fill))
+#+end_src
+*********** export
+
+#+begin_src emacs-lisp
+(use-package ox-hugo
+  :after ox)
+
+(setq org-export-backends '(ascii html icalendar latex md odt))
+#+end_src
+*********** tempo
+
+#+begin_src emacs-lisp
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist
+             '("el" . "src emacs-lisp\n"))
+(add-to-list 'org-structure-template-alist
+             '("en" . "src nix\n"))
+#+end_src
+*********** custom functions
+************* general setup
+
+#+begin_src emacs-lisp
+(defun Tn/org-mode-setup ()
+  (org-indent-mode 1)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1))
+
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+(add-hook 'org-log-buffer-setup-hook 'evil-insert-state)
+
+(advice-add 'org-deadline       :after #'save-buffer)
+(advice-add 'org-schedule       :after #'save-buffer)
+(advice-add 'org-todo           :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'save-buffer)
+(advice-add 'org-store-log-note :after #'org-cycle)
+#+end_src
+************* font configuration
+
+#+begin_src emacs-lisp
+  (defun Tn/org-font-setup ()
+  ;; This is magic code that changes the font of non-heading bullet point lists.
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  (dolist (face '((org-level-1 . "Azure3")
+                  (org-level-2 . "Azure3")
+                  (org-level-3 . "Azure3")
+                  (org-level-4 . "Azure3")
+                  (org-level-5 . "Azure3")
+                  (org-level-6 . "Azure3")
+                  (org-level-7 . "Azure3")
+                  (org-level-8 . "Azure3")))
+    (set-face-attribute (car face) nil :font "Iosevka"
+                        :weight 'regular :height 1.3
+                        :foreground (cdr face)))
+
+  (set-face-attribute 'org-link nil    :foreground "dark cyan" :inherit 'fixed-pitch)
+  (set-face-attribute 'org-tag nil     :height 0.9 :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil    :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil    :foreground "dark cyan" :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil  :foreground "dark cyan" :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil     :foreground "SpringGreen3"
+                      :weight 'semi-bold :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :foreground "SpringGreen3"
+                      :weight 'semi-bold :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+#+end_src
+************* file time stamps
+
+#+begin_src emacs-lisp
+(defun Tn/org-find-time-file-property (property &optional anywhere)
+  "Return the position of the time file PROPERTY if it exists.
+When ANYWHERE is non-nil, search beyond the preamble."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((first-heading
+           (save-excursion
+             (re-search-forward org-outline-regexp-bol nil t))))
+      (when (re-search-forward (format "^#\\+%s:" property)
+                               (if anywhere nil first-heading)
+                               t)
+        (point)))))
+
+(defun Tn/org-has-time-file-property-p (property &optional anywhere)
+  "Return the position of time file PROPERTY if it is defined.
+As a special case, return -1 if the time file PROPERTY exists but
+is not defined."
+  (when-let ((pos (Tn/org-find-time-file-property property anywhere)))
+    (save-excursion
+      (goto-char pos)
+      (if (and (looking-at-p " ")
+               (progn (forward-char)
+                      (org-at-timestamp-p 'lax)))
+          pos
+        -1))))
+
+(defun Tn/org-set-time-file-property (property &optional anywhere pos)
+  "Set the time file PROPERTY in the preamble.
+When ANYWHERE is non-nil, search beyond the preamble.
+If the position of the file PROPERTY has already been computed,
+it can be passed in POS."
+  (when-let ((pos (or pos
+                      (Tn/org-find-time-file-property property))))
+    (save-excursion
+      (goto-char pos)
+      (if (looking-at-p " ")
+          (forward-char)
+        (insert " "))
+      (delete-region (point) (line-end-position))
+      (let* ((now (format-time-string "[%Y-%m-%d %a %H:%M]")))
+        (insert now)))))
+
+(defun Tn/org-set-last-modified ()
+  "Update the LAST_MODIFIED file property in the preamble."
+  (when (derived-mode-p 'org-mode)
+    (Tn/org-set-time-file-property "LAST_MODIFIED")))
+
+(defun Tn/current-year () (interactive)
+  (shell-command-to-string "echo -n $(date +%Y)"))
+#+end_src
+************* todo states
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "NEXT(n)" "ACTIVE(a@/!)" "|" "DONE(d@/!)")
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "INACTIVE(i@/!)" "|" "CANCELLED(c@/!)"))))
+
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "deep sky blue" :weight bold)
+              ("NEXT" :foreground "medium spring green" :weight bold)
+              ("ACTIVE" :foreground "cyan" :weight bold)
+              ("DONE" :foreground "dim gray" :weight bold)
+              ("WAITING" :foreground "blue violet" :weight bold)
+              ("HOLD" :foreground "dark red" :weight bold)
+              ("CANCELLED" :foreground "dim gray" :weight bold))))
+#+end_src
+
+************* tag alist
+
+#+begin_src emacs-lisp
+(setq org-tag-alist
+      '((:startgroup . ART)
+        ("SCULPTURE" . ?s) ("ILLUSTRATION" . ?i) ("METAL-WORKING" . ?m)
+        (:endgroup . ART)
+        (:startgroup . TECHNOLOGY)
+        ("PROGRAMMING" . ?p) ("CAD" . ?x)
+        (:endgroup . TECHNOLOGY)
+        (:startgroup . ACADEMIC)
+        ("MATHS" . ?m)
+        (:endgroup . ACADEMIC)
+        (:startgroup . FITNESS)
+        ("@CF-GYM" . ?g) ("@OLY-GYM" . ?o)
+        (:endgroup . FITNESS)
+        ("@Toby" . ?T)
+        ("@PHONE" . ?P) ("@COMPUTER" . ?C) ("@CAR" . ?V)))
+#+end_src
+
+*********** variables
+
+#+begin_src emacs-lisp
+(setq org-ellipsis " ▾"
+      org-hide-emphasis-markers t
+      org-src-fontify-natively t
+      org-fontify-quote-and-verse-blocks t
+      org-fontify-done-headline t
+      org-src-tab-acts-natively t
+      org-hide-block-startup nil
+      org-src-preserve-indentation nil
+      org-startup-folded t
+      org-treat-S-cursor-todo-selection-as-state-change nil
+      org-startup-with-inline-images t
+      org-cycle-separator-lines 2
+      org-confirm-babel-evaluate nil
+      org-capture-bookmark nil
+      evil-auto-indent nil
+      org-src-preserve-indentation nil
+      org-export-with-todo-keywords nil
+      org-edit-src-content-indentation 0
+      org-return-follows-link t
+      org-enforce-todo-dependencies t
+      org-enforce-todo-checkbox-dependencies t
+      org-odd-levels-only t
+      org-fold-catch-invisible-edits 'show-and-error
+      org-directory "~/Archive/Apocrypha/Org/"
+      org-archive-location (format  "%sArchive/\%s-archive.org::datetree/" (symbol-value 'org-directory) (Tn/current-year)))
+#+end_src
+*********** org-core
+#+begin_src emacs-lisp
+(use-package org
+:hook
+(org-mode . Tn/org-mode-setup)
+(org-mode . Tn/org-font-setup)
+(before-save . Tn/org-set-last-modified)
+
+:bind
+(("C-c C-l" . org-store-link)
+ ("C-c l" . org-insert-link))
+
+:config
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (lisp . t)
+   (latex . t)
+   (scheme . t)))
+
+(push '("conf-unix" . conf-unix) org-src-lang-modes))
+#+end_src
+*********** org-roam
+************* roam-core
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i n" . Tn/Node-insert)
+         ("C-c n i e" . Tn/Internal-insert)
+         ("C-c n i t" . Tn/Topic-insert)
+         ("C-c n i s" . Tn/Source-insert)
+         ("C-c n i a" . org-roam-node-insert)
+         ("C-c n c n" . Tn/Node-capture)
+         ("C-c n c e" . Tn/Internal-capture)
+         ("C-c n c t" . Tn/Topic-capture)
+         ("C-c n c s" . Tn/Source-capture)
+         ("C-c n c a" . org-roam-capture)
+         ("C-c n f n" . Tn/Node-open)
+         ("C-c n f e" . Tn/Internal-open)
+         ("C-c n f t" . Tn/Topic-capture)
+         ("C-c n f s" . Tn/Source-open)
+         ("C-c n f a" . org-roam-node-find))
+  :config
+  (setq org-roam-directory (file-truename "~/Archive/Grimoire/")
+        org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
+  (org-roam-db-autosync-mode)
+  (require 'org-roam-protocol))
+#+end_src
+************* capture templates
+
+#+begin_src emacs-lisp
+(setq org-roam-capture-templates
+      '(("n" "Node" plain "%?"
+         :target (file+head "Node/%<%Y%m%d%H%M%S>-${slug}.org"
+                            "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Node:")
+         :unnarrowed t :empty-lines-before 1)
+         ("s" "Source" plain "%?"
+         :target (file+head "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
+          "#+title: ${citar-citekey} ${note-title}\n#+LAST_MODIFIED: \n#+filetags: :Source:")
+         :unnarrowed t :empty-lines-before 1)
+         ("e" "Internal" plain "%?"
+         :target (file+head "Personal/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Internal:")
+         :unnarrowed t :empty-lines-before 1)
+        ("t" "Topic" plain "%?"
+         :target (file+head "Topic/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+LAST_MODIFIED: \n#+filetags: :Topic: \n\n")
+         :unnarrowed t :empty-lines-before 1)))
+#+end_src
+************* keybind functions
+
+#+begin_src emacs-lisp
+(defun Tn/Node (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Node" tags)))
+
+(defun Tn/Node-capture ()
+  (interactive)
+  (org-roam-capture :templates "n"))
+
+(defun Tn/Node-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Node))
+
+(defun Tn/Node-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Node))
+
+(defun Tn/Source (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Source" tags)))
+
+(defun Tn/Source-capture ()
+  (interactive)
+  (org-roam-capture :templates "s"))
+
+(defun Tn/Source-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Source))
+
+(defun Tn/Source-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Source))
+
+(defun Tn/Internal (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Internal" tags)))
+
+(defun Tn/Internal-capture ()
+  (interactive)
+  (org-roam-capture :templates "e"))
+
+(defun Tn/Internal-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Internal))
+
+(defun Tn/Internal-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Internal))
+
+(defun Tn/Topic (node)
+    (interactive)
+    (let ((tags (org-roam-node-tags node)))
+        (member "Topic" tags)))
+
+(defun Tn/Topic-capture ()
+  (interactive)
+  (org-roam-capture :templates "t"))
+
+(defun Tn/Topic-insert ()
+  (interactive)
+ (org-roam-node-insert 'Tn/Topic))
+
+(defun Tn/Topic-open ()
+  (interactive)
+  (org-roam-node-find t nil 'Tn/Topic))
+#+end_src
+************* roam-node widow
+- Roam node window navigation is controlled by magit bindings
+
+#+begin_src emacs-lisp
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
+#+end_src
+
+************* roam-bibtex
+
+#+begin_src emacs-lisp
+(use-package org-roam-bibtex
+  :after
+  (org-roam)
+
+  :config
+  (org-roam-bibtex-mode +1))
+#+end_src
+
+************* roam-ui
+
+#+begin_src emacs-lisp
+(use-package org-roam-ui
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+#+end_src
+*********** org-journal
+
+************* core
+#+begin_src emacs-lisp
+(use-package org-journal
+  :bind
+  (("C-c n t o" . Tn/open-todays-journal)
+   ("C-c n t O" . Tn/org-journal-new-entry)
+   ("C-c n t t" . Tn/todays-todos-capture)
+   ("C-c n t m" . Tn/todays-notes-capture)
+   ("C-c n t f" . Tn/todays-finaces-capture)
+   ("C-c n t e" . Tn/todays-food&fitness-capture)
+   ("C-c n t n" . Tn/todays-journal-capture)
+   ("C-c n s" . Tn/future-journal-capture))
+  :hook
+  ((org-capture-mode-hook . delete-other-windows)))
+
+(setq org-journal-dir (file-truename "~/Archive/Feronomicon/Journal/")
+      org-journal-file-header 'Tn/org-journal-header-func
+      org-enable-org-journal-support t
+      org-journal-find-file #'find-file
+      org-journal-enable-cache t
+      org-journal-file-format "%Y%m%d.org"
+      org-journal-date-prefix "#+TITLE: "
+      org-journal-date-format "%Y%m%d"
+      org-journal-time-prefix "*** "
+      org-journal-time-format "%H:%M"
+      org-journal-start-on-weekday 0
+      org-journal-carryover-items "TODO=\"TODO\"|TODO=\"WAITING\"|TODO=\"NEXT\"|TODO=\"HOLD\"|TODO=\"ACTIVE\"|TODO=\"INACTIVE\"")
+#+end_src
+
+************* custom functions
+
+#+begin_src emacs-lisp
+(defun Tn/org-journal-header-func ()
+  "Inserts custom template in a new journal file."
+  (when (= (buffer-size) 0)
+    (let ((file-id (file-name-sans-extension(file-name-nondirectory (buffer-file-name)))))
+    (insert (format "#+TITLE: *%s*\n:PROPERTIES:\n:ID: %s\n#+LAST_MODIFIED: \n#+STARTUP: overview\n:END:\n\n\n* End Of Day Review\n\n* Notes\n\n* Finaces\n\n* Food & Fitness\n\n* Journal\n\n* Todos" file-id file-id)))))
+
+(defun Tn/org-journal-capture-date-string ()
+  "Return a formatted date string for journal capture templates."
+  (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format)))
+
+(defun Tn/open-todays-journal ()
+  "Opens todays Org-Journal"
+  (interactive)
+  (find-file (Tn/org-journal-capture-date-string))
+  (org-journal-mode)
+  (Tn/org-journal-header-func))
+
+(defun Tn/org-journal-new-entry ()
+  "Creates a new journal entry with custom header and todo carryover"
+  (interactive)
+  (Tn/open-todays-journal)
+  (org-journal--carryover)
+  (save-buffer))
+
+(defvar org-journal--date-location-scheduled-time nil)
+(defun Tn/journal-future-capture (&optional scheduled-time)
+  (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
+    (setq org-journal--date-location-scheduled-time scheduled-time)
+    (find-file (format "%s/%s.org" (symbol-value 'org-journal-dir) (format-time-string org-journal-date-format (org-time-string-to-time scheduled-time))))
+    (Tn/org-journal-header-func scheduled-time)))
+#+end_src
+************* capture templates
+
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      '(("tt" "TODO Capture" entry (file+olp Tn/org-journal-capture-date-string "Todos") "*** TODO %?")
+        ("tm" "Notes Capture" entry (file+olp Tn/org-journal-capture-date-string "Notes") "*** %?")
+        ("tf" "Finances" entry (file+olp Tn/org-journal-capture-date-string "Finaces") "*** %?")
+        ("te" "Food & Fitness" entry (file+olp Tn/org-journal-capture-date-string "Food & Fitness") "*** %?")
+        ("tn" "Journal Capture" entry (file+olp Tn/org-journal-capture-date-string "Journal") "*** %(format-time-string org-journal-time-format) %?")
+        ("ff" "Future Todo" entry (function Tn/journal-future-capture)
+                               "* %?** TODO ")))
+#+end_src
+************* keybind functions
+
+#+begin_src emacs-lisp
+(defun Tn/todays-todos-capture ()
+  (interactive)
+  (org-capture nil "tt"))
+
+(defun Tn/todays-notes-capture ()
+  (interactive)
+  (org-capture nil "tm"))
+
+(defun Tn/todays-finaces-capture ()
+  (interactive)
+  (org-capture nil "tf"))
+
+(defun Tn/todays-food&fitness-capture ()
+  (interactive)
+  (org-capture nil "te"))
+
+(defun Tn/todays-journal-capture ()
+  (interactive)
+  (org-capture nil "tn"))
+
+(defun Tn/future-journal-capture ()
+  (interactive)
+  (org-capture nil "ff"))
+#+end_src
+*********** pdf-tools
+
+#+begin_src emacs-lisp
+(use-package pdf-tools)
+#+end_src
+********* bibtex
+*********** bibtex-core
+
+#+begin_src emacs-lisp
+ (require 'bibtex)
+
+ (setq bibtex-dialect 'biblatex
+       bibtex-autokey-year-length 4
+       bibtex-autokey-name-year-separator "-"
+       bibtex-autokey-year-title-separator "-"
+       bibtex-autokey-titleword-separator "-"
+       bibtex-autokey-titlewords 2
+       bibtex-autokey-titlewords-stretch 1
+       bibtex-autokey-titleword-length 5
+       bibtex-align-at-equal-sign t
+       bibtex-completion-pdf-symbol "⌘"
+       bibtex-completion-pdf-field "File"
+       bibtex-completion-notes-symbol "✎"
+       bibtex-completion-additional-search-fields '(Tags)
+       bibtex-completion-notes-extension ".org"
+       bibtex-completion-pdf-extension '(".pdf" ".djvu", ".jpg")
+       bibtex-completion-library-path "~/Archive/Apocrypha/PDF/"
+       bibtex-completion-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
+       bibtex-completion-browser-function
+       (lambda (url _) (start-process "firefox" "*firefox*" "firefox" url))
+       bibtex-user-optional-fields '(("tags" "Tags to describe the entry" "")
+                                     ("file" "Link to a document file." "" )))
+#+end_src
+*********** custom capture template
+#+begin_src emacs-lisp
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Movie" "Feature length video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("writer")
+                                     ("cast")
+                                     ("genre")
+                                     ("tags")
+                                     ("file")
+                                     ("url")
+                                     ("notes"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Video" "Short form video"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Image" "Painting, Illustration, Photography"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Object" "Sculpture, Architecture, Invention"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Music" "Music or Sound of any kind"
+                                    (("title")
+                                     ("author")
+                                     ("date"))
+                                    nil
+                                    (("publisher")
+                                     ("series")
+                                     ("episode")
+                                     ("guests")
+                                     ("url")
+                                     ("file")
+                                     ("tags"))))
+
+(add-to-list 'bibtex-biblatex-entry-alist '("Web-Page" "General Web Pages"
+                                            (("title")
+                                             ("url")
+                                             ("date"))
+                                            nil
+                                           (("publisher")
+                                            ("series")
+                                            ("episode")
+                                            ("guests")
+                                            ("file")
+                                            ("tags"))))
+#+end_src
+*********** citar
+
+#+begin_src emacs-lisp
+(use-package citar
+  :config
+  (setq org-cite-follow-processor 'citar
+        org-cite-insert-processor 'citar
+        org-cite-activate-processor 'citar
+        org-cite-global-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib")
+        citar-bibliography '("~/Archive/Apocrypha/Org/bibliography-index.bib"))
+
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
+
+  :bind
+  (("C-c c o" . citar-open)
+   ("C-c c l" . citar-open-link)
+   ("C-c c n" . citar-open-notes)
+   ("C-c c f" . citar-open-files)
+   ("C-c c e" . citar-open-entry)
+   ("C-c c i" . citar-insert-citation)
+   ("C-c b o" . Tn/open-bibliography)
+   ("C-c b n" . bibtex-entry)
+   ("C-c b v" . Tn/bibtex-validate-and-save)))
+
+(define-key helm-comp-read-map (kbd "C-c C-c") 'helm-cr-empty-string)
+#+end_src
+************* custom functions
+
+#+begin_src emacs-lisp
+(defun Tn/bibtex-validate-and-save ()
+  "saves file and validates bibtex formatting"
+  (interactive)
+  (bibtex-validate)
+  (save-buffer))
+
+(defun Tn/open-bibliography ()
+"opens the global bibliography file"
+  (interactive)
+    (find-file "~/Archive/Apocrypha/Org/bibliography-index.bib"))
+
+(setq citar-templates
+      '((main . "     ${title:48}")
+        (suffix . "${=type=:12}    ${tags keywords:*}")
+        (preview . "${author editor:%etal} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
+        (note . "Notes on ${author editor:%etal}, ${title}")))
+#+end_src
+*********** citar-org-roam
+
+#+begin_src emacs-lisp
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config (citar-org-roam-mode))
+
+(setq citar-org-roam-subdir (file-truename "~/Archive/Grimoire/Reference/")
+      citar-org-roam-capture-template-key "s")
+#+end_src
+********* agenda
+
+*********** agenda-core
+
+#+begin_src emacs-lisp
+(require 'org-agenda)
+
+(defun Tn/org-agenda-day ()
+   (interactive)
+   (let ((org-agenda-span 'day))
+        (org-agenda nil "a")))
+
+(defun Tn/org-agenda-week ()
+   (interactive)
+   (let ((org-agenda-span 'week))
+        (org-agenda nil "a")))
+
+(setq org-agenda-files (append (directory-files-recursively "~/Archive/" "\\todo.org$"))
+      org-agenda-start-on-weekday 0
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-window-setup 'only-window
+      org-agenda-block-separator #x2501
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t
+      org-agenda-start-with-clockreport-mode t
+      org-agenda-time-leading-zero t
+      org-agenda-time-grid '((daily today require-timed)
+ (100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 0)
+ " ----- " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+
+(define-key org-agenda-mode-map (kbd "n") 'evil-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'evil-previous-line)
+(define-key org-agenda-mode-map (kbd "n") 'org-agenda-next-line)
+(define-key org-agenda-mode-map (kbd "e") 'org-agenda-previous-line)
+(define-key org-agenda-mode-map (kbd "j") 'org-agenda-goto-date)
+(define-key org-agenda-mode-map (kbd "p") 'org-agenda-capture)
+(define-key org-agenda-mode-map (kbd "<SPC>") 'helm-occur)
+(define-key org-agenda-mode-map (kbd "s-A") 'org-agenda-exit)
+#+end_src
+
+*********** super-agenda
+
+#+begin_src emacs-lisp
+(use-package org-super-agenda)
+
+(org-super-agenda-mode 1)
+#+end_src
+
+*********** icalendar
+
+#+begin_src emacs-lisp
+(setq-default org-icalendar-include-todo t)
+
+(setq org-combined-agenda-icalendar-file "~/Archive/Apocrypha/Org-Files/calendar.ics"
+      org-icalendar-combined-name "OrgCal"
+      org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo)
+      org-icalendar-use-deadline '(todo-due event-if-todo event-if-not-todo)
+      org-icalendar-timezone "America/Detroit"
+      org-icalendar-store-UID t
+      org-icalendar-alarm-time 30
+      calendar-date-style 'iso
+      calendar-mark-holidays-flag t
+      calendar-week-start-day 0
+      calendar-mark-diary-entries-flag t)
+#+end_src
+
+********* openscad
+
+#+begin_src emacs-lisp
+(use-package scad-mode)
+#+end_src
+********* misc.
+
+#+begin_src emacs-lisp
+(use-package centered-cursor-mode)
+
+(use-package dmenu)
+
+(use-package ag)
+
+(use-package rg)
+(global-set-key (kbd "C-s") #'rg-menu)
+#+end_src
+
+***** flameshot.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/flameshot.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.flameshot = {
+    enable = true;
+    settings = {
+    };
+  };
+}
+#+end_src
+
+***** blueman.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/blueman.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  services.blueman-applet = {
+    enable = true;
+  };
+}
+#+end_src
+
+***** XDG
+
+******* user-dirs.dirs
+point at thanatos
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/XDG/user-dirs.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home.file."user-dirs.dirs" = {
+    target = ".config/user-dirs.dirs";
+    force = true;
+    text = ''
+      XDG_DESKTOP_DIR="$HOME/Archive"
+      XDG_DOWNLOAD_DIR="$HOME/Downloads"
+      XDG_TEMPLATES_DIR="$HOME/Projects"
+      XDG_PUBLICSHARE_DIR="$HOME/Projects"
+      XDG_DOCUMENTS_DIR="$HOME/Media"
+      XDG_MUSIC_DIR="$HOME/Media"
+      XDG_PICTURES_DIR="$HOME/Media"
+      XDG_VIDEOS_DIR="$HOME/Media"
+    '';
+  };
+}
+#+end_src
+
+***** communication.nix
+:PROPERTIES:
+:header-args: :tangle ./Artemis/Home-Manager/Home-Packages/communication.nix
+:END:
+
+#+begin_src nix
+{ inputs, outputs, lib, config, pkgs, ... }: {
+
+  home = {
+    packages = with pkgs; [
+    slack
+    discord
+    ];
+  };
+}
+#+end_src
+*** Home-Scripts

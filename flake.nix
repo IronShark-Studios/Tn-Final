@@ -1,5 +1,5 @@
 {
-  description = "Configuration for personal travel laptop.";
+  description = "Configurations for personal computers.";
 
   nixConfig = {
     extra-substituters = [
@@ -34,29 +34,38 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, nur, sops-nix, emacs-community, ... }@inputs:
-    let
+   let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
     in
-      rec {
+    rec {
 
-        overlays = import ./Flake/Overlays { inherit inputs; };
-        nixosModules = import ./Flake/Modules/Nixos;
-        homeManagerModules = import ./Flake/Modules/Home-Manager;
+  overlays = import ./Flake/Overlays { inherit inputs; };
+  nixosModules = import ./Flake/Modules/Nixos;
+  homeManagerModules = import ./Flake/Modules/Home-Manager;
 
-        nixosConfigurations = {
-          Thanatos = nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs outputs; };
-            modules = [
-              nur.nixosModules.nur
-              nixos-hardware.nixosModules.lenovo-thinkpad-t430
-              sops-nix.nixosModules.sops
-              home-manager.nixosModules.home-manager
-              ./Thanatos/NixOS/configuration.nix
-            ];
-          };
-        };
-      };
+  nixosConfigurations = {
+    Thanatos = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
+      modules = [
+        nur.nixosModules.nur
+        nixos-hardware.nixosModules.lenovo-thinkpad-t430
+        sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
+        ./Thanatos/NixOS/configuration.nix
+      ];
+    };
+    Artemis = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
+      modules = [
+        nur.nixosModules.nur
+        sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
+        ./Artemis/NixOS/configuration.nix
+      ];
+    };
+  };
+};
 }
