@@ -67,6 +67,15 @@
         ./Thanatos/NixOS/configuration.nix
       ];
     };
+    Artemis = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
+      modules = [
+        nur.nixosModules.nur
+        sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
+        ./Artemis/NixOS/configuration.nix
+      ];
+    };
   };
 };
 }
