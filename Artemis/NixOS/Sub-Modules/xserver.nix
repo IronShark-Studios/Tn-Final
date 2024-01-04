@@ -75,8 +75,9 @@
         enable = true;
       };
 
-      windowManager.xmonad-with-packages = {
+      windowManager.xmonad = {
         enable = true;
+        enableContribAndExtras = true;
       };
     };
 
