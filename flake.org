@@ -1,5 +1,6 @@
 #+TITLE: System Tangle File
 #+DESCRIPTION: Temporary file containt all shared files for a nix flake. Go be re organized later.
+#+LAST_MODIFIED: [2024-01-04 Thu 15:38]
 #+PROPERTY: :tangle yes :noweb yes
 
 * flake.nix
