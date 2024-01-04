@@ -9,7 +9,7 @@
 
 #+begin_src nix
 {
-  description = "Configuration for personal travel laptop.";
+  description = "Configurations for personal computers.";
 
   nixConfig = {
     extra-substituters = [
