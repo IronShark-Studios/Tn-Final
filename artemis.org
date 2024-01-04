@@ -52,7 +52,7 @@ This section contains all root level or otherwise system wide configuration sett
 #+end_src
 
 *** hardware-configuration.nix
-This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into =~/.../Technonomicon/Thanatos/NixOS/hardware-configuration.nix= as part of any fresh install. At some point I would like to be able to standardize it.
+This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped into =~/.../Technonomicon/Artemis/NixOS/hardware-configuration.nix= as part of any fresh install. At some point I would like to be able to standardize it.
 
 *** Sub-Modules
 
