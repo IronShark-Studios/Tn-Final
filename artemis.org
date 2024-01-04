@@ -1,6 +1,6 @@
 #+TITLE: Artemis Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-04 Thu 16:15]
+#+LAST_MODIFIED: [2024-01-04 Thu 16:30]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
