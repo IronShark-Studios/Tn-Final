@@ -274,6 +274,10 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       desktopManager.enlightenment = {
         enable = true;
       };
+
+      windowManager.xmonad-with-packages = {
+        enable = true;
+      };
     };
 
     unclutter-xfixes = {
