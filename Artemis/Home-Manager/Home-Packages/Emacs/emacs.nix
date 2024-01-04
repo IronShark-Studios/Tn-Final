@@ -18,7 +18,6 @@
       silver-searcher
       hunspell
       hunspellDicts.en_US-large
-      networkmanagerapplet
     ];
 
     file = {

@@ -11,7 +11,9 @@
     ./Sub-Modules/xserver.nix
     ./Sub-Modules/network.nix
     ./Tools/Scripts/rebuild.nix
+    ./Tools/Scripts/test.nix
     ./Tools/Scripts/upgrade.nix
+    ./Tools/Scripts/mv-to-tmp.nix
   ];
 
   boot = {

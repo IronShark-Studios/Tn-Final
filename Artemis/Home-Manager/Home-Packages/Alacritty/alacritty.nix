@@ -10,6 +10,7 @@
     btop
     htop
     nmon
+    kmon
     fzf
     rsync
     zoxide

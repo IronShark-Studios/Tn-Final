@@ -12,13 +12,14 @@
 
     sessionVariables = {
       SUDO_EDITOR = "\"emacsclient\"";
-      NIXOS_GENERATION = "$(nix-env --list-generations | tail -n 1 | sed 's/(current)//')";
+      NIXOS_GENERATION = "$(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -n 1 | sed 's/(current)//')";
     };
 
     initExtra = ''
       autoload -Uz compinit && compinit
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
       eval "$(zoxide init zsh)"
+      bindkey '^H' backward-kill-word
       bindkey -a 'm' vi-backward-char
       bindkey -v
       neofetch

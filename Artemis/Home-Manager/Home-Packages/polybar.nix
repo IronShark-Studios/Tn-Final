@@ -40,6 +40,7 @@
         };
         "module/xworkspaces" = {
           type = "internal/xworkspaces";
+          pin-workspaces = true;
           label-active = "%name%";
           label-active-background = "\${colors.background}";
           label-active-underline= "\${colors.primary}";

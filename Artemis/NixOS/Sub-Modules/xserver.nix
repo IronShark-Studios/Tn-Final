@@ -3,14 +3,17 @@
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
+      networkmanagerapplet
       sddm-chili-theme
       pavucontrol
       xorg.xev
       gparted
       xdotool
+      pnmixer
+      udiskie
+      xcolor
       slock
       xclip
-      xcolor
       xsel
       xdo
     ];
@@ -38,6 +41,7 @@
   services = {
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
+
     pipewire = {
       enable = true;
       pulse.enable = true;
@@ -54,11 +58,13 @@
       layout = "us";
       xkbVariant = "colemak_dh";
       xkbOptions = "caps:escape";
+      videoDrivers = [ "modesetting" ];
       excludePackages = with pkgs; [
         xterm
       ];
 
       displayManager = {
+
         sddm = {
           enable = true;
           autoNumlock = true;
@@ -66,15 +72,13 @@
           };
       };
 
-      desktopManager.xfce = {
+      desktopManager.enlightenment = {
         enable = true;
-        enableScreensaver = false;
       };
     };
 
-    unclutter = {
+    unclutter-xfixes = {
       enable = true;
-      keystroke = false;
       threshold = 10;
       timeout = 1;
     };

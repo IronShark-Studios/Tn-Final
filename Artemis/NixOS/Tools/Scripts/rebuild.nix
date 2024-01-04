@@ -6,9 +6,10 @@
       #!/bin/sh
 
       git add .
-      sudo nixos-rebuild switch --flake .#$HOSTNAME &&
-      git commit -m "$HOSTNAME Rebuilt: $NIXOS_GENERATION"
-      git push
+      git status
+      sudo nixos-rebuild switch --flake .#$HOSTNAME
+      git commit -m "$HOST Rebuild: $NIXOS_GENERATION"
+      git push &&
       echo
       echo System Generation $NIXOS_GENERATION Active.
     '';

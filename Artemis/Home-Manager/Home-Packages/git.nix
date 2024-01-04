@@ -10,16 +10,17 @@
       "*~"
       ".*~"
       "#*#"
-      "'#*#'"
       ".*.swp"
     ];
     aliases = {
-      send = "! git status &&
-echo -n \"Commit Message: \" &&
-read -r commitMessage &&
-git add . &&
-git commit -m \"$commitMessage\" &&
-git push";
+      send = ''
+        ! git status &&
+        echo -n Commit Message:  &&
+        read -r CommitMessage &&
+        git add . &&
+        git commit -m "$CommitMessage" &&
+        git push
+      '';
     };
     extraConfig = {
       init = {
