@@ -71,9 +71,9 @@
           };
       };
 
-      desktopManager.enlightenment = {
-        enable = true;
-      };
+      # desktopManager.enlightenment = {
+      #   enable = true;
+      # };
 
       windowManager.xmonad = {
         enable = true;

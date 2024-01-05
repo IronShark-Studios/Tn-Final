@@ -1,6 +1,6 @@
 #+TITLE: Artemis Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-04 Thu 16:38]
+#+LAST_MODIFIED: [2024-01-05 Fri 07:57]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -270,9 +270,9 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
           };
       };
 
-      desktopManager.enlightenment = {
-        enable = true;
-      };
+      # desktopManager.enlightenment = {
+      #   enable = true;
+      # };
 
       windowManager.xmonad = {
         enable = true;
