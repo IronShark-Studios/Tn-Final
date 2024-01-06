@@ -9,18 +9,17 @@ import XMonad.Util.Ungrab
 import XMonad.Util.EZConfig
 import XMonad.Util.SpawnOnce (spawnOnce)
 
-myStartupHook :: X ()
-myStartupHook = do
-         spawnOnce "firefox"
-
-myConfig = def
-         { modMask = mod4Mask
-         , startupHook = myStartupHook
-         , focusedBorderColor = "#000000" }
-       `additionalKeysP`
-         [ ("M-x" , spawn "dmenu")]
-
-main = xmonad myConfig
+main = xmonad $ defaultConfig
+    { modMask            = mod4Mask
+    , borderWidth        = 0
+    , normalBorderColor  = "#000000"
+    , focusedBorderColor = "#000000"
+    , startupHook = do
+        spawnOnce "firefox"
+    }
+    `additionalKeys`
+    [ ((mod4Mask, xK_x), spawn "dmenu_run")
+    , ((mod4Mask, xK_Escape), spawn "sudo slock")]
     '';
   };
 }
