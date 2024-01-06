@@ -4,9 +4,7 @@
     enable = true;
 
     profileExtra = ''
-      udiskie --no-notify --tray &
-      nm-applet &
-      pnmixer &
+      xrandr --output HDMI-2 --mode 1920x1080 --rate 60
     '';
   };
 }

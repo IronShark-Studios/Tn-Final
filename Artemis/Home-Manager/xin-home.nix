@@ -22,6 +22,7 @@
     ./Home-Packages/flameshot.nix
     ./Home-Packages/blueman.nix
     ./Home-Packages/communication.nix
+    ./Home-Packages/xmonad.nix
   ];
 
   programs.home-manager.enable = true;
