@@ -206,6 +206,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       networkmanagerapplet
       sddm-chili-theme
       pavucontrol
+      wireplumber
       xorg.xev
       gparted
       xdotool
