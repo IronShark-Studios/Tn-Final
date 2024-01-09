@@ -19,6 +19,7 @@ main = xmonad $ defaultConfig
     }
     `additionalKeys`
     [ ((mod4Mask, xK_x), spawn "dmenu_run")
+    , ((mod4Mask, xK_c), kill)
     , ((mod4Mask, xK_Escape), spawn "sudo slock")]
     '';
   };

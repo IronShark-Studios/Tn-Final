@@ -1,6 +1,6 @@
 #+TITLE: Artemis Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-09 Tue 10:22]
+#+LAST_MODIFIED: [2024-01-09 Tue 11:10]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -2147,6 +2147,7 @@ main = xmonad $ defaultConfig
     }
     `additionalKeys`
     [ ((mod4Mask, xK_x), spawn "dmenu_run")
+    , ((mod4Mask, xK_c), kill)
     , ((mod4Mask, xK_Escape), spawn "sudo slock")]
     '';
   };
