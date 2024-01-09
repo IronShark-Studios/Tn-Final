@@ -4,6 +4,7 @@
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
       xfce.xfce4-power-manager
+      xfce.xfce4-pulseaudio-plugin
       networkmanagerapplet
       sddm-chili-theme
       pavucontrol
