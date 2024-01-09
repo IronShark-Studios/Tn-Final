@@ -202,6 +202,7 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
+      xfce.xfce4-power-manager
       networkmanagerapplet
       sddm-chili-theme
       pavucontrol
