@@ -20,6 +20,9 @@ main = xmonad $ defaultConfig
     `additionalKeys`
     [ ((mod4Mask, xK_x), spawn "dmenu_run")
     , ((mod4Mask, xK_c), kill)
+    , ((xK_<XF86AudioRaiseVolume>), raiseVolume 5)
+    , ((xK_<XF86AudioLowerVolume>), lowerVolume 5)
+    , ((xK_<XF86AudioMute>), toggleMute)
     , ((mod4Mask, xK_Escape), spawn "sudo slock")]
     '';
   };

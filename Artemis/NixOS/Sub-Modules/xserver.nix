@@ -11,7 +11,6 @@
       xorg.xev
       gparted
       xdotool
-      pnmixer
       udiskie
       xcolor
       slock

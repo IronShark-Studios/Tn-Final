@@ -1,6 +1,6 @@
 #+TITLE: Artemis Tangle File
 #+DESCRIPTION: Describes configuration settings specific to my travel laptop.
-#+LAST_MODIFIED: [2024-01-09 Tue 11:10]
+#+LAST_MODIFIED: [2024-01-09 Tue 11:48]
 :PROPERTIES:
 #+STARTUP: content
 #+tangle: yes
@@ -210,7 +210,6 @@ This file is copied from =/etc/nixos/hardware-configuration.nix= and dropped int
       xorg.xev
       gparted
       xdotool
-      pnmixer
       udiskie
       xcolor
       slock
@@ -2147,6 +2146,9 @@ main = xmonad $ defaultConfig
     `additionalKeys`
     [ ((mod4Mask, xK_x), spawn "dmenu_run")
     , ((mod4Mask, xK_c), kill)
+    , ((xK_<XF86AudioRaiseVolume>), raiseVolume 5)
+    , ((xK_<XF86AudioLowerVolume>), lowerVolume 5)
+    , ((xK_<XF86AudioMute>), toggleMute)
     , ((mod4Mask, xK_Escape), spawn "sudo slock")]
     '';
   };

@@ -9,7 +9,6 @@
       sudo nixos-rebuild test --flake .#$HOSTNAME &&
       echo
       echo System Generation $NIXOS_GENERATION Temporarily Active.
-      git commit -m "Test Rebuild $HOSTNAME $NIXOS_GENERATION"
     '';
   };
 }
