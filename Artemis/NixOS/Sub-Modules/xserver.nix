@@ -3,9 +3,11 @@
   environment = {
     systemPackages = with pkgs; [
       xfce.xfce4-genmon-plugin
+      xfce.xfce4-power-manager
       networkmanagerapplet
       sddm-chili-theme
       pavucontrol
+      wireplumber
       xorg.xev
       gparted
       xdotool
